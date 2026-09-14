@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Emily Rojas Creative</title>
+<meta name="description" content="Start your design project — send a note and let's talk about your brand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Unbounded:wght@700;800;900&family=Space+Mono:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <nav class="main-nav nav-left">
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+    </nav>
+
+    <a href="index.html" class="logo">
+      <span class="logo-name">Emily Rojas</span>
+      <span class="logo-sub">Creative</span>
+    </a>
+
+    <nav class="main-nav nav-right">
+      <a href="contact.html" class="nav-contact">Contact</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="collage">
+        <div class="collage-tile tile-orange" style="border-radius:6px;">
+          <div class="tile-label">Say Hello</div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1>Start Your Design Project</h1>
+        <p class="lede" style="font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.08em; font-size:0.82rem; font-weight:700; opacity:0.75; max-width:460px; margin:0 auto;">Send me a note using the form below — I'll get back to you within 1&ndash;2 business days</p>
+      </div>
+
+      <div class="collage collage-right">
+        <div class="collage-tile tile-pink" style="border-radius:6px;">
+          <div class="tile-label">Let's Chat</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checker-strip" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="wrap contact-grid">
+
+      <div class="contact-info">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>Ready to get started?</h2>
+        <p class="lede">Have questions about which package would be the right fit for you? Send me a note — I can't wait to hear from you.</p>
+
+        <div class="contact-detail">
+          <span class="k">Email</span>
+          <span class="v"><a href="mailto:hello@emilyrojascreative.com">hello@emilyrojascreative.com</a></span>
+        </div>
+        <div class="contact-detail">
+          <span class="k">Response Time</span>
+          <span class="v">1&ndash;2 business days</span>
+        </div>
+        <div class="contact-detail">
+          <span class="k">Follow Along</span>
+          <span class="v"><a href="#">On the gram</a></span>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <!--
+          Static form markup only — wire `action` up to a form service
+          (e.g. Formspree, Basin) or your own backend to actually send mail.
+        -->
+        <form class="contact-form" action="#" method="POST">
+          <div class="form-row two-col">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="project">Project Type</label>
+            <select id="project" name="project">
+              <option>Brand Design</option>
+              <option>Website Design</option>
+              <option>Brand + Website</option>
+              <option>Freelance / Ongoing Design</option>
+              <option>Something Else</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="budget">Estimated Budget</label>
+            <select id="budget" name="budget">
+              <option>Under $2,500</option>
+              <option>$2,500 &ndash; $5,000</option>
+              <option>$5,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Tell me about your project</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-orange">Send It Over</button>
+        </form>
+        <p class="contact-note">Prefer email? Reach me directly at hello@emilyrojascreative.com</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="wrap">
+      <nav class="footer-nav">
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About</a>
+        <a href="portfolio.html">Portfolio</a>
+      </nav>
+      <p class="footer-desc">Emily Rojas Creative is a design studio specializing in brand design, Showit websites, and freelance graphic design services.</p>
+    </div>
+  </div>
+
+  <div class="footer-wordmark">Emily Rojas Creative</div>
+
+  <div class="footer-bottom">
+    <p>&copy; Emily Rojas Creative LLC <span id="year"></span> &middot; <a href="#">Privacy</a></p>
+    <p>Photos by local creative partners</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
