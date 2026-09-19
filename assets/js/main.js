@@ -126,18 +126,36 @@ document.addEventListener("DOMContentLoaded", () => {
     updateKnow();
   }
 
-  // Testimonials: arrows cycle through .t-slide elements (no-op with one slide)
+  // Testimonials: auto-advance every few seconds, arrows also work. The timer
+  // pauses while the pointer or keyboard focus is inside the section and
+  // never runs with reduced motion.
   const tSlides = document.querySelectorAll(".t-slide");
   const tPrev = document.querySelector(".t-prev");
   const tNext = document.querySelector(".t-next");
   if (tSlides.length > 1 && tPrev && tNext) {
+    const T_DELAY = 6000;
     let tIndex = 0;
+    let tTimer = null;
     const showT = (i) => {
       tIndex = (i + tSlides.length) % tSlides.length;
       tSlides.forEach((s, n) => s.classList.toggle("is-active", n === tIndex));
     };
-    tPrev.addEventListener("click", () => showT(tIndex - 1));
-    tNext.addEventListener("click", () => showT(tIndex + 1));
+    const stopT = () => { clearInterval(tTimer); tTimer = null; };
+    const startT = () => {
+      if (prefersReducedMotion) return;
+      stopT();
+      tTimer = setInterval(() => showT(tIndex + 1), T_DELAY);
+    };
+    tPrev.addEventListener("click", () => { showT(tIndex - 1); startT(); });
+    tNext.addEventListener("click", () => { showT(tIndex + 1); startT(); });
+    const tSection = document.getElementById("testimonials");
+    if (tSection) {
+      tSection.addEventListener("mouseenter", stopT);
+      tSection.addEventListener("mouseleave", startT);
+      tSection.addEventListener("focusin", stopT);
+      tSection.addEventListener("focusout", startT);
+    }
+    startT();
   }
 
   // Testimonial carousel (prev/next arrows)
