@@ -3,159 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Emily Rojas Creative</title>
-<meta name="description" content="Start your design project — send a note and let's talk about your brand.">
+<title>Contact — Bloom Coaching</title>
+<meta name="description" content="A coaching space for women entrepreneurs ready to stop doing it all alone.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Unbounded:wght@700;800;900&family=Space+Mono:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <header class="site-header">
-  <div class="wrap header-inner">
-    <nav class="main-nav nav-left">
-      <a href="portfolio.html">Portfolio</a>
-      <a href="about.html">About</a>
-    </nav>
+  <a href="index.html" class="logo" aria-label="Bloom Coaching">BC</a>
 
-    <a href="index.html" class="logo">
-      <span class="logo-name">Emily Rojas</span>
-      <span class="logo-sub">Creative</span>
-    </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 
-    <nav class="main-nav nav-right">
-      <a href="contact.html" class="nav-contact">Contact</a>
-    </nav>
-
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="sales.html">Sales Page</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
-<main>
+<main class="page-main">
 
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="collage">
-        <div class="collage-tile tile-orange" style="border-radius:6px;">
-          <div class="tile-label">Say Hello</div>
-        </div>
-      </div>
-
-      <div class="hero-copy">
-        <h1>Start Your Design Project</h1>
-        <p class="lede" style="font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.08em; font-size:0.82rem; font-weight:700; opacity:0.75; max-width:460px; margin:0 auto;">Send me a note using the form below — I'll get back to you within 1&ndash;2 business days</p>
-      </div>
-
-      <div class="collage collage-right">
-        <div class="collage-tile tile-pink" style="border-radius:6px;">
-          <div class="tile-label">Let's Chat</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="checker-strip" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <!-- CONTACT HERO -->
+  <section class="ct-hero">
+    <h1 class="ct-title">Let&rsquo;s <em>Connect</em></h1>
+    <div class="ct-pills">
+      <a href="mailto:hello@bloomcoaching.com" class="pill ct-pill--a"><span>hello@bloomcoaching.com</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+      <a href="#" class="pill ct-pill--b"><span>@bloomcoaching</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
     </div>
   </section>
 
-  <section class="contact-section">
-    <div class="wrap contact-grid">
+  <!-- CONTACT FORM -->
+  <section class="ct-form">
+    <div class="ct-card">
+      <h2 class="ct-card-title">Have <em>questions?</em> Ready to<br>move forward?</h2>
+      <p class="ct-card-text">Drop me a message through the form or send an email to<br>hello@bloomcoaching. For partnership inquiries, please include details and<br>timelines so I can get back to you quickly.</p>
 
-      <div class="contact-info">
-        <p class="eyebrow">Get In Touch</p>
-        <h2>Ready to get started?</h2>
-        <p class="lede">Have questions about which package would be the right fit for you? Send me a note — I can't wait to hear from you.</p>
+      <form class="ct-fields" action="#" onsubmit="return false">
+        <div class="ct-row">
+          <input type="text" name="name" placeholder="Name*" aria-label="Name" required>
+          <input type="email" name="email" placeholder="Email*" aria-label="Email" required>
+        </div>
+        <input type="text" name="reason" placeholder="Reason for inquiry*" aria-label="Reason for inquiry" class="ct-reason" required>
+        <textarea name="message" placeholder="Message*" aria-label="Message" required></textarea>
+        <button type="submit" class="ct-submit">Submit</button>
+      </form>
+    </div>
+  </section>
 
-        <div class="contact-detail">
-          <span class="k">Email</span>
-          <span class="v"><a href="mailto:hello@emilyrojascreative.com">hello@emilyrojascreative.com</a></span>
+  <!-- FAQ -->
+  <section class="faq">
+    <p class="faq-eyebrow">Got questions? We've got answers</p>
+    <h2 class="faq-title">Frequently<br><em>Asked</em> Questions</h2>
+    <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
         </div>
-        <div class="contact-detail">
-          <span class="k">Response Time</span>
-          <span class="v">1&ndash;2 business days</span>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
         </div>
-        <div class="contact-detail">
-          <span class="k">Follow Along</span>
-          <span class="v"><a href="#">On the gram</a></span>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
         </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <div class="faq-item">
+          <h3>Question Goes Here?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+    </div>
+  </section>
+
+  <div class="dark-block dark-block--solo">
+    <!-- FREEBIE -->
+  <section class="freebie" id="freebie">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><polygon id="scallop" points="215.0,110.0 214.8,113.4 214.2,116.8 213.3,120.2 212.1,123.4 210.7,126.6 209.1,129.7 209.4,133.2 209.5,136.7 209.4,140.1 208.9,143.6 208.1,146.9 207.0,150.2 205.5,153.3 203.7,156.2 201.6,158.9 199.2,161.5 196.6,163.9 194.0,166.1 192.9,169.4 191.7,172.7 190.3,175.9 188.5,178.9 186.5,181.7 184.2,184.2 181.7,186.5 178.9,188.5 175.9,190.3 172.7,191.7 169.4,192.9 166.1,194.0 163.9,196.6 161.5,199.2 158.9,201.6 156.2,203.7 153.3,205.5 150.2,207.0 146.9,208.1 143.6,208.9 140.1,209.4 136.7,209.5 133.2,209.4 129.7,209.1 126.6,210.7 123.4,212.1 120.2,213.3 116.8,214.2 113.4,214.8 110.0,215.0 106.6,214.8 103.2,214.2 99.8,213.3 96.6,212.1 93.4,210.7 90.3,209.1 86.8,209.4 83.3,209.5 79.9,209.4 76.4,208.9 73.1,208.1 69.8,207.0 66.7,205.5 63.8,203.7 61.1,201.6 58.5,199.2 56.1,196.6 53.9,194.0 50.6,192.9 47.3,191.7 44.1,190.3 41.1,188.5 38.3,186.5 35.8,184.2 33.5,181.7 31.5,178.9 29.7,175.9 28.3,172.7 27.1,169.4 26.0,166.1 23.4,163.9 20.8,161.5 18.4,158.9 16.3,156.2 14.5,153.3 13.0,150.2 11.9,146.9 11.1,143.6 10.6,140.1 10.5,136.7 10.6,133.2 10.9,129.7 9.3,126.6 7.9,123.4 6.7,120.2 5.8,116.8 5.2,113.4 5.0,110.0 5.2,106.6 5.8,103.2 6.7,99.8 7.9,96.6 9.3,93.4 10.9,90.3 10.6,86.8 10.5,83.3 10.6,79.9 11.1,76.4 11.9,73.1 13.0,69.8 14.5,66.7 16.3,63.8 18.4,61.1 20.8,58.5 23.4,56.1 26.0,53.9 27.1,50.6 28.3,47.3 29.7,44.1 31.5,41.1 33.5,38.3 35.8,35.8 38.3,33.5 41.1,31.5 44.1,29.7 47.3,28.3 50.6,27.1 53.9,26.0 56.1,23.4 58.5,20.8 61.1,18.4 63.8,16.3 66.7,14.5 69.8,13.0 73.1,11.9 76.4,11.1 79.9,10.6 83.3,10.5 86.8,10.6 90.3,10.9 93.4,9.3 96.6,7.9 99.8,6.7 103.2,5.8 106.6,5.2 110.0,5.0 113.4,5.2 116.8,5.8 120.2,6.7 123.4,7.9 126.6,9.3 129.7,10.9 133.2,10.6 136.7,10.5 140.1,10.6 143.6,11.1 146.9,11.9 150.2,13.0 153.3,14.5 156.2,16.3 158.9,18.4 161.5,20.8 163.9,23.4 166.1,26.0 169.4,27.1 172.7,28.3 175.9,29.7 178.9,31.5 181.7,33.5 184.2,35.8 186.5,38.3 188.5,41.1 190.3,44.1 191.7,47.3 192.9,50.6 194.0,53.9 196.6,56.1 199.2,58.5 201.6,61.1 203.7,63.8 205.5,66.7 207.0,69.8 208.1,73.1 208.9,76.4 209.4,79.9 209.5,83.3 209.4,86.8 209.1,90.3 210.7,93.4 212.1,96.6 213.3,99.8 214.2,103.2 214.8,106.6"/></defs></svg>
+
+    <div class="freebie-card">
+      <div class="freebie-books">
+      <div class="book book-back" aria-hidden="true">
+        <div class="book-badge"><svg viewBox="0 0 220 220"><use href="#scallop"/></svg><span>Freebie<br>Download</span></div>
+        <p class="book-title">How to Bloom Again</p>
+        <p class="book-sub"><span>A step by step guide of</span><br><span>taking back your life</span></p>
+      </div>
+      <div class="book book-front" aria-hidden="true">
+        <div class="book-badge"><svg viewBox="0 0 220 220"><use href="#scallop"/></svg><span>Freebie<br>Download</span></div>
+        <p class="book-title">How to Bloom Again</p>
+        <p class="book-sub"><span>A step by step guide of</span><br><span>taking back your life</span></p>
+      </div>
       </div>
 
-      <div class="contact-form-card">
-        <!--
-          Static form markup only — wire `action` up to a form service
-          (e.g. Formspree, Basin) or your own backend to actually send mail.
-        -->
-        <form class="contact-form" action="#" method="POST">
-          <div class="form-row two-col">
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-          </div>
+      <h2 class="freebie-title">Get <em>the</em> Freebie</h2>
+      <p class="freebie-text">Lorem ipsum dolor sit amet, consectetur adipiscing<br>elit, sed do eiusmod tempor incididunt ut labore et<br>dolore magna aliqua. Ut enim ad minim veniam.</p>
 
-          <div class="form-row">
-            <label for="project">Project Type</label>
-            <select id="project" name="project">
-              <option>Brand Design</option>
-              <option>Website Design</option>
-              <option>Brand + Website</option>
-              <option>Freelance / Ongoing Design</option>
-              <option>Something Else</option>
-            </select>
-          </div>
+      <form class="freebie-form" action="#" onsubmit="return false">
+        <input type="text" name="first" placeholder="First Name" aria-label="First Name" class="f-first">
+        <input type="text" name="last" placeholder="Last Name" aria-label="Last Name" class="f-last">
+        <input type="email" name="email" placeholder="Email Address" aria-label="Email Address" class="f-email">
+        <button type="submit" class="f-submit">Sign Up</button>
+      </form>
+    </div>
+  </section>
+  </div>
 
-          <div class="form-row">
-            <label for="budget">Estimated Budget</label>
-            <select id="budget" name="budget">
-              <option>Under $2,500</option>
-              <option>$2,500 &ndash; $5,000</option>
-              <option>$5,000+</option>
-              <option>Not sure yet</option>
-            </select>
-          </div>
+  <!-- CONTACT sections go here, one at a time -->
 
-          <div class="form-row">
-            <label for="message">Tell me about your project</label>
-            <textarea id="message" name="message" rows="6" required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-orange">Send It Over</button>
-        </form>
-        <p class="contact-note">Prefer email? Reach me directly at hello@emilyrojascreative.com</p>
-      </div>
-
+  <!-- FINAL CTA -->
+  <section class="cta">
+    <p class="cta-eyebrow">Let's make it bloom</p>
+    <h2 class="cta-title">I&rsquo;m ready<br>whenever <em>you</em> are!</h2>
+    <p class="cta-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <div class="cta-actions">
+      <a href="contact.html" class="pill"><span>Reach out</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+      <a href="services.html" class="pill"><span>See services</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="footer-top">
-    <div class="wrap">
-      <nav class="footer-nav">
-        <a href="contact.html">Contact</a>
-        <a href="about.html">About</a>
-        <a href="portfolio.html">Portfolio</a>
+    <div class="foot-top">
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="index.html" style="--x:170">Home</a>
+        <a href="about.html" style="--x:277">About</a>
+        <a href="services.html" style="--x:403">Services</a>
+        <a href="sales.html" style="--x:562">Sales Page</a>
+        <a href="contact.html" style="--x:741">Contact</a>
       </nav>
-      <p class="footer-desc">Emily Rojas Creative is a design studio specializing in brand design, Showit websites, and freelance graphic design services.</p>
+      <div class="foot-social"><a href="#" aria-label="Instagram"><svg viewBox="0 0 28 28"><rect width="28" height="28" rx="8"/><circle cx="14" cy="14" r="6" fill="none" stroke="var(--lavender)" stroke-width="2.2"/><circle cx="21" cy="7" r="1.6" fill="var(--lavender)"/></svg></a><a href="#" aria-label="TikTok"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="14"/><path d="M15.2 7v9.6a3 3 0 1 1-3-3M15.2 7c.4 2.400 1.900 3.800 4.200 4" fill="none" stroke="var(--lavender)" stroke-width="2.2" stroke-linecap="round"/></svg></a><a href="#" aria-label="Pinterest"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="14"/><text x="14" y="20.500" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="var(--lavender)">P</text></svg></a></div>
     </div>
-  </div>
 
-  <div class="footer-wordmark">Emily Rojas Creative</div>
+    <div class="foot-mid">
+      <p class="foot-tag">We&rsquo;re a coaching<br><em>community</em> built for women<br>growing online<br>businesses.</p>
+      <div class="foot-links">
+        <a href="mailto:hello@bloomcoaching.com" class="pill"><span>hello@bloomcoaching.com</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="#" class="pill"><span>Instagram @bloomcoaching</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+      </div>
+    </div>
 
-  <div class="footer-bottom">
-    <p>&copy; Emily Rojas Creative LLC <span id="year"></span> &middot; <a href="#">Privacy</a></p>
-    <p>Photos by local creative partners</p>
-  </div>
-</footer>
+    <a href="index.html" class="foot-mark">Bloom Coaching</a>
+    <p class="foot-credit">Site credit</p>
+  </footer>
 
 <script src="assets/js/main.js"></script>
 </body>

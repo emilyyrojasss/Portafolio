@@ -68,6 +68,78 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  // Hero ribbon: the text repeats along the curved path and drifts
+  // right-to-left. RIBBON_START is the arc length at which the first
+  // "Structure" sits when the page loads.
+  const ribbonText = document.getElementById("ribbon-text");
+  if (ribbonText) {
+    const RIBBON_START = parseFloat(ribbonText.dataset.start) || 975;
+    const RIBBON_SPEED = 70; // svg units per second
+    const REPEATS = 6;
+    const unit = ribbonText.dataset.text || "Structure Meets Softness ✱ Strategy Meets Sweetness ✱ ";
+    ribbonText.textContent = unit.repeat(REPEATS);
+
+    const start = () => {
+      const unitLen = ribbonText.getComputedTextLength() / REPEATS;
+      if (!unitLen) return;
+      const base = RIBBON_START - unitLen;
+      const render = (t) => {
+        const shift = prefersReducedMotion ? 0 : (t / 1000) * RIBBON_SPEED % unitLen;
+        ribbonText.setAttribute("startOffset", base - shift);
+        if (!prefersReducedMotion) requestAnimationFrame(render);
+      };
+      requestAnimationFrame(render);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+    else start();
+  }
+
+  // About hero: the giant "ABOUT" drifts right at half the scroll speed.
+  // Spans repeat every one span-width, so wrap the offset by that width.
+  const abTrack = document.querySelector(".ab-track");
+  if (abTrack && !prefersReducedMotion) {
+    const updateAb = () => {
+      const period = abTrack.children[0].getBoundingClientRect().width;
+      abTrack.style.transform = `translateX(${(window.scrollY * 0.5) % period}px)`;
+    };
+    window.addEventListener("scroll", updateAb, { passive: true });
+    window.addEventListener("resize", updateAb);
+    updateAb();
+  }
+
+  // About "Get to know me": the stage is pinned (CSS sticky) while scroll
+  // progress reveals the cards one after another.
+  const know = document.querySelector(".know");
+  if (know && !prefersReducedMotion) {
+    const cards = know.querySelectorAll(".know-card");
+    const steps = [0.08, 0.36, 0.62];
+    know.classList.add("is-armed");
+    const updateKnow = () => {
+      const rect = know.getBoundingClientRect();
+      const spacer = know.querySelector(".know-spacer");
+      const span = spacer ? spacer.offsetHeight : 0;
+      const p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 1;
+      cards.forEach((card, i) => card.classList.toggle("is-in", p >= steps[i]));
+    };
+    window.addEventListener("scroll", updateKnow, { passive: true });
+    window.addEventListener("resize", updateKnow);
+    updateKnow();
+  }
+
+  // Testimonials: arrows cycle through .t-slide elements (no-op with one slide)
+  const tSlides = document.querySelectorAll(".t-slide");
+  const tPrev = document.querySelector(".t-prev");
+  const tNext = document.querySelector(".t-next");
+  if (tSlides.length > 1 && tPrev && tNext) {
+    let tIndex = 0;
+    const showT = (i) => {
+      tIndex = (i + tSlides.length) % tSlides.length;
+      tSlides.forEach((s, n) => s.classList.toggle("is-active", n === tIndex));
+    };
+    tPrev.addEventListener("click", () => showT(tIndex - 1));
+    tNext.addEventListener("click", () => showT(tIndex + 1));
+  }
+
   // Testimonial carousel (prev/next arrows)
   const carousel = document.querySelector(".testimonial-carousel");
   if (carousel) {

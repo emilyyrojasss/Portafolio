@@ -3,390 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emily Rojas Creative — Brand &amp; Website Design</title>
-<meta name="description" content="Quality, colorful brand & website design for small businesses with big dreams.">
+<title>Bloom Coaching</title>
+<meta name="description" content="A coaching space for women entrepreneurs ready to stop doing it all alone.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Unbounded:wght@700;800;900&family=Space+Mono:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <header class="site-header">
-  <div class="wrap header-inner">
-    <nav class="main-nav nav-left">
-      <a href="portfolio.html">Portfolio</a>
-      <a href="about.html">About</a>
-    </nav>
+  <a href="index.html" class="logo" aria-label="Bloom Coaching">BC</a>
 
-    <a href="index.html" class="logo">
-      <span class="logo-name">Emily Rojas</span>
-      <span class="logo-sub">Creative</span>
-    </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 
-    <nav class="main-nav nav-right">
-      <a href="contact.html" class="nav-contact">Contact</a>
-    </nav>
-
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="sales.html">Sales Page</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
 <main>
 
-  <!-- 0. HERO -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="collage" data-parallax="0.08">
-        <div class="collage-tile tile-cream photo" style="background-image:url('assets/img/hero-jewelry.jpg');">
-          <div>
-            <div class="tile-label">Maebel</div>
-            <div class="tile-sub">Handcrafted Jewelry</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-copy">
-        <h1>Quality, Colorful Brand &amp; <span class="accent">Graphic Design</span> For Small Businesses With Big Dreams</h1>
-        <a href="#services" class="btn btn-pink">Explore My Services</a>
-      </div>
-
-      <div class="collage collage-right" data-parallax="0.08" style="position:relative;">
-        <div class="sticker-badge" style="position:absolute; top:-24px; right:-10px; z-index:2;">Say<br>Hello</div>
-        <div class="collage-tile tile-pink photo" style="background-image:url('assets/img/hero-portrait.jpg');">
-          <div>
-            <div class="tile-label">Colette Rochelle</div>
-            <div class="tile-sub">Photography</div>
-          </div>
-        </div>
-        <div class="collage-tile tile-burgundy">
-          <div class="tile-label">M</div>
-        </div>
-      </div>
+    <div class="hero-photos" aria-hidden="true">
+      <div class="hero-photo hero-photo-left"></div>
+      <div class="hero-photo hero-photo-right"></div>
     </div>
 
-    <div class="checker-strip" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
+    <p class="hero-tagline">A coaching space for<br>women entrepreneurs ready<br>to stop doing it all <em>alone</em></p>
+
+    <h1 class="hero-title">Bloom<br>Coaching</h1>
+
+    <a href="contact.html" class="hero-badge" aria-label="Let's Bloom">
+      <svg viewBox="0 0 220 220" aria-hidden="true"><polygon points="214.5,110.0 214.4,112.5 213.9,114.9 213.2,117.4 212.3,119.8 211.2,122.1 210.0,124.4 210.5,126.9 210.9,129.4 211.1,132.0 211.1,134.5 210.8,137.0 210.3,139.4 209.4,141.8 208.3,144.0 207.0,146.2 205.4,148.2 203.7,150.1 201.9,152.0 201.7,154.5 201.3,157.1 200.8,159.6 200.1,162.0 199.1,164.3 197.9,166.5 196.4,168.5 194.7,170.3 192.8,172.0 190.8,173.5 188.6,174.9 186.3,176.1 185.4,178.5 184.4,180.9 183.2,183.2 181.8,185.3 180.2,187.2 178.4,189.0 176.5,190.5 174.3,191.8 172.0,192.8 169.6,193.7 167.1,194.4 164.6,195.0 163.0,197.0 161.4,199.0 159.6,200.8 157.7,202.5 155.6,203.9 153.4,205.1 151.1,206.0 148.7,206.6 146.2,207.0 143.6,207.1 141.0,207.1 138.5,206.9 136.4,208.4 134.2,209.9 132.0,211.1 129.7,212.2 127.3,212.9 124.9,213.4 122.4,213.6 119.9,213.6 117.4,213.2 114.9,212.6 112.4,211.9 110.0,211.0 107.6,211.9 105.1,212.6 102.6,213.2 100.1,213.6 97.6,213.6 95.1,213.4 92.7,212.9 90.3,212.2 88.0,211.1 85.8,209.9 83.6,208.4 81.5,206.9 79.0,207.1 76.4,207.1 73.8,207.0 71.3,206.6 68.9,206.0 66.6,205.1 64.4,203.9 62.3,202.5 60.4,200.8 58.6,199.0 57.0,197.0 55.4,195.0 52.9,194.4 50.4,193.7 48.0,192.8 45.7,191.8 43.5,190.5 41.6,189.0 39.8,187.2 38.2,185.3 36.8,183.2 35.6,180.9 34.6,178.5 33.7,176.1 31.4,174.9 29.2,173.5 27.2,172.0 25.3,170.3 23.6,168.5 22.1,166.5 20.9,164.3 19.9,162.0 19.2,159.6 18.7,157.1 18.3,154.5 18.1,152.0 16.3,150.1 14.6,148.2 13.0,146.2 11.7,144.0 10.6,141.8 9.7,139.4 9.2,137.0 8.9,134.5 8.9,132.0 9.1,129.4 9.5,126.9 10.0,124.4 8.8,122.1 7.7,119.8 6.8,117.4 6.1,114.9 5.6,112.5 5.5,110.0 5.6,107.5 6.1,105.1 6.8,102.6 7.7,100.2 8.8,97.9 10.0,95.6 9.5,93.1 9.1,90.6 8.9,88.0 8.9,85.5 9.2,83.0 9.7,80.6 10.6,78.2 11.7,76.0 13.0,73.8 14.6,71.8 16.3,69.9 18.1,68.0 18.3,65.5 18.7,62.9 19.2,60.4 19.9,58.0 20.9,55.7 22.1,53.5 23.6,51.5 25.3,49.7 27.2,48.0 29.2,46.5 31.4,45.1 33.7,43.9 34.6,41.5 35.6,39.1 36.8,36.8 38.2,34.7 39.8,32.8 41.6,31.0 43.5,29.5 45.7,28.2 48.0,27.2 50.4,26.3 52.9,25.6 55.4,25.0 57.0,23.0 58.6,21.0 60.4,19.2 62.3,17.5 64.4,16.1 66.6,14.9 68.9,14.0 71.3,13.4 73.8,13.0 76.4,12.9 79.0,12.9 81.5,13.1 83.6,11.6 85.8,10.1 88.0,8.9 90.3,7.8 92.7,7.1 95.1,6.6 97.6,6.4 100.1,6.4 102.6,6.8 105.1,7.4 107.6,8.1 110.0,9.0 112.4,8.1 114.9,7.4 117.4,6.8 119.9,6.4 122.4,6.4 124.9,6.6 127.3,7.1 129.7,7.8 132.0,8.9 134.2,10.1 136.4,11.6 138.5,13.1 141.0,12.9 143.6,12.9 146.2,13.0 148.7,13.4 151.1,14.0 153.4,14.9 155.6,16.1 157.7,17.5 159.6,19.2 161.4,21.0 163.0,23.0 164.6,25.0 167.1,25.6 169.6,26.3 172.0,27.2 174.3,28.2 176.5,29.5 178.4,31.0 180.2,32.8 181.8,34.7 183.2,36.8 184.4,39.1 185.4,41.5 186.3,43.9 188.6,45.1 190.8,46.5 192.8,48.0 194.7,49.7 196.4,51.5 197.9,53.5 199.1,55.7 200.1,58.0 200.8,60.4 201.3,62.9 201.7,65.5 201.9,68.0 203.7,69.9 205.4,71.8 207.0,73.8 208.3,76.0 209.4,78.2 210.3,80.6 210.8,83.0 211.1,85.5 211.1,88.0 210.9,90.6 210.5,93.1 210.0,95.6 211.2,97.9 212.3,100.2 213.2,102.6 213.9,105.1 214.4,107.5"/></svg>
+      <span>Let's<br>Bloom</span>
+    </a>
+
+    <svg class="hero-ribbon" viewBox="0 761 2000 420" aria-hidden="true">
+      <defs><path id="ribbon-path" d="M-800 852 L-30 852 C356 852 644 1172 1030 1172 C1416 1172 1704 852 2090 852 L2900 852"/></defs>
+      <use href="#ribbon-path" class="ribbon-band"/>
+      <text class="ribbon-text" dy=".36em"><textPath id="ribbon-text" href="#ribbon-path" startOffset="0"></textPath></text>
+    </svg>
   </section>
 
-  <!-- 1. INTRO -->
-  <section class="value-prop">
-    <div class="wrap value-grid">
-      <div class="value-side">
-        <div class="collage-tile tile-pink photo" style="aspect-ratio:1; background-image:url('assets/img/intro-portrait.jpg');" data-parallax="0.1">
-          <div class="tile-label">Sarah Jess Evans</div>
-        </div>
-        <div class="collage-tile tile-orange" style="border-radius:16px;">
-          <div class="tile-label">NT</div>
+  <!-- INTRO -->
+  <section class="intro" id="about">
+    <p class="intro-eyebrow">You didn't start your business to stay small forever</p>
+    <h2 class="intro-title">We&rsquo;re a coaching <em>community</em> built<br>for women growing online<br>businesses. Where strategy<br>meets support, and structure<br><em>doesn&rsquo;t</em> mean sacrificing softness</h2>
+    <p class="intro-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-inner">
+      <div class="about-photo">
+        <div class="about-badge" aria-hidden="true">
+          <svg viewBox="0 0 220 220">
+            <polygon class="badge-fill" points="213.0,110.0 214.2,112.7 215.2,115.5 215.9,118.3 216.2,121.2 216.1,124.0 215.5,126.7 214.5,129.4 213.0,131.9 211.4,134.3 209.5,136.7 207.6,138.9 205.7,141.1 204.0,143.3 202.6,145.5 201.5,147.9 200.6,150.3 200.0,152.9 199.7,155.7 199.4,158.6 199.2,161.5 198.9,164.5 198.4,167.4 197.6,170.2 196.4,172.8 194.9,175.1 193.0,177.2 190.8,179.0 188.3,180.5 185.6,181.8 182.8,182.8 180.0,183.8 177.3,184.8 174.8,185.9 172.4,187.1 170.3,188.5 168.3,190.3 166.5,192.2 164.8,194.4 163.2,196.8 161.5,199.2 159.7,201.6 157.8,203.9 155.7,205.9 153.4,207.6 150.9,208.9 148.3,209.7 145.5,210.1 142.6,210.2 139.6,209.9 136.7,209.5 133.8,209.0 130.9,208.4 128.2,208.1 125.5,208.0 122.9,208.2 120.4,208.7 117.8,209.5 115.3,210.5 112.7,211.7 110.0,213.0 107.3,214.2 104.5,215.2 101.7,215.9 98.8,216.2 96.0,216.1 93.3,215.5 90.6,214.5 88.1,213.0 85.7,211.4 83.3,209.5 81.1,207.6 78.9,205.7 76.7,204.0 74.5,202.6 72.1,201.5 69.7,200.6 67.1,200.0 64.3,199.7 61.4,199.4 58.5,199.2 55.5,198.9 52.6,198.4 49.8,197.6 47.2,196.4 44.9,194.9 42.8,193.0 41.0,190.8 39.5,188.3 38.2,185.6 37.2,182.8 36.2,180.0 35.2,177.3 34.1,174.8 32.9,172.4 31.5,170.3 29.7,168.3 27.8,166.5 25.6,164.8 23.2,163.2 20.8,161.5 18.4,159.7 16.1,157.8 14.1,155.7 12.4,153.4 11.1,150.9 10.3,148.3 9.9,145.5 9.8,142.6 10.1,139.6 10.5,136.7 11.0,133.8 11.6,130.9 11.9,128.2 12.0,125.5 11.8,122.9 11.3,120.4 10.5,117.8 9.5,115.3 8.3,112.7 7.0,110.0 5.8,107.3 4.8,104.5 4.1,101.7 3.8,98.8 3.9,96.0 4.5,93.3 5.5,90.6 7.0,88.1 8.6,85.7 10.5,83.3 12.4,81.1 14.3,78.9 16.0,76.7 17.4,74.5 18.5,72.1 19.4,69.7 20.0,67.1 20.3,64.3 20.6,61.4 20.8,58.5 21.1,55.5 21.6,52.6 22.4,49.8 23.6,47.2 25.1,44.9 27.0,42.8 29.2,41.0 31.7,39.5 34.4,38.2 37.2,37.2 40.0,36.2 42.7,35.2 45.2,34.1 47.6,32.9 49.7,31.5 51.7,29.7 53.5,27.8 55.2,25.6 56.8,23.2 58.5,20.8 60.3,18.4 62.2,16.1 64.3,14.1 66.6,12.4 69.1,11.1 71.7,10.3 74.5,9.9 77.4,9.8 80.4,10.1 83.3,10.5 86.2,11.0 89.1,11.6 91.8,11.9 94.5,12.0 97.1,11.8 99.6,11.3 102.2,10.5 104.7,9.5 107.3,8.3 110.0,7.0 112.7,5.8 115.5,4.8 118.3,4.1 121.2,3.8 124.0,3.9 126.7,4.5 129.4,5.5 131.9,7.0 134.3,8.6 136.7,10.5 138.9,12.4 141.1,14.3 143.3,16.0 145.5,17.4 147.9,18.5 150.3,19.4 152.9,20.0 155.7,20.3 158.6,20.6 161.5,20.8 164.5,21.1 167.4,21.6 170.2,22.4 172.8,23.6 175.1,25.1 177.2,27.0 179.0,29.2 180.5,31.7 181.8,34.4 182.8,37.2 183.8,40.0 184.8,42.7 185.9,45.2 187.1,47.6 188.5,49.7 190.3,51.7 192.2,53.5 194.4,55.2 196.8,56.8 199.2,58.5 201.6,60.3 203.9,62.2 205.9,64.3 207.6,66.6 208.9,69.1 209.7,71.7 210.1,74.5 210.2,77.4 209.9,80.4 209.5,83.3 209.0,86.2 208.4,89.1 208.1,91.8 208.0,94.5 208.2,97.1 208.7,99.6 209.5,102.2 210.5,104.7 211.7,107.3"/>
+            <polygon class="badge-line" points="201.0,110.0 201.9,112.4 202.6,114.9 203.1,117.3 203.3,119.8 203.2,122.3 202.7,124.7 201.9,127.0 200.7,129.3 199.4,131.5 197.9,133.6 196.4,135.6 194.9,137.6 193.5,139.6 192.3,141.6 191.3,143.7 190.5,145.9 189.9,148.1 189.5,150.5 189.2,153.0 188.8,155.5 188.4,158.0 187.8,160.5 187.0,162.9 185.9,165.2 184.6,167.2 182.9,169.1 181.0,170.7 178.9,172.1 176.7,173.3 174.3,174.3 172.0,175.3 169.7,176.3 167.5,177.4 165.5,178.5 163.6,179.8 161.8,181.3 160.2,183.0 158.6,184.8 157.1,186.8 155.5,188.8 153.9,190.8 152.1,192.7 150.2,194.3 148.2,195.7 146.0,196.8 143.6,197.6 141.2,198.1 138.7,198.2 136.1,198.1 133.6,197.9 131.0,197.6 128.6,197.3 126.1,197.1 123.8,197.1 121.5,197.2 119.2,197.7 116.9,198.3 114.7,199.1 112.4,200.0 110.0,201.0 107.6,201.9 105.1,202.6 102.7,203.1 100.2,203.3 97.7,203.2 95.3,202.7 93.0,201.9 90.7,200.7 88.5,199.4 86.4,197.9 84.4,196.4 82.4,194.9 80.4,193.5 78.4,192.3 76.3,191.3 74.1,190.5 71.9,189.9 69.5,189.5 67.0,189.2 64.5,188.8 62.0,188.4 59.5,187.8 57.1,187.0 54.8,185.9 52.8,184.6 50.9,182.9 49.3,181.0 47.9,178.9 46.7,176.7 45.7,174.3 44.7,172.0 43.7,169.7 42.6,167.5 41.5,165.5 40.2,163.6 38.7,161.8 37.0,160.2 35.2,158.6 33.2,157.1 31.2,155.5 29.2,153.9 27.3,152.1 25.7,150.2 24.3,148.2 23.2,146.0 22.4,143.6 21.9,141.2 21.8,138.7 21.9,136.1 22.1,133.6 22.4,131.0 22.7,128.6 22.9,126.1 22.9,123.8 22.8,121.5 22.3,119.2 21.7,116.9 20.9,114.7 20.0,112.4 19.0,110.0 18.1,107.6 17.4,105.1 16.9,102.7 16.7,100.2 16.8,97.7 17.3,95.3 18.1,93.0 19.3,90.7 20.6,88.5 22.1,86.4 23.6,84.4 25.1,82.4 26.5,80.4 27.7,78.4 28.7,76.3 29.5,74.1 30.1,71.9 30.5,69.5 30.8,67.0 31.2,64.5 31.6,62.0 32.2,59.5 33.0,57.1 34.1,54.8 35.4,52.8 37.1,50.9 39.0,49.3 41.1,47.9 43.3,46.7 45.7,45.7 48.0,44.7 50.3,43.7 52.5,42.6 54.5,41.5 56.4,40.2 58.2,38.7 59.8,37.0 61.4,35.2 62.9,33.2 64.5,31.2 66.1,29.2 67.9,27.3 69.8,25.7 71.8,24.3 74.0,23.2 76.4,22.4 78.8,21.9 81.3,21.8 83.9,21.9 86.4,22.1 89.0,22.4 91.4,22.7 93.9,22.9 96.2,22.9 98.5,22.8 100.8,22.3 103.1,21.7 105.3,20.9 107.6,20.0 110.0,19.0 112.4,18.1 114.9,17.4 117.3,16.9 119.8,16.7 122.3,16.8 124.7,17.3 127.0,18.1 129.3,19.3 131.5,20.6 133.6,22.1 135.6,23.6 137.6,25.1 139.6,26.5 141.6,27.7 143.7,28.7 145.9,29.5 148.1,30.1 150.5,30.5 153.0,30.8 155.5,31.2 158.0,31.6 160.5,32.2 162.9,33.0 165.2,34.1 167.2,35.4 169.1,37.1 170.7,39.0 172.1,41.1 173.3,43.3 174.3,45.7 175.3,48.0 176.3,50.3 177.4,52.5 178.5,54.5 179.8,56.4 181.3,58.2 183.0,59.8 184.8,61.4 186.8,62.9 188.8,64.5 190.8,66.1 192.7,67.9 194.3,69.8 195.7,71.8 196.8,74.0 197.6,76.4 198.1,78.8 198.2,81.3 198.1,83.9 197.9,86.4 197.6,89.0 197.3,91.4 197.1,93.9 197.1,96.2 197.2,98.5 197.7,100.8 198.3,103.1 199.1,105.3 200.0,107.6"/>
+            <text x="110" y="153" text-anchor="middle" transform="rotate(-9 110 110)">B</text>
+          </svg>
         </div>
       </div>
 
-      <div class="value-copy">
-        <p class="eyebrow">Brand Designer for Creative Businesses</p>
-        <h2>Where strategy meets support, and structure <span class="accent">doesn't</span> mean sacrificing style.</h2>
-        <p class="mono-line">Helping entrepreneurs launch strategic brands and custom websites.</p>
-        <p class="body-text">Design is meant to visually communicate the value and quality of what your small business provides. As the designer behind Emily Rojas Creative, I'm committed to ensuring every design we create together is aligned with your mission and message. My designs are creative and colorful, allowing your unique personality to shine through your branded visuals. Let's create designs that influence and impact.</p>
-        <a href="contact.html" class="btn btn-orange">Start Your Project</a>
-      </div>
-
-      <div class="value-side right">
-        <div class="collage-tile tile-cream photo" style="aspect-ratio:3/4; background-image:url('assets/img/intro-editorial.jpg');">
-          <div class="tile-label">The Friendship Deck</div>
-        </div>
-        <div class="collage-tile tile-burgundy" style="border-radius:14px; width:100%;">
-          <div>
-            <div class="tile-label">Cait Bielefeldt</div>
-            <div class="tile-sub">Minneapolis &middot; Minnesota</div>
-          </div>
+      <div class="about-copy">
+        <h2 class="about-title">Hey, I&rsquo;m <em>Lily!</em></h2>
+        <p class="about-sub">Consider me your new business<br>bestie and biggest hype girl.</p>
+        <p class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div class="about-actions">
+          <a href="about.html" class="pill"><span>Learn about me</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+          <a href="services.html" class="pill"><span>See what I offer</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2. ABOUT (sticky photo column) -->
-  <section class="about-teaser">
-    <div class="wrap about-teaser-grid">
-      <div>
-        <h2>Meet The Designer</h2>
-        <p class="lede">I'm Emily, a brand &amp; web designer specializing in brand design &amp; websites for small businesses.</p>
-
-        <span class="label" style="font-family:var(--font-mono); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:0.85rem; color:var(--ink); display:block; margin-bottom:16px;">My Approach To Design</span>
-        <ul class="approach-list">
-          <li>Creative brands packed with purpose and personality to truly feel like "you"</li>
-          <li>Custom, conversion-focused websites (no templates here)</li>
-          <li>Streamlined, friendly process that makes the experience feel easy</li>
-          <li>Customized, colorful designs that attract your ideal client</li>
-          <li>Clear timelines, great communication, no guesswork</li>
-        </ul>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="about.html" class="btn btn-outline">Learn About Me</a>
-          <a href="portfolio.html" class="btn btn-pink">See What I Offer</a>
-        </div>
-      </div>
-      <div style="position:relative;">
-        <div class="sticker-badge" style="position:absolute; top:-30px; left:-30px; z-index:2; background:var(--lavender);">ER</div>
-        <div class="photo-blob sticky-media"><span>ER</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. DOES THIS SOUND LIKE YOU -->
-  <section class="pain-points">
-    <div class="wrap">
-      <h2 class="section-title center">Does this sound like <span class="accent">you?</span></h2>
-
-      <div class="pain-grid">
-        <div class="pain-card">
-          <span class="arrow-chip"></span>
-          <h3>You feel<span class="accent">stuck</span></h3>
-          <p>Your branding looks fine, but it doesn't feel like you — and you can't put your finger on why.</p>
-        </div>
-        <div class="pain-card">
-          <span class="arrow-chip"></span>
-          <h3>You want<span class="accent">it to fit</span></h3>
-          <p>Your website is a template stretched to fit, not built around how your business actually works.</p>
-        </div>
-        <div class="pain-card">
-          <span class="arrow-chip"></span>
-          <h3>You crave<span class="accent">clarity</span></h3>
-          <p>You're proud of your work, but your visuals aren't telling that story yet.</p>
-        </div>
-      </div>
-
-      <p class="pain-close center">Let's close that gap.</p>
-      <div class="center">
-        <a href="contact.html" class="btn btn-orange">Start Your Project</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- RECENT WORK (kept as proof, right after the pitch) -->
-  <section class="work">
-    <div class="wrap">
-      <p class="eyebrow center">Selected Projects</p>
-      <h2 class="display-heading center" style="text-align:center;">Recent Work</h2>
-
-      <div class="work-grid">
-        <a href="portfolio.html" class="work-tile wt-1">
-          <span class="tile-name">Genevieve Vaughn</span>
+  <!-- DOES THIS SOUND LIKE YOU -->
+  <section class="feel">
+    <h2 class="feel-title">Does this<br>sound like <em>you?</em></h2>
+    <div class="feel-grid">
+        <a href="services.html" class="feel-card">
+          <i class="pill-icon pill-orange card-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+          <h3 class="feel-card-title">You crave<br><em>freedom</em></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </a>
-        <a href="portfolio.html" class="work-tile wt-2">
-          <span class="tile-name">Playful Threads</span>
+        <a href="services.html" class="feel-card">
+          <i class="pill-icon pill-orange card-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+          <h3 class="feel-card-title">You want<br><em>$10k months</em></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </a>
-        <a href="portfolio.html" class="work-tile wt-3">
-          <span class="tile-name">Honey House</span>
+        <a href="services.html" class="feel-card">
+          <i class="pill-icon pill-orange card-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+          <h3 class="feel-card-title">You feel<br><em>burnt out</em></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         </a>
-      </div>
+    </div>
 
-      <div class="work-grid" style="margin-top:-10px; grid-template-columns: repeat(3, 1fr);">
-        <p class="work-caption">01 Genevieve Vaughn Floral Artistry</p>
-        <p class="work-caption">02 Playful Threads</p>
-        <p class="work-caption">03 Honey House Art Studio</p>
-      </div>
+    <div class="feel-cta">
+      <h2 class="feel-cta-title">Stop <em>overthinking</em> your next move<br>and start building the business<br>you know you&rsquo;re capable of</h2>
+      <a href="contact.html" class="btn-learn">Learn more</a>
     </div>
   </section>
 
-  <!-- 4-6. SERVICES: stacked sticky cards -->
-  <div class="panel-stack" id="services">
-    <section class="stack-panel">
-      <div class="stack-panel-head">
-        <h2>Brand <span class="accent">Design</span></h2>
-        <span class="arrow-chip"></span>
+  <!-- COACHING OFFERS (stacked cards) -->
+  <section class="coaching">
+    <a href="services.html" class="coach-card coach-card--individual" style="--i:0">
+      <h2 class="coach-title">Individual <em>Coaching</em></h2>
+      <i class="pill-icon pill-orange coach-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+      <div class="coach-photo coach-photo--individual" role="img" aria-label="Close-up portrait with daisies"></div>
+      <div class="coach-copy">
+        <p class="coach-sub">Grow your business without<br>losing yourself in the process.</p>
+        <p class="coach-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-      <div class="stack-panel-body">
-        <div class="collage-tile tile-cream photo" style="background-image:url('assets/img/service-brand.jpg');"></div>
-        <div>
-          <h3>Grow your business without losing yourself in the process.</h3>
-          <p>Your brand design needs to position you as an expert and tell a memorable story to win your client's trust. We'll collaborate to create timeless brand elements to rebrand or refresh your business.</p>
-        </div>
+    </a>
+    <a href="services.html" class="coach-card coach-card--group" style="--i:1">
+      <h2 class="coach-title">Group <em>Coaching</em></h2>
+      <i class="pill-icon pill-butter coach-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+      <div class="coach-photo coach-photo--group" role="img" aria-label="Woman in a yellow sweater holding a coffee cup"></div>
+      <div class="coach-copy">
+        <p class="coach-sub">Grow your business without<br>losing yourself in the process.</p>
+        <p class="coach-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-    </section>
+    </a>
+    <a href="services.html" class="coach-card coach-card--intensive" style="--i:2">
+      <h2 class="coach-title">3 Month <em>Intensive</em></h2>
+      <i class="pill-icon pill-lavender coach-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
+      <div class="coach-photo coach-photo--intensive" role="img" aria-label="Placeholder photo"></div>
+      <div class="coach-copy">
+        <p class="coach-sub">Grow your business without<br>losing yourself in the process.</p>
+        <p class="coach-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </a>
+  </section>
 
-    <section class="stack-panel">
-      <div class="stack-panel-head">
-        <h2>Website <span class="accent">Design</span></h2>
-        <span class="arrow-chip"></span>
-      </div>
-      <div class="stack-panel-body">
-        <div class="collage-tile tile-pink photo" style="background-image:url('assets/img/service-website.jpg');"></div>
-        <div>
-          <h3>Grow your business without losing yourself in the process.</h3>
-          <p>You want a website design that makes as much of an impact as your branding does. I design websites exclusively on the Showit platform, perfect for creative businesses and entrepreneurs.</p>
-        </div>
-      </div>
-    </section>
+  <!-- WHY WE DO THIS -->
+  <section class="why">
+    <p class="intro-eyebrow">Why we do this</p>
+    <h2 class="why-title">Building a business <em>doesn&rsquo;t</em><br>have to be <em>overwhelming</em></h2>
 
-    <section class="stack-panel">
-      <div class="stack-panel-head">
-        <h2>Graphic <span class="accent">Design</span></h2>
-        <span class="arrow-chip"></span>
+    <div class="why-grid">
+      <div class="why-photo" role="img" aria-label="Portrait of a woman with curly hair resting her cheek on her hand"></div>
+      <div class="why-copy">
+        <p class="why-sub">Bloom exists to help ambitious<br>entrepreneurs build businesses<br>that are profitable, purposeful,<br>and designed around the life they<br>actually want.</p>
+        <p class="why-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a href="about.html" class="btn-learn btn-orange">Learn more</a>
       </div>
-      <div class="stack-panel-body">
-        <div class="collage-tile tile-burgundy photo" style="background-image:url('assets/img/service-graphic.jpg');"></div>
-        <div>
-          <h3>Grow your business without losing yourself in the process.</h3>
-          <p>With every launch or new stage of business growth, you'll need digital and print marketing materials. With quick turnaround and affordable price points, my collaborative process will be your perfect fit.</p>
-        </div>
+    </div>
+
+    <div class="tilt-band" aria-hidden="true">
+      <div class="tilt-track"><span>Build Your Dream Life &#10033; Let&rsquo;s Make It Bloom &#10033; Grow Your Business &#10033; Build Your Dream Life &#10033; Let&rsquo;s Make It Bloom &#10033; Grow Your Business &#10033; </span><span>Build Your Dream Life &#10033; Let&rsquo;s Make It Bloom &#10033; Grow Your Business &#10033; Build Your Dream Life &#10033; Let&rsquo;s Make It Bloom &#10033; Grow Your Business &#10033; </span></div>
+    </div>
+  </section>
+
+  <div class="dark-block">
+  <!-- FREEBIE -->
+  <section class="freebie" id="freebie">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><polygon id="scallop" points="215.0,110.0 214.8,113.4 214.2,116.8 213.3,120.2 212.1,123.4 210.7,126.6 209.1,129.7 209.4,133.2 209.5,136.7 209.4,140.1 208.9,143.6 208.1,146.9 207.0,150.2 205.5,153.3 203.7,156.2 201.6,158.9 199.2,161.5 196.6,163.9 194.0,166.1 192.9,169.4 191.7,172.7 190.3,175.9 188.5,178.9 186.5,181.7 184.2,184.2 181.7,186.5 178.9,188.5 175.9,190.3 172.7,191.7 169.4,192.9 166.1,194.0 163.9,196.6 161.5,199.2 158.9,201.6 156.2,203.7 153.3,205.5 150.2,207.0 146.9,208.1 143.6,208.9 140.1,209.4 136.7,209.5 133.2,209.4 129.7,209.1 126.6,210.7 123.4,212.1 120.2,213.3 116.8,214.2 113.4,214.8 110.0,215.0 106.6,214.8 103.2,214.2 99.8,213.3 96.6,212.1 93.4,210.7 90.3,209.1 86.8,209.4 83.3,209.5 79.9,209.4 76.4,208.9 73.1,208.1 69.8,207.0 66.7,205.5 63.8,203.7 61.1,201.6 58.5,199.2 56.1,196.6 53.9,194.0 50.6,192.9 47.3,191.7 44.1,190.3 41.1,188.5 38.3,186.5 35.8,184.2 33.5,181.7 31.5,178.9 29.7,175.9 28.3,172.7 27.1,169.4 26.0,166.1 23.4,163.9 20.8,161.5 18.4,158.9 16.3,156.2 14.5,153.3 13.0,150.2 11.9,146.9 11.1,143.6 10.6,140.1 10.5,136.7 10.6,133.2 10.9,129.7 9.3,126.6 7.9,123.4 6.7,120.2 5.8,116.8 5.2,113.4 5.0,110.0 5.2,106.6 5.8,103.2 6.7,99.8 7.9,96.6 9.3,93.4 10.9,90.3 10.6,86.8 10.5,83.3 10.6,79.9 11.1,76.4 11.9,73.1 13.0,69.8 14.5,66.7 16.3,63.8 18.4,61.1 20.8,58.5 23.4,56.1 26.0,53.9 27.1,50.6 28.3,47.3 29.7,44.1 31.5,41.1 33.5,38.3 35.8,35.8 38.3,33.5 41.1,31.5 44.1,29.7 47.3,28.3 50.6,27.1 53.9,26.0 56.1,23.4 58.5,20.8 61.1,18.4 63.8,16.3 66.7,14.5 69.8,13.0 73.1,11.9 76.4,11.1 79.9,10.6 83.3,10.5 86.8,10.6 90.3,10.9 93.4,9.3 96.6,7.9 99.8,6.7 103.2,5.8 106.6,5.2 110.0,5.0 113.4,5.2 116.8,5.8 120.2,6.7 123.4,7.9 126.6,9.3 129.7,10.9 133.2,10.6 136.7,10.5 140.1,10.6 143.6,11.1 146.9,11.9 150.2,13.0 153.3,14.5 156.2,16.3 158.9,18.4 161.5,20.8 163.9,23.4 166.1,26.0 169.4,27.1 172.7,28.3 175.9,29.7 178.9,31.5 181.7,33.5 184.2,35.8 186.5,38.3 188.5,41.1 190.3,44.1 191.7,47.3 192.9,50.6 194.0,53.9 196.6,56.1 199.2,58.5 201.6,61.1 203.7,63.8 205.5,66.7 207.0,69.8 208.1,73.1 208.9,76.4 209.4,79.9 209.5,83.3 209.4,86.8 209.1,90.3 210.7,93.4 212.1,96.6 213.3,99.8 214.2,103.2 214.8,106.6"/></defs></svg>
+
+    <div class="freebie-card">
+      <div class="freebie-books">
+      <div class="book book-back" aria-hidden="true">
+        <div class="book-badge"><svg viewBox="0 0 220 220"><use href="#scallop"/></svg><span>Freebie<br>Download</span></div>
+        <p class="book-title">How to Bloom Again</p>
+        <p class="book-sub"><span>A step by step guide of</span><br><span>taking back your life</span></p>
+      </div>
+      <div class="book book-front" aria-hidden="true">
+        <div class="book-badge"><svg viewBox="0 0 220 220"><use href="#scallop"/></svg><span>Freebie<br>Download</span></div>
+        <p class="book-title">How to Bloom Again</p>
+        <p class="book-sub"><span>A step by step guide of</span><br><span>taking back your life</span></p>
+      </div>
+      </div>
+
+      <h2 class="freebie-title">Get <em>the</em> Freebie</h2>
+      <p class="freebie-text">Lorem ipsum dolor sit amet, consectetur adipiscing<br>elit, sed do eiusmod tempor incididunt ut labore et<br>dolore magna aliqua. Ut enim ad minim veniam.</p>
+
+      <form class="freebie-form" action="#" onsubmit="return false">
+        <input type="text" name="first" placeholder="First Name" aria-label="First Name" class="f-first">
+        <input type="text" name="last" placeholder="Last Name" aria-label="Last Name" class="f-last">
+        <input type="email" name="email" placeholder="Email Address" aria-label="Email Address" class="f-email">
+        <button type="submit" class="f-submit">Sign Up</button>
+      </form>
+    </div>
+  </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testi" id="testimonials">
+      <div class="testi-photo" aria-hidden="true"></div>
+      <p class="testi-label testi-label--left">Testimonials</p>
+      <p class="testi-label testi-label--right">Testimonials</p>
+
+      <article class="t-slide is-active">
+        <div class="t-avatar" role="img" aria-label="Client photo"></div>
+        <svg class="t-stars" viewBox="0 0 140 24" role="img" aria-label="5 out of 5 stars"><path transform="translate(0 0)" d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.6l-6.4 3.6 1.4-7.2-5.3-5 7.2-.9z"/><path transform="translate(28 0)" d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.6l-6.4 3.6 1.4-7.2-5.3-5 7.2-.9z"/><path transform="translate(56 0)" d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.6l-6.4 3.6 1.4-7.2-5.3-5 7.2-.9z"/><path transform="translate(84 0)" d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.6l-6.4 3.6 1.4-7.2-5.3-5 7.2-.9z"/><path transform="translate(112 0)" d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 17.6l-6.4 3.6 1.4-7.2-5.3-5 7.2-.9z"/></svg>
+        <blockquote class="t-quote">&rdquo;She has given me the<br>most <em>invaluable</em> experience<br>and growth&rdquo;</blockquote>
+        <p class="t-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="t-name">-Client Name</p>
+      </article>
+
+      <div class="t-arrows">
+        <button type="button" class="pill-icon pill-orange t-prev" aria-label="Previous testimonial"><svg viewBox="0 0 36 16" aria-hidden="true"><path d="M35 8H2M8.5 1.5 2 8l6.5 6.5"/></svg></button>
+        <button type="button" class="pill-icon pill-orange t-next" aria-label="Next testimonial"><svg viewBox="0 0 36 16" aria-hidden="true"><path d="M1 8h33M27.5 1.5 34 8l-6.5 6.5"/></svg></button>
       </div>
     </section>
   </div>
 
-  <!-- 7. MISSION STATEMENT -->
-  <section class="mission">
-    <div class="wrap mission-grid">
-      <div class="collage-tile photo" style="aspect-ratio:4/5; width:100%; box-shadow:none; background-image:url('assets/img/mission.jpg');"></div>
-      <div>
-        <p class="eyebrow">Why I Do This</p>
-        <h2>Building a brand <span class="accent">doesn't</span> have to be overwhelming</h2>
-        <p>I believe good design has the power to completely transform a small business — how it's perceived, how it's remembered, how it grows. My studio is built around fast turnaround times, clear communication and budget-conscious pricing, so quality design feels accessible, not out of reach.</p>
-        <a href="about.html" class="btn btn-outline">Learn More About Me</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. MARQUEE (scroll-linked diagonal ribbon) -->
-  <section class="marquee-section">
-    <div class="marquee-ribbon">
-      <div class="marquee-track">
-        <span>Brand Design</span><span>✷</span><span>Website Design</span><span>✷</span><span>Freelance Graphic Design</span><span>✷</span>
-        <span>Brand Design</span><span>✷</span><span>Website Design</span><span>✷</span><span>Freelance Graphic Design</span><span>✷</span>
-        <span>Brand Design</span><span>✷</span><span>Website Design</span><span>✷</span><span>Freelance Graphic Design</span><span>✷</span>
-        <span>Brand Design</span><span>✷</span><span>Website Design</span><span>✷</span><span>Freelance Graphic Design</span><span>✷</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. EMAIL OPT-IN / FREEBIE -->
-  <section class="email-opt-in">
-    <div class="wrap opt-in-grid">
-      <div class="freebie-stack">
-        <div class="freebie-card"></div>
-        <div class="freebie-card"></div>
-      </div>
-      <div class="opt-in-card">
-        <p class="eyebrow">Get The Freebie</p>
-        <h2>Design tips, studio news &amp; the occasional <span class="accent">freebie</span></h2>
-        <p>A short, no-fluff guide to spotting whether your brand is actually working for you — straight to your inbox.</p>
-        <!--
-          Static form markup only — wire `action` up to a form/email
-          service (e.g. Mailchimp, Flodesk, Formspree) to actually subscribe.
-        -->
-        <form class="signup-form" action="#" method="POST">
-          <input type="text" name="first_name" placeholder="First Name" required>
-          <input type="text" name="last_name" placeholder="Last Name" required>
-          <input type="email" name="email" placeholder="Email Address" required aria-label="Email address">
-          <button type="submit" class="btn btn-orange">Sign Up</button>
-        </form>
-        <p class="contact-note">No spam, just good design — unsubscribe anytime.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 10. FEATURED IN / INDUSTRIES -->
-  <section class="perfect-for">
-    <div class="wrap">
-      <div class="industries-collage">
-        <div class="ic-tile">Photography</div>
-        <div class="ic-tile">Jewelry</div>
-        <div class="ic-tile">Wellness</div>
-        <div class="ic-tile">Retail</div>
-      </div>
-
-      <h2 class="section-title center">Industries I've Worked With</h2>
-      <p class="tag-list">Photographers / Jewelry Makers / Hair &amp; Makeup Artists / Interior Designers / Bookshops / Consultants / Travel Agents / Daycare Centers / Optometrists / Bakeries / Candle Makers / Retailers / Therapists / Quilters / Designers / Coffee Shops / Real Estate / Construction / And More</p>
-      <div class="center">
-        <a href="portfolio.html" class="btn btn-orange">View The Creative</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11. TESTIMONIALS: split panel + arrow nav -->
-  <section class="testimonial">
-    <div class="testimonial-split">
-      <div class="testimonial-copy">
-        <p class="eyebrow">Testimonials</p>
-        <div class="testimonial-carousel">
-          <div class="testimonial-slide active">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="quote-text">She gave me the most <span class="accent">invaluable</span> confidence in my own brand</p>
-            <p class="quote-attr">— Al, Minneapolis</p>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="quote-text">Working with Emily felt like she reached into my brain and pulled out exactly what I <span class="accent">couldn't</span> put into words</p>
-            <p class="quote-attr">— Genevieve Vaughn, Floral Artistry</p>
-          </div>
-          <div class="testimonial-slide">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="quote-text">Smooth, colorful and so <span class="accent">completely</span> "us" — I get compliments on my site constantly</p>
-            <p class="quote-attr">— Maebel, Handcrafted Jewelry</p>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-photo">
-        <div class="collage-tile tile-burgundy photo" style="background-image:url('assets/img/testimonial.jpg');"></div>
-        <div class="carousel-arrows">
-          <button class="carousel-arrow prev" aria-label="Previous testimonial">←</button>
-          <button class="carousel-arrow next" aria-label="Next testimonial">→</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 12. CTA -->
-  <section class="get-in-touch">
-    <div class="wrap">
-      <div class="git-grid">
-        <div class="photo-blob"><span>ER</span></div>
-        <div>
-          <p class="eyebrow" style="color:var(--pink);">Let's Make It Happen</p>
-          <h2 class="display-heading">I'm ready whenever <span class="accent" style="color:inherit;">you</span> are!</h2>
-          <p class="lede">Ready to get started on your brand design? Have questions about which package would be the right fit for you? Send me a note! I can't wait to hear from you!</p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a href="contact.html" class="btn btn-pink">Reach Out</a>
-            <a href="portfolio.html" class="btn btn-outline">See Services</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="strip-row">
-        <div class="work-tile wt-1" style="aspect-ratio:1;"><span class="tile-name" style="font-size:1rem;">Maebel</span></div>
-        <div class="work-tile wt-2" style="aspect-ratio:1;"><span class="tile-name" style="font-size:1rem;">M-Power</span></div>
-        <div class="work-tile wt-3" style="aspect-ratio:1;"><span class="tile-name" style="font-size:1rem;">Colette R.</span></div>
-        <div class="work-tile wt-1" style="aspect-ratio:1;"><span class="tile-name" style="font-size:1rem;">Pattern Co.</span></div>
-      </div>
+  <!-- FINAL CTA -->
+  <section class="cta">
+    <p class="cta-eyebrow">Let's make it bloom</p>
+    <h2 class="cta-title">I&rsquo;m ready<br>whenever <em>you</em> are!</h2>
+    <p class="cta-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <div class="cta-actions">
+      <a href="contact.html" class="pill"><span>Reach out</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+      <a href="services.html" class="pill"><span>See services</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
     </div>
   </section>
 
 </main>
 
-<footer class="site-footer">
-  <div class="footer-top">
-    <div class="wrap">
-      <nav class="footer-nav">
-        <a href="contact.html">Contact</a>
-        <a href="about.html">About</a>
-        <a href="portfolio.html">Portfolio</a>
+  <footer class="site-footer">
+    <div class="foot-top">
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="index.html" style="--x:170">Home</a>
+        <a href="about.html" style="--x:277">About</a>
+        <a href="services.html" style="--x:403">Services</a>
+        <a href="sales.html" style="--x:562">Sales Page</a>
+        <a href="contact.html" style="--x:741">Contact</a>
       </nav>
-      <p class="footer-desc">Emily Rojas Creative is a design studio specializing in brand design, Showit websites, and freelance graphic design services.</p>
-      <div style="display:flex; gap:12px; justify-content:center; margin-top:26px; flex-wrap:wrap;">
-        <a href="mailto:hello@emilyrojascreative.com" class="btn btn-pink">hello@emilyrojascreative.com</a>
-        <a href="#" class="btn btn-outline">Instagram</a>
+      <div class="foot-social"><a href="#" aria-label="Instagram"><svg viewBox="0 0 28 28"><rect width="28" height="28" rx="8"/><circle cx="14" cy="14" r="6" fill="none" stroke="var(--lavender)" stroke-width="2.2"/><circle cx="21" cy="7" r="1.6" fill="var(--lavender)"/></svg></a><a href="#" aria-label="TikTok"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="14"/><path d="M15.2 7v9.6a3 3 0 1 1-3-3M15.2 7c.4 2.400 1.900 3.800 4.200 4" fill="none" stroke="var(--lavender)" stroke-width="2.2" stroke-linecap="round"/></svg></a><a href="#" aria-label="Pinterest"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="14"/><text x="14" y="20.500" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="var(--lavender)">P</text></svg></a></div>
+    </div>
+
+    <div class="foot-mid">
+      <p class="foot-tag">We&rsquo;re a coaching<br><em>community</em> built for women<br>growing online<br>businesses.</p>
+      <div class="foot-links">
+        <a href="mailto:hello@bloomcoaching.com" class="pill"><span>hello@bloomcoaching.com</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="#" class="pill"><span>Instagram @bloomcoaching</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
       </div>
     </div>
-  </div>
 
-  <div class="footer-wordmark">Emily Rojas Creative</div>
-
-  <div class="footer-bottom">
-    <p>&copy; Emily Rojas Creative LLC <span id="year"></span> &middot; <a href="#">Privacy</a></p>
-    <p>Photos by local creative partners</p>
-  </div>
-</footer>
+    <a href="index.html" class="foot-mark">Bloom Coaching</a>
+    <p class="foot-credit">Site credit</p>
+  </footer>
 
 <script src="assets/js/main.js"></script>
 </body>
