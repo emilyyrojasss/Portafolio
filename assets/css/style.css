@@ -1968,6 +1968,62 @@ a { color: inherit; text-decoration: none; }
 }
 .sv-hero-btn .pill-icon { width: calc(var(--u) * 56); height: calc(var(--u) * 56); }
 
+/* straight ribbon with the tools I create with: logos + names scroll sideways, near the bottom of the hero */
+.tool-ribbon {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--u) * 52);
+  display: flex;
+  overflow: hidden;
+  height: calc(var(--u) * 68);
+  background: var(--lime);
+  color: var(--ocean);
+  box-shadow: 0 calc(var(--u) * 8) calc(var(--u) * 24) rgba(60, 60, 20, 0.22);
+}
+.tool-track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: calc(var(--u) * 34);
+  margin: 0;
+  padding: 0 calc(var(--u) * 17);
+  list-style: none;
+  animation: tool-scroll 38s linear infinite;
+}
+.tool { display: flex; align-items: center; gap: calc(var(--u) * 12); white-space: nowrap; }
+/* logos are painted with the text colour (mask), so they always match it */
+.tool-logo {
+  display: block;
+  width: calc(var(--u) * 30);
+  height: calc(var(--u) * 30);
+  background: currentColor;
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}
+.tool-logo--adobeillustrator { --logo: url("../img/tools/adobeillustrator.svg"); }
+.tool-logo--adobephotoshop { --logo: url("../img/tools/adobephotoshop.svg"); }
+.tool-logo--canva { --logo: url("../img/tools/canva.svg"); }
+.tool-logo--figma { --logo: url("../img/tools/figma.svg"); }
+.tool-logo--github { --logo: url("../img/tools/github.svg"); }
+.tool-logo--visualstudiocode { --logo: url("../img/tools/visualstudiocode.svg"); }
+.tool-logo--magnific { --logo: url("../img/tools/magnific.svg"); }
+/* CapCut's logo already includes its name, so it is wide and has no text label */
+.tool-logo--capcut { --logo: url("../img/tools/capcut.png"); width: calc(var(--u) * 30 * 5.27); }
+.tool-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.tool span {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: calc(var(--u) * 24);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tool-dot { font-size: calc(var(--u) * 24); font-weight: 700; opacity: 0.55; }
+@keyframes tool-scroll { to { transform: translateX(-100%); } }
+.tool-ribbon:hover .tool-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .tool-track { animation: none; } .tool-track[aria-hidden] { display: none; } }
+
 /* ---------- Services page: intro ---------- */
 
 .sv-intro {
@@ -2993,6 +3049,11 @@ a { color: inherit; text-decoration: none; }
   .faq-item p { margin-top: 12px; font-size: 15px; line-height: 1.5; text-align: left; }
   .sv-hero { height: 640px; }
   .sv-hero-copy { gap: 28px; padding-bottom: 24px; }
+  .tool-ribbon { height: 50px; bottom: 30px; }
+  .tool-track { gap: 24px; padding: 0 12px; }
+  .tool-logo { width: 22px; height: 22px; }
+  .tool-logo--capcut { width: 116px; }
+  .tool span, .tool-dot { font-size: 15px; }
   .sv-hero-btn { height: 60px; gap: 16px; padding: 0 9px 0 24px; font-size: 13px; }
   .sv-hero-btn .pill-icon { width: 42px; height: 42px; }
   .sv-title { top: 200px; font-size: 15vw; line-height: 0.85; }
@@ -3293,6 +3354,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 }
 .pj.is-list .pj-photo { display: none; }
 .pj-cover--yellowmaps { background-image: url("../img/yellowmaps/logo yellowmaps.png"); background-position: 50% 50%; }
+.pj-cover--ceipa { background-image: url("../img/ceipa/portada.jpg"); background-position: 50% 50%; }
 .pj-cover--costarica { background-image: url("../img/costa rica/6695d2b3-8d9d-4938-b66b-b53845c71db7.jpg"); background-position: 50% 48%; }
 .pj-cover--newyork { background-image: url("../img/new york/77964F49-C555-4FBE-85BA-6E4B788050EB_1_105_c.jpeg"); background-position: 50% 50%; }
 .pj-close {
@@ -3473,6 +3535,27 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 .pj-slot:has(img) span { display: none; }
 .pj-slot--hero { aspect-ratio: 2.3 / 1; margin-top: calc(var(--u) * 36); background: var(--tone); }
 
+/* "what is this project" paragraph: label on the left, text on the right */
+.pj-case-about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: calc(var(--u) * 60);
+  margin: calc(var(--u) * 64) 0 0;
+}
+.pj-case-about h3 {
+  margin: 0;
+  font-family: "Inter Tight", var(--font-sans);
+  font-size: calc(var(--u) * 42);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.pj-case-about p {
+  margin: 0;
+  color: #3d2b1f;
+  font-size: calc(var(--u) * 24);
+  line-height: 1.5;
+}
 .pj-case-cols {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3497,7 +3580,6 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 }
 .pj-case-cols p {
   margin: calc(var(--u) * 18) 0 0;
-  max-width: calc(var(--u) * 380);
   color: #3d2b1f;
   font-size: calc(var(--u) * 18);
   line-height: 1.5;
@@ -3566,6 +3648,9 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   .pj-case-meta dd { font-size: 16px; }
   .pj-slot { border-radius: 20px; font-size: 12px; }
   .pj-slot--hero { aspect-ratio: 4 / 3; margin-top: 22px; }
+  .pj-case-about { grid-template-columns: 1fr; gap: 14px; margin-top: 34px; }
+  .pj-case-about h3 { font-size: 30px; }
+  .pj-case-about p { font-size: 16px; }
   .pj-case-cols { grid-template-columns: 1fr; gap: 26px; margin: 34px 0; }
   .pj-case-cols section { padding-top: 16px; }
   .pj-case-cols h3 { font-size: 30px; }
