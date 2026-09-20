@@ -108,7 +108,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   background-color: #9b7d5a;
-  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/toucan.jpg");
+  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/tropical/toucan.jpg");
   background-size: 100% 100%, cover;
   background-repeat: no-repeat;
   background-position: 0 0, 50% 22%;
@@ -285,7 +285,7 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   height: calc(var(--u) * 651);
   background-color: #c9a27c;
-  background-image: url("../img/emily-rojas.jpg");
+  background-image: url("../img/me/emily-rojas.jpg");
   background-repeat: no-repeat;
   background-size: 120% auto; /* closer crop: the whole figure fits, less empty wall on top */
   background-position: 32% 85%;
@@ -494,6 +494,7 @@ a { color: inherit; text-decoration: none; }
   background-position: center;
 }
 .feel-card-photo--ux { background-color: var(--wave); }
+.feel-card-photo--yellowmaps { background-color: #131313; background-image: url("../img/yellowmaps/logo yellowmaps.png"); background-repeat: no-repeat; }
 .feel-card-photo--brand { background-color: var(--lime); }
 .feel-card-photo--photo { background-color: #e9a27f; }
 
@@ -636,11 +637,11 @@ a { color: inherit; text-decoration: none; }
   background-size: cover;
   background-position: center;
 }
-.coach-photo--individual { background-image: url("../img/cert-lci-ux-ui.png"); }
-.coach-photo--group { background-image: url("../img/cert-lci-project-management.png"); }
-.coach-photo--intensive { background-image: url("../img/cert-effie-bronce.jpg"); }
-.coach-photo--fourth { background-image: url("../img/cert-reto-gerencial-latam.jpg"); }
-.coach-photo--fifth { background-image: url("../img/effie-college-costa-rica.png"); }
+.coach-photo--individual { background-image: url("../img/certificados/cert-lci-ux-ui.png"); }
+.coach-photo--group { background-image: url("../img/certificados/cert-lci-project-management.png"); }
+.coach-photo--intensive { background-image: url("../img/certificados/cert-effie-bronce.jpg"); }
+.coach-photo--fourth { background-image: url("../img/certificados/cert-reto-gerencial-latam.jpg"); }
+.coach-photo--fifth { background-image: url("../img/certificados/effie-college-costa-rica.png"); }
 [data-zoom] { cursor: zoom-in; }
 [data-zoom]:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
 
@@ -743,7 +744,7 @@ a { color: inherit; text-decoration: none; }
 .why-photo {
   height: calc(var(--u) * 680);
   background-color: #d9e4ec;
-  background-image: url("../img/mesh-bags.jpg");
+  background-image: url("../img/tropical/mesh-bags.jpg");
   background-size: cover;
   background-position: 50% 20%;
   box-shadow: 0 calc(var(--u) * 8) calc(var(--u) * 40) rgba(150, 130, 50, 0.14);
@@ -812,7 +813,7 @@ a { color: inherit; text-decoration: none; }
 .dark-block {
   padding-bottom: calc(var(--u) * 80);
   background-color: #b39c84;
-  background-image: linear-gradient(rgba(34, 107, 107, 0.6), rgba(34, 107, 107, 0.6)), url("../img/beach-volcano.jpg");
+  background-image: linear-gradient(rgba(34, 107, 107, 0.6), rgba(34, 107, 107, 0.6)), url("../img/tropical/beach-volcano.jpg");
   background-size: cover;
   background-position: 50% 30%;
 }
@@ -974,14 +975,14 @@ a { color: inherit; text-decoration: none; }
   width: calc(var(--u) * 168);
   height: calc(var(--u) * 154);
   background-color: #2b6a68;
-  background-image: url("../img/ref-steve-jobs-2.jpg");
+  background-image: url("../img/referentes/ref-steve-jobs-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 18%;
 }
-.t-avatar--2 { background-image: url("../img/ref-dieter-rams-2.jpg"); background-position: 50% 30%; }
-.t-avatar--3 { background-image: url("../img/ref-susan-kare-2.jpg"); background-position: 50% 30%; }
-.t-avatar--4 { background-image: url("../img/ref-exodo-2.jpg"); background-position: 50% 50%; }
+.t-avatar--2 { background-image: url("../img/referentes/ref-dieter-rams-2.jpg"); background-position: 50% 30%; }
+.t-avatar--3 { background-image: url("../img/referentes/ref-susan-kare-2.jpg"); background-position: 50% 30%; }
+.t-avatar--4 { background-image: url("../img/referentes/ref-exodo-2.jpg"); background-position: 50% 50%; }
 
 /* big photo on the right side of the section, fading into the green */
 .t-photo {
@@ -997,10 +998,10 @@ a { color: inherit; text-decoration: none; }
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 40%);
   mask-image: linear-gradient(to right, transparent 0%, #000 40%);
 }
-.t-photo--1 { background-image: url("../img/ref-dieter-rams.jpg"); background-position: 50% 30%; }
-.t-photo--2 { background-image: url("../img/ref-steve-jobs.jpg"); background-position: 50% 0%; }
-.t-photo--3 { background-image: url("../img/ref-susan-kare.jpg"); background-position: 45% 30%; }
-.t-photo--4 { background-image: url("../img/ref-exodo.jpg"); background-position: 50% 45%; }
+.t-photo--1 { background-image: url("../img/referentes/ref-dieter-rams.jpg"); background-position: 50% 30%; }
+.t-photo--2 { background-image: url("../img/referentes/ref-steve-jobs.jpg"); background-position: 50% 0%; }
+.t-photo--3 { background-image: url("../img/referentes/ref-susan-kare.jpg"); background-position: 45% 30%; }
+.t-photo--4 { background-image: url("../img/referentes/ref-exodo.jpg"); background-position: 50% 45%; }
 
 .t-stars {
   position: absolute;
@@ -1084,7 +1085,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 7; /* shared closing block: always above pinned/sticky sections before it */
   height: calc(var(--u) * 807);
   background-color: #a09484;
-  background-image: linear-gradient(rgba(20, 64, 64, 0.45), rgba(20, 64, 64, 0.45)), url("../img/cta-papaya.jpg");
+  background-image: linear-gradient(rgba(20, 64, 64, 0.45), rgba(20, 64, 64, 0.45)), url("../img/tropical/cta-papaya.jpg");
   background-size: cover;
   background-position: 50% 40%;
   color: var(--white);
@@ -1278,8 +1279,8 @@ a { color: inherit; text-decoration: none; }
     linear-gradient(to bottom, rgba(244, 242, 238, 0) 50%, var(--paper) 98.7%),
     linear-gradient(to right, rgba(60, 40, 25, 0.35), rgba(60, 40, 25, 0) 60%),
     linear-gradient(rgba(70, 50, 35, 0.2), rgba(70, 50, 35, 0.2)),
-    url("../img/beach-volcano.jpg"),
-    url("../img/beach-volcano.jpg");
+    url("../img/tropical/beach-volcano.jpg"),
+    url("../img/tropical/beach-volcano.jpg");
   background-size: 100% 100%, 100% 100%, 100% 100%, cover, cover;
   background-position: 0 0, 0 0, 0 0, 50% 25%, 50% 25%;
   background-repeat: no-repeat;
@@ -1397,7 +1398,7 @@ a { color: inherit; text-decoration: none; }
 .ab-story-photo {
   height: calc(var(--u) * 678);
   background-color: #c9a27c;
-  background-image: url("../img/frutas-stall.jpg");
+  background-image: url("../img/tropical/frutas-stall.jpg");
   background-size: cover;
   background-position: 50% 30%;
 }
@@ -1454,7 +1455,7 @@ a { color: inherit; text-decoration: none; }
 .ab-values-photo {
   height: calc(var(--u) * 650);
   background-color: #9b7d5a;
-  background-image: url("../img/sun-season.jpg"), url("../img/toucan.jpg");
+  background-image: url("../img/tropical/sun-season.jpg"), url("../img/tropical/toucan.jpg");
   background-size: cover;
   background-position: 40% 20%;
 }
@@ -1565,7 +1566,7 @@ a { color: inherit; text-decoration: none; }
   width: calc(var(--u) * 662);
   border-radius: calc(var(--u) * 44) 0 0 calc(var(--u) * 44);
   background-color: #4a3320;
-  background-image: url("../img/poco-a-poco.jpg"), url("../img/fruit-macro.jpg");
+  background-image: url("../img/tropical/poco-a-poco.jpg"), url("../img/tropical/fruit-macro.jpg");
   background-size: cover;
   background-position: 50% 40%;
 }
@@ -1651,8 +1652,8 @@ a { color: inherit; text-decoration: none; }
   background-color: #3a2a1c;
   background-image:
     linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)),
-    url("../img/toucan.jpg"),
-    url("../img/fruit-macro.jpg");
+    url("../img/tropical/toucan.jpg"),
+    url("../img/tropical/fruit-macro.jpg");
   background-size: 100% 100%, cover, cover;
   background-position: 0 0, 50% 30%, 50% 30%;
   background-repeat: no-repeat;
@@ -1908,7 +1909,7 @@ a { color: inherit; text-decoration: none; }
 .sv-photo--left {
   grid-column: 1 / -1;
   background-color: #b89c86;
-  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/fruit-cart-blue.jpg"), url("../img/fruit-cart-blue.jpg");
+  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/tropical/fruit-cart-blue.jpg"), url("../img/tropical/fruit-cart-blue.jpg");
 }
 /* photos dissolve into the page colour at the bottom */
 .sv-hero::after {
@@ -1971,7 +1972,7 @@ a { color: inherit; text-decoration: none; }
 
 .sv-intro {
   position: relative;
-  height: calc(var(--u) * 760);
+  height: calc(var(--u) * 690);
 }
 .sv-eyebrow {
   position: absolute;
@@ -2007,7 +2008,7 @@ a { color: inherit; text-decoration: none; }
 }
 .sv-intro-copy {
   position: absolute;
-  top: calc(var(--u) * 410);
+  top: calc(var(--u) * 340);
   left: calc(var(--u) * 241);
   width: calc(var(--u) * 645);
 }
@@ -2019,17 +2020,6 @@ a { color: inherit; text-decoration: none; }
   text-align: justify;
 }
 .sv-intro-copy p + p { margin-top: calc(var(--u) * 21.5); }
-.sv-intro-photo {
-  position: absolute;
-  top: calc(var(--u) * 349);
-  left: calc(var(--u) * 981);
-  width: calc(var(--u) * 288);
-  height: calc(var(--u) * 294);
-  background-color: #c9b98a;
-  background-image: url("../img/fruit-macro.jpg"), url("../img/frutas-stall.jpg"), url("../img/fruit-collage.jpg");
-  background-size: cover;
-  background-position: 50% 50%;
-}
 
 /* ---------- Services page: offer cards (stacked) ---------- */
 
@@ -2060,9 +2050,9 @@ a { color: inherit; text-decoration: none; }
   background-position: 50% 30%;
   background-color: #6b5238;
 }
-.sv-card--individual .sv-card-photo { background-image: url("../img/poco-a-poco.jpg"), url("../img/fruit-macro.jpg"); }
-.sv-card--group .sv-card-photo { background-color: #b78e6b; background-image: url("../img/sun-season.jpg"), url("../img/toucan.jpg"); }
-.sv-card--intensive .sv-card-photo { background-color: #c9b98a; background-image: url("../img/fruit-macro.jpg"), url("../img/fruit-collage.jpg"); }
+.sv-card--individual .sv-card-photo { background-image: url("../img/tropical/poco-a-poco.jpg"), url("../img/tropical/fruit-macro.jpg"); }
+.sv-card--group .sv-card-photo { background-color: #b78e6b; background-image: url("../img/tropical/sun-season.jpg"), url("../img/tropical/toucan.jpg"); }
+.sv-card--intensive .sv-card-photo { background-color: #c9b98a; background-image: url("../img/tropical/fruit-macro.jpg"), url("../img/tropical/fruit-collage.jpg"); }
 
 .sv-card-title {
   position: absolute;
@@ -2176,7 +2166,7 @@ a { color: inherit; text-decoration: none; }
   background-color: #4b5256;
   background-image:
     linear-gradient(rgba(20, 64, 64, 0.62), rgba(20, 64, 64, 0.62)),
-    url("../img/beach-volcano.jpg");
+    url("../img/tropical/beach-volcano.jpg");
   background-size: 100% 100%, cover;
   background-position: 0 0, 50% 25%;
   background-repeat: no-repeat;
@@ -2312,9 +2302,9 @@ a { color: inherit; text-decoration: none; }
   background-image:
     linear-gradient(to bottom, rgba(244, 242, 238, 0) 78%, rgba(244, 242, 238, 0.85) 100%),
     linear-gradient(rgba(70, 48, 30, 0.22), rgba(70, 48, 30, 0.22)),
-    url("../img/beach-volcano.jpg"),
-    url("../img/beach-volcano.jpg"),
-    url("../img/beach-volcano.jpg");
+    url("../img/tropical/beach-volcano.jpg"),
+    url("../img/tropical/beach-volcano.jpg"),
+    url("../img/tropical/beach-volcano.jpg");
   background-size: 100% 100%, 100% 100%, cover, cover, cover;
   background-position: 0 0, 0 0, 50% 25%, 50% 25%, 50% 25%;
   background-repeat: no-repeat;
@@ -2403,9 +2393,9 @@ a { color: inherit; text-decoration: none; }
   background-color: #7a6248;
   background-image:
     linear-gradient(rgba(34, 107, 107, 0.5), rgba(34, 107, 107, 0.5)),
-    url("../img/fruit-cart-blue.jpg"),
-    url("../img/sun-season.jpg"),
-    url("../img/toucan.jpg");
+    url("../img/tropical/fruit-cart-blue.jpg"),
+    url("../img/tropical/sun-season.jpg"),
+    url("../img/tropical/toucan.jpg");
   background-size: 100% 100%, cover, cover, cover;
   background-position: 0 0, 50% 30%, 50% 30%, 50% 30%;
   background-repeat: no-repeat;
@@ -2454,7 +2444,7 @@ a { color: inherit; text-decoration: none; }
 .sl-imagine { height: calc(var(--u) * 925); margin: 0 calc(var(--u) * 45); }
 .sl-imagine .approach-photo {
   background-color: #cdbf95;
-  background-image: url("../img/mangoes.jpg"), url("../img/fruit-macro.jpg"), url("../img/fruit-collage.jpg");
+  background-image: url("../img/tropical/mangoes.jpg"), url("../img/tropical/fruit-macro.jpg"), url("../img/tropical/fruit-collage.jpg");
   background-position: 50% 50%;
 }
 .sl-imagine .approach-title { font-size: calc(var(--u) * 69); }
@@ -2577,10 +2567,10 @@ a { color: inherit; text-decoration: none; }
 .bm-tablet--main .bm-screen {
   background-image:
     linear-gradient(to bottom, rgba(40, 32, 28, 0) 52%, rgba(40, 32, 28, 0.88) 100%),
-    url("../img/citrus-slice.jpg"), url("../img/fruit-cart-blue.jpg");
+    url("../img/tropical/citrus-slice.jpg"), url("../img/tropical/fruit-cart-blue.jpg");
 }
-.bm-tablet--left .bm-screen  { background-image: url("../img/sun-season.jpg"), url("../img/toucan.jpg"); background-position: 30% 30%; }
-.bm-tablet--right .bm-screen { background-image: url("../img/sun-season.jpg"), url("../img/toucan.jpg"); background-position: 70% 30%; }
+.bm-tablet--left .bm-screen  { background-image: url("../img/tropical/sun-season.jpg"), url("../img/tropical/toucan.jpg"); background-position: 30% 30%; }
+.bm-tablet--right .bm-screen { background-image: url("../img/tropical/sun-season.jpg"), url("../img/tropical/toucan.jpg"); background-position: 70% 30%; }
 
 .bm-cam { position: absolute; z-index: 3; top: calc(var(--u) * 9); left: 50%; display: flex; gap: calc(var(--u) * 7); align-items: center; transform: translateX(-50%); }
 .bm-cam i { display: block; width: calc(var(--u) * 6); height: calc(var(--u) * 6); border-radius: 50%; background: #2b2b2b; }
@@ -3008,13 +2998,12 @@ a { color: inherit; text-decoration: none; }
   .sv-title { top: 200px; font-size: 15vw; line-height: 0.85; }
   .sv-badge { top: 76px; right: 14px; }
   .sv-intro { height: auto; padding: 56px 20px 64px; }
-  .sv-eyebrow, .sv-intro-title, .sv-intro-copy, .sv-intro-photo { position: static; width: auto; }
+  .sv-eyebrow, .sv-intro-title, .sv-intro-copy { position: static; width: auto; }
   .sv-eyebrow { font-size: 13px; white-space: normal; }
   .sv-intro-title { margin-top: 24px; font-size: 34px; line-height: 1.02; white-space: normal; }
   .sv-intro-title br { display: none; }
   .sv-intro-copy { margin-top: 28px; }
   .sv-intro-copy p { font-size: 15px; line-height: 1.5; text-align: left; }
-  .sv-intro-photo { height: auto; aspect-ratio: 288 / 294; margin-top: 32px; max-width: 320px; }
   .sv-cards { padding: 24px 16px 64px; }
   .sv-card { position: relative; top: auto; width: auto; height: auto; margin-bottom: 20px; padding-bottom: 28px; border-radius: 32px; }
   .sv-card-photo { position: relative; inset: auto; width: 100%; height: 300px; }
@@ -3193,7 +3182,7 @@ body.pj-lock { overflow: hidden; }
   inset: 0 auto 0 0;
   width: calc(var(--u) * 432);
   background-color: #6b5238;
-  background-image: url("../img/poco-a-poco.jpg"), url("../img/fruit-macro.jpg");
+  background-image: url("../img/tropical/poco-a-poco.jpg"), url("../img/tropical/fruit-macro.jpg");
   background-size: cover;
   background-position: 50% 30%;
 }
@@ -3275,6 +3264,11 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 }
 .pj-pill .feel-card-photo { display: block; height: calc(var(--u) * 300); margin-top: calc(var(--u) * 44); border-radius: calc(var(--u) * 28); }
 /* a project logo (<img>) can replace the name; it keeps the same room as the text */
+/* project logos used as the title: the yellow logo is drawn in black so it reads on the white card, like the other names */
+.pj-logo { display: block; width: auto; filter: brightness(0); }
+.pj-card-title:has(.pj-logo) { display: flex; align-items: center; justify-content: center; min-height: calc(var(--u) * 76); } /* same height as a text title */
+.pj-card-title .pj-logo { height: calc(var(--u) * 54); max-width: 100%; margin: 0 auto; }
+.pj-case-title .pj-logo { height: calc(var(--u) * 118); max-width: 100%; }
 .pj-card-title img { display: block; max-width: 100%; max-height: calc(var(--u) * 112); margin: 0 auto; object-fit: contain; }
 .pj-card-text {
   display: block;
@@ -3298,13 +3292,13 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   transform: none;
 }
 .pj.is-list .pj-photo { display: none; }
-.pj-cover--naturaleza { background-image: url("../img/animales/1c57069d-1514-4f3d-ba41-687050f47909.jpg"); background-position: 60% 40%; }
-.pj-cover--costarica { background-image: url("../img/costa rica/B217A79F-1489-46E8-B8CA-47EA571FC27C_1_105_c.jpeg"); background-position: 50% 45%; }
+.pj-cover--yellowmaps { background-image: url("../img/yellowmaps/logo yellowmaps.png"); background-position: 50% 50%; }
+.pj-cover--costarica { background-image: url("../img/costa rica/6695d2b3-8d9d-4938-b66b-b53845c71db7.jpg"); background-position: 50% 48%; }
 .pj-cover--newyork { background-image: url("../img/new york/77964F49-C555-4FBE-85BA-6E4B788050EB_1_105_c.jpeg"); background-position: 50% 50%; }
 .pj-close {
   position: fixed;
   top: calc(var(--u) * 40);
-  right: calc(var(--u) * 50);
+  left: calc(var(--u) * 50);
   z-index: 2;
   display: grid;
   place-items: center;
@@ -3333,13 +3327,10 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 @media (min-width: 801px) {
   /* scale by height too, so the cards always fit the screen */
   .pj.is-list { --u: min(calc(100vw / 1470), calc(100svh / 960)); }
-  .pj.is-list .pj-grid:not(.pj-grid--one) li:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc((100% - var(--u) * 28) / 2); }
-  .pj.is-list .pj-grid--one { grid-template-columns: minmax(0, calc((100% - var(--u) * 28) / 2)); justify-content: center; }
-  .pj.is-list .pj-grid--one .feel-card-photo { height: calc(var(--u) * 230); }
   .pj.is-list .pj-view--list {
     display: flex;
     flex-direction: column;
-    padding: calc(var(--u) * 120) calc(var(--u) * 70);
+    padding: calc(var(--u) * 100) calc(var(--u) * 70) calc(var(--u) * 60);
     overflow-y: auto;
     scrollbar-gutter: stable both-edges; /* a classic scrollbar must not push the cards to one side */
   }
@@ -3348,32 +3339,53 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
     width: 100%;
     max-width: calc(var(--u) * 1300);
     margin: auto;
-    gap: calc(var(--u) * 28) calc(var(--u) * 28);
+    /* 3 cards per row; a last row with fewer cards stays centred */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: calc(var(--u) * 28);
   }
+  .pj.is-list .pj-grid li { flex: 0 0 calc((100% - var(--u) * 56) / 3); min-width: 0; }
+  .pj.is-list .pj-pill { padding: calc(var(--u) * 36) calc(var(--u) * 28) calc(var(--u) * 30); border-radius: calc(var(--u) * 40); }
+  .pj.is-list .pj-card-title { font-size: calc(var(--u) * 54); }
+  .pj.is-list .pj-card-title .pj-logo { height: calc(var(--u) * 46); }
+  .pj.is-list .pj-card-title:has(.pj-logo) { min-height: calc(var(--u) * 51); }
+  .pj.is-list .pj-pill .feel-card-photo { height: calc(var(--u) * 150); margin-top: calc(var(--u) * 22); border-radius: calc(var(--u) * 22); }
+  .pj.is-list .pj-card-text { margin-top: calc(var(--u) * 20); font-size: calc(var(--u) * 19); line-height: calc(var(--u) * 26); }
+  /* a section with only a few projects (UX/UI, freelance, photos): bigger cards, 2 per row, so the screen does not look empty */
+  .pj.is-list:not(#pj-all) .pj-grid li { flex-basis: calc((100% - var(--u) * 28) / 2); }
+  .pj.is-list:not(#pj-all) .pj-pill { padding: calc(var(--u) * 64) calc(var(--u) * 48) calc(var(--u) * 52); border-radius: calc(var(--u) * 56); }
+  .pj.is-list:not(#pj-all) .pj-card-title { font-size: calc(var(--u) * 80); }
+  .pj.is-list:not(#pj-all) .pj-card-title .pj-logo { height: calc(var(--u) * 66); }
+  .pj.is-list:not(#pj-all) .pj-card-title:has(.pj-logo) { min-height: calc(var(--u) * 76); }
+  .pj.is-list:not(#pj-all) .pj-pill .feel-card-photo { height: calc(var(--u) * 300); margin-top: calc(var(--u) * 44); border-radius: calc(var(--u) * 28); }
+  .pj.is-list:not(#pj-all) .pj-card-text { margin-top: calc(var(--u) * 30); font-size: calc(var(--u) * 26); line-height: calc(var(--u) * 34); }
 }
 
 /* --- photo collection --- */
-.pj-view--gallery { overflow-y: auto; scrollbar-gutter: stable both-edges; padding: calc(var(--u) * 122) calc(var(--u) * 24) calc(var(--u) * 24); }
-.pj-view--gallery:has(.pj-gallery.is-mosaic:not([hidden])) { overflow: hidden; scrollbar-gutter: auto; }
-/* mosaic: tidy tiles that fill the whole screen with a thin gap (no frames, no tilt) */
-.pj-gallery {
-  --rh: calc(var(--u) * 260);
-  display: flex;
-  flex-wrap: wrap;
+.pj-view--gallery { overflow-y: auto; scrollbar-gutter: stable both-edges; padding: calc(var(--u) * 150) calc(var(--u) * 70) calc(var(--u) * 110); }
+.pj-gallery[hidden] { display: none !important; }
+/* a photo project uses the same header as the design projects (.pj-case-head), then a rounded photo grid */
+.pj-gallery { max-width: calc(var(--u) * 1330); margin: 0 auto; }
+.pj-gallery .pj-case-head { margin-bottom: calc(var(--u) * 36); }
+.pj-shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: calc(var(--u) * 8);
 }
-.pj-gallery[hidden] { display: none; }
-.pj-gallery--tall { --rh: calc(var(--u) * 330); }
-.pj-gallery::after { content: ""; flex-grow: 1000; }
-.pj-gallery figure { flex: calc(var(--ar) * 100) 1 calc(var(--ar) * var(--rh)); margin: 0; overflow: hidden; isolation: isolate; contain: paint; border-radius: calc(var(--u) * 6); background: var(--wave); }
-.pj-gallery img { display: block; width: 100%; height: auto; transition: filter 0.25s ease; }
-/* JS lays the tiles out to exactly fill the area (desktop) */
-.pj-gallery.is-mosaic { position: absolute; inset: calc(var(--u) * 122) calc(var(--u) * 24) calc(var(--u) * 24); display: block; }
-.pj-gallery.is-mosaic::after { display: none; }
-.pj-gallery.is-mosaic figure { position: absolute; }
-.pj-gallery.is-mosaic img { height: 100%; object-fit: cover; }
+.pj-shots figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 9 / 10;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: calc(var(--u) * 22);
+  background: var(--wave);
+}
+.pj-shots figure.is-wide { grid-column: span 2; aspect-ratio: auto; } /* stretches to the height of the row */
+.pj-shots img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: filter 0.25s ease; }
 /* no zoom on hover: a scaled <img> can spill past the rounded tile (Safari) and show over its neighbours */
-.pj-gallery figure:hover img { filter: brightness(1.06); }
+.pj-shots figure:hover img { filter: brightness(1.06); }
 .pj-back-circle {
   position: fixed;
   top: calc(var(--u) * 40);
@@ -3415,25 +3427,6 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   gap: calc(var(--u) * 60);
   padding-bottom: calc(var(--u) * 36);
   border-bottom: 1px solid var(--black);
-}
-.pj-case-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 12);
-  margin: 0 0 calc(var(--u) * 22);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: calc(var(--u) * 16);
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-.pj-case-eyebrow::before {
-  content: "";
-  width: calc(var(--u) * 14);
-  height: calc(var(--u) * 14);
-  border-radius: 50%;
-  background: var(--tone);
-  box-shadow: 0 0 0 1px var(--black);
 }
 .pj-case-title {
   margin: 0;
@@ -3510,6 +3503,28 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   line-height: 1.5;
 }
 
+/* real mockups: each row is filled edge to edge and every image keeps its own proportions (no cropping) */
+.pj-mock-row { display: flex; gap: calc(var(--u) * 22); margin-bottom: calc(var(--u) * 22); }
+.pj-mock-row figure { flex: var(--ar) 1 0; min-width: 0; margin: 0; overflow: hidden; isolation: isolate; border-radius: calc(var(--u) * 32); background: var(--tone-soft); }
+.pj-mock-row img { display: block; width: 100%; height: auto; transition: filter 0.25s ease; }
+.pj-mock-row figure:hover img { filter: brightness(1.05); }
+/* entrance (all project pages): each block rises, fades in and settles from a slight zoom, one after another.
+   JS puts .pj-rv on the blocks, .is-armed on the page and .is-in when a block reaches the screen. */
+.pj-mock-row figure, .pj-shots figure { contain: paint; }
+.is-armed .pj-rv { opacity: 0; transform: translateY(calc(var(--u) * 60)) scale(0.96); }
+.is-armed .pj-rv img { transform: scale(1.14); }
+.is-armed .pj-rv.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms), transform 1s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+}
+.is-armed .pj-rv.is-in img {
+  transform: none;
+  transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms), filter 0.25s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-armed .pj-rv, .is-armed .pj-rv img { opacity: 1; transform: none; transition: none; }
+}
 .pj-case-shots {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -3531,20 +3546,21 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
     .pj-card-title { font-size: 52px; }
   .pj-pill .feel-card-photo { height: auto; aspect-ratio: 16 / 9; margin-top: 22px; }
   .pj-card-text { margin-top: 18px; font-size: 15px; line-height: 1.4; }
-  .pj-close { top: 14px; right: 14px; width: 46px; height: 46px; }
+  .pj-close { top: 14px; left: 14px; width: 46px; height: 46px; }
   /* in the list the card arrow sits top-right, so the X goes top-left, above the cards */
-  .pj.is-list .pj-close { left: 14px; right: auto; }
   .pj.is-list .pj-view--list { padding-top: 74px; }
   .pj-back-circle { top: 14px; left: 14px; width: 46px; height: 46px; }
-  .pj-view--gallery { padding: 82px 12px 24px; }
-  .pj-gallery.is-mosaic { inset: 82px 12px 12px; }
-  .pj-gallery figure { border-radius: 6px; }
-  .pj-gallery { --rh: 150px; gap: 6px; }
-  .pj-gallery--tall { --rh: 210px; }
+  .pj-view--gallery { padding: 82px 16px 48px; }
+  .pj-gallery .pj-case-head { margin-bottom: 20px; }
+  .pj-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: dense; gap: 6px; }
+  .pj-shots figure { border-radius: 14px; }
+  .pj-shots figure.is-wide { aspect-ratio: 16 / 10; }
   .pj-view--deck { padding: 82px 16px 48px; }
   .pj-case-head { grid-template-columns: 1fr; gap: 24px; padding-bottom: 24px; }
-  .pj-case-eyebrow { margin-bottom: 14px; font-size: 13px; }
   .pj-case-title { font-size: 56px; }
+  .pj-case-title .pj-logo { height: 46px; }
+  .pj-card-title .pj-logo { height: 40px; }
+  .pj-card-title:has(.pj-logo) { min-height: 49px; }
   .pj-case-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .pj-case-meta dt { font-size: 12px; }
   .pj-case-meta dd { font-size: 16px; }
@@ -3555,6 +3571,8 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   .pj-case-cols h3 { font-size: 30px; }
   .pj-case-cols p { max-width: none; margin-top: 12px; font-size: 15px; }
   .pj-case-shots { grid-template-columns: 1fr; gap: 14px; }
+  .pj-mock-row { flex-direction: column; gap: 14px; margin-bottom: 14px; }
+  .pj-mock-row figure { flex: none; border-radius: 20px; }
   .pj-case-shots .pj-slot, .pj-case-shots .pj-slot--wide { grid-column: auto; aspect-ratio: 4 / 3; }
 }
 
