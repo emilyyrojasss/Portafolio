@@ -2071,6 +2071,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Services page: offer cards (stacked) ---------- */
 
 .sv-cards { padding: calc(var(--u) * 40) 0 0; }
+.sv-cards { scroll-margin-top: var(--nav-h); } /* links to #offers land right under the fixed header */
 
 .sv-card {
   --card-bg: var(--wave);
@@ -2950,7 +2951,7 @@ a { color: inherit; text-decoration: none; }
   .t-arrows { right: 20px; bottom: 28px; gap: 16px; }
   .t-arrows button { width: 54px; height: 54px; }
   .cta { height: auto; padding: 88px 20px 72px; }
-  .cta-sloth { right: 14px; bottom: -16px; width: 120px; }
+  .cta-sloth { right: 14px; bottom: calc(120px * -21 / 250); width: 120px; } /* same ledge ratio as desktop: the line sits exactly on the block edge */
   .cta-eyebrow, .cta-title, .cta-text, .cta-actions { position: static; transform: none; width: auto; }
   .cta-title { margin-top: 20px; font-size: 64px; line-height: 0.95; white-space: normal; }
   .cta-text { margin-top: 28px; font-size: 15px; line-height: 1.5; }
@@ -3164,6 +3165,7 @@ a { color: inherit; text-decoration: none; }
   .hero-ribbon {
     width: 100%;
     left: 0;
+    bottom: 9vw; /* lifted so the whole band, including its lowest dip, stays inside the hero */
   }
   .hero-ribbon .ribbon-text { font-size: 56px; }
 }
@@ -3326,6 +3328,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 /* --- list as its own full screen on the beige base --- */
 .pj.is-list, .pj.is-gallery { background: var(--paper); }
 .pj.is-list .pj-panel, .pj.is-gallery .pj-panel {
+  scrollbar-gutter: stable both-edges;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -3376,6 +3379,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
     flex-direction: column;
     padding: calc(var(--u) * 120) calc(var(--u) * 70);
     overflow-y: auto;
+    scrollbar-gutter: stable both-edges; /* a classic scrollbar must not push the cards to one side */
   }
   .pj.is-list .pj-grid {
     position: static;
@@ -3387,7 +3391,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 }
 
 /* --- photo collection --- */
-.pj-view--gallery { overflow-y: auto; padding: calc(var(--u) * 130) calc(var(--u) * 70) calc(var(--u) * 90); }
+.pj-view--gallery { overflow-y: auto; scrollbar-gutter: stable both-edges; padding: calc(var(--u) * 130) calc(var(--u) * 70) calc(var(--u) * 90); }
 .pj-gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

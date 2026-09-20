@@ -147,12 +147,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const updatePins = () => {
       const header = document.querySelector(".site-header");
       const headerH = header ? header.offsetHeight : 0;
+      // certification cards share one height (the tallest), so each card slides over
+      // the previous one and covers it completely
+      const coachCards = [...pinEls].filter((el) => el.classList.contains("coach-card"));
+      coachCards.forEach((el) => el.style.removeProperty("min-height"));
+      let coachH = 0;
+      if (pinMq.matches) {
+        coachH = Math.max(0, ...coachCards.map((el) => el.offsetHeight));
+        coachCards.forEach((el) => { el.style.minHeight = `${coachH}px`; });
+      }
       pinEls.forEach((el) => {
         if (!pinMq.matches) { el.style.removeProperty("--pin-top"); return; }
-        const isCard = el.classList.contains("sv-card") || el.classList.contains("coach-card");
+        const isCoach = el.classList.contains("coach-card");
+        const isCard = isCoach || el.classList.contains("sv-card");
         const gap = isCard ? headerH + 12 : 0;
         const bottom = isCard ? 16 : 0;
-        el.style.setProperty("--pin-top", `${Math.min(gap, window.innerHeight - el.offsetHeight - bottom)}px`);
+        const h = isCoach ? coachH : el.offsetHeight;
+        el.style.setProperty("--pin-top", `${Math.min(gap, window.innerHeight - h - bottom)}px`);
       });
     };
     window.addEventListener("resize", updatePins);
