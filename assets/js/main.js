@@ -240,4 +240,97 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
     });
   });
+  // Projects overlay (services): "Ver proyectos" opens a list of project pills;
+  // choosing one shows its presentation (.pj-deck > .pj-slide). Esc steps back.
+  const pj = document.getElementById("pj");
+  if (pj) {
+    const listView = pj.querySelector(".pj-view--list");
+    const deckView = pj.querySelector(".pj-view--deck");
+    const decks = pj.querySelectorAll(".pj-deck");
+    const prevBtn = pj.querySelector(".pj-prev");
+    const nextBtn = pj.querySelector(".pj-next");
+    const count = pj.querySelector(".pj-count");
+    let opener = null;
+    let slides = [];
+    let slideIndex = 0;
+
+    const showSlide = (i) => {
+      slideIndex = Math.max(0, Math.min(slides.length - 1, i));
+      slides.forEach((s, n) => s.classList.toggle("is-active", n === slideIndex));
+      count.textContent = String(slideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+      prevBtn.disabled = slideIndex === 0;
+      nextBtn.disabled = slideIndex === slides.length - 1;
+    };
+    const showList = () => {
+      deckView.hidden = true;
+      listView.hidden = false;
+      pj.classList.add("is-list");
+      const last = pj.querySelector(".pj-pill.is-last");
+      (last || pj.querySelector(".pj-pill")).focus();
+    };
+    const showDeck = (i) => {
+      decks.forEach((d, n) => { d.hidden = n !== i; });
+      pj.querySelectorAll(".pj-pill").forEach((b, n) => b.classList.toggle("is-last", n === i));
+      slides = Array.from(decks[i].querySelectorAll(".pj-slide"));
+      deckView.dataset.tone = decks[i].dataset.tone;
+      listView.hidden = true;
+      deckView.hidden = false;
+      pj.classList.remove("is-list");
+      showSlide(0);
+      nextBtn.focus();
+    };
+    const openPj = () => {
+      pj.hidden = false;
+      listView.hidden = false;
+      deckView.hidden = true;
+      pj.classList.add("is-list");
+      document.body.classList.add("pj-lock");
+      requestAnimationFrame(() => pj.classList.add("is-open"));
+      pj.querySelector(".pj-pill").focus();
+    };
+    const closePj = () => {
+      pj.classList.remove("is-open");
+      document.body.classList.remove("pj-lock");
+      setTimeout(() => { pj.hidden = true; }, prefersReducedMotion ? 0 : 250);
+      if (opener) opener.focus();
+    };
+
+    document.querySelectorAll("[data-pj-open]").forEach((btn) => {
+      btn.addEventListener("click", () => { opener = btn; openPj(); });
+      // the whole card opens it too; the button stays the keyboard/screen-reader entry point
+      const card = btn.closest(".sv-card");
+      if (card) {
+        card.classList.add("is-clickable");
+        card.addEventListener("click", (e) => {
+          if (e.target.closest("button, a")) return;
+          opener = btn;
+          openPj();
+        });
+      }
+    });
+    pj.querySelectorAll(".pj-pill").forEach((btn) => {
+      btn.addEventListener("click", () => showDeck(Number(btn.dataset.pj)));
+    });
+    pj.querySelector(".pj-close").addEventListener("click", closePj);
+    pj.querySelector(".pj-back").addEventListener("click", showList);
+    prevBtn.addEventListener("click", () => showSlide(slideIndex - 1));
+    nextBtn.addEventListener("click", () => showSlide(slideIndex + 1));
+    pj.addEventListener("click", (e) => { if (e.target === pj) closePj(); });
+
+    document.addEventListener("keydown", (e) => {
+      if (pj.hidden) return;
+      const inDeck = !deckView.hidden;
+      if (e.key === "Escape") { inDeck ? showList() : closePj(); }
+      else if (inDeck && e.key === "ArrowRight") showSlide(slideIndex + 1);
+      else if (inDeck && e.key === "ArrowLeft") showSlide(slideIndex - 1);
+      else if (e.key === "Tab") {
+        // keep focus inside the dialog
+        const f = Array.from(pj.querySelectorAll("button:not([disabled])")).filter((b) => b.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+  }
 });
