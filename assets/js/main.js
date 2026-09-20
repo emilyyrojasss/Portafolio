@@ -240,12 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
     });
   });
-  // Projects overlay (services): "Ver proyectos" opens a list of project pills;
-  // choosing one shows its presentation (.pj-deck > .pj-slide). Esc steps back.
-  const pj = document.getElementById("pj");
-  if (pj) {
+  // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
+  // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck > .pj-slide)
+  // or a photo collection (.pj-view--gallery). Esc steps back. No value = the first overlay, #pj.
+  document.querySelectorAll(".pj").forEach((pj) => {
     const listView = pj.querySelector(".pj-view--list");
     const deckView = pj.querySelector(".pj-view--deck");
+    const galleryView = pj.querySelector(".pj-view--gallery");
     const decks = pj.querySelectorAll(".pj-deck");
     const prevBtn = pj.querySelector(".pj-prev");
     const nextBtn = pj.querySelector(".pj-next");
@@ -254,6 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let slides = [];
     let slideIndex = 0;
 
+    const setScreen = (screen) => {
+      listView.hidden = screen !== "list";
+      if (deckView) deckView.hidden = screen !== "deck";
+      if (galleryView) galleryView.hidden = screen !== "gallery";
+      pj.classList.toggle("is-list", screen === "list");
+      pj.classList.toggle("is-gallery", screen === "gallery");
+    };
     const showSlide = (i) => {
       slideIndex = Math.max(0, Math.min(slides.length - 1, i));
       slides.forEach((s, n) => s.classList.toggle("is-active", n === slideIndex));
@@ -262,28 +270,29 @@ document.addEventListener("DOMContentLoaded", () => {
       nextBtn.disabled = slideIndex === slides.length - 1;
     };
     const showList = () => {
-      deckView.hidden = true;
-      listView.hidden = false;
-      pj.classList.add("is-list");
+      setScreen("list");
       const last = pj.querySelector(".pj-pill.is-last");
       (last || pj.querySelector(".pj-pill")).focus();
     };
-    const showDeck = (i) => {
-      decks.forEach((d, n) => { d.hidden = n !== i; });
+    const showDetail = (i) => {
       pj.querySelectorAll(".pj-pill").forEach((b, n) => b.classList.toggle("is-last", n === i));
+      if (galleryView) {
+        setScreen("gallery");
+        galleryView.scrollTop = 0;
+        pj.querySelector(".pj-panel").scrollTop = 0;
+        galleryView.querySelector(".pj-back-circle").focus();
+        return;
+      }
+      decks.forEach((d, n) => { d.hidden = n !== i; });
       slides = Array.from(decks[i].querySelectorAll(".pj-slide"));
       deckView.dataset.tone = decks[i].dataset.tone;
-      listView.hidden = true;
-      deckView.hidden = false;
-      pj.classList.remove("is-list");
+      setScreen("deck");
       showSlide(0);
       nextBtn.focus();
     };
     const openPj = () => {
       pj.hidden = false;
-      listView.hidden = false;
-      deckView.hidden = true;
-      pj.classList.add("is-list");
+      setScreen("list");
       document.body.classList.add("pj-lock");
       requestAnimationFrame(() => pj.classList.add("is-open"));
       pj.querySelector(".pj-pill").focus();
@@ -296,6 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.querySelectorAll("[data-pj-open]").forEach((btn) => {
+      if ((btn.dataset.pjOpen || "pj") !== pj.id) return;
       btn.addEventListener("click", () => { opener = btn; openPj(); });
       // the whole card opens it too; the button stays the keyboard/screen-reader entry point
       const card = btn.closest(".sv-card");
@@ -309,28 +319,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     pj.querySelectorAll(".pj-pill").forEach((btn) => {
-      btn.addEventListener("click", () => showDeck(Number(btn.dataset.pj)));
+      btn.addEventListener("click", () => showDetail(Number(btn.dataset.pj)));
     });
-    pj.querySelector(".pj-close").addEventListener("click", closePj);
-    pj.querySelector(".pj-back").addEventListener("click", showList);
-    prevBtn.addEventListener("click", () => showSlide(slideIndex - 1));
-    nextBtn.addEventListener("click", () => showSlide(slideIndex + 1));
+    pj.querySelectorAll(".pj-close").forEach((btn) => btn.addEventListener("click", closePj));
+    pj.querySelectorAll(".pj-back, .pj-back-circle").forEach((btn) => btn.addEventListener("click", showList));
+    if (prevBtn) prevBtn.addEventListener("click", () => showSlide(slideIndex - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => showSlide(slideIndex + 1));
     pj.addEventListener("click", (e) => { if (e.target === pj) closePj(); });
 
     document.addEventListener("keydown", (e) => {
-      if (pj.hidden) return;
-      const inDeck = !deckView.hidden;
-      if (e.key === "Escape") { inDeck ? showList() : closePj(); }
+      if (pj.hidden || document.querySelector(".lightbox")) return;
+      const inDeck = deckView && !deckView.hidden;
+      const inList = !listView.hidden;
+      if (e.key === "Escape") { inList ? closePj() : showList(); }
       else if (inDeck && e.key === "ArrowRight") showSlide(slideIndex + 1);
       else if (inDeck && e.key === "ArrowLeft") showSlide(slideIndex - 1);
       else if (e.key === "Tab") {
         // keep focus inside the dialog
-        const f = Array.from(pj.querySelectorAll("button:not([disabled])")).filter((b) => b.offsetParent !== null);
+        const f = Array.from(pj.querySelectorAll("button:not([disabled]), [data-zoom]")).filter((b) => b.offsetParent !== null || getComputedStyle(b).position === "fixed");
         if (!f.length) return;
         const first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
-  }
+  });
 });
