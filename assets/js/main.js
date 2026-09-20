@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Entrance animation for every project page (design projects and photo collections): the header, the
   // main image, the text columns and every image/mockup rise in one after the other, and the rest do the
   // same when scrolled into view. Plain scroll + position check (no IntersectionObserver).
-  const REVEAL = ".pj-case-head, .pj-slot, .pj-case-cols section, .pj-mock-row figure, .pj-shots figure";
+  const REVEAL = ".pj-case-head, .pj-slot, .pj-case-about, .pj-case-cols section, .pj-mock-row figure, .pj-shots figure";
   let revealCleanup = null;
   const revealProject = (view) => {
     if (revealCleanup) { revealCleanup(); revealCleanup = null; }
