@@ -21,7 +21,7 @@
 
   <nav class="main-nav">
     <a href="index.html">Inicio</a>
-    <a href="about.html">Acerca de mí</a>
+    <a href="about.html" aria-current="page">Acerca de mí</a>
     <a href="services.html">Proyectos</a>
     <a href="contact.html">Contacto</a>
   </nav>
@@ -150,10 +150,10 @@
       <p class="freebie-text">Si tienes un proyecto que quieres desarrollar, una <br>idea que necesita tomar forma o simplemente quieres <br>explorar nuevas posibilidades, me encantaría conocerla.</p>
 
       <form class="freebie-form">
-        <input type="text" name="first" placeholder="Nombre" aria-label="Nombre" class="f-first">
+        <input type="text" name="first" placeholder="Nombre" aria-label="Nombre" class="f-first" required>
         <input type="text" name="last" placeholder="Apellido" aria-label="Apellido" class="f-last">
-        <input type="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" class="f-email">
-        <textarea name="message" placeholder="Cuéntame sobre tu proyecto" aria-label="Cuéntame sobre tu proyecto" class="f-message"></textarea>
+        <input type="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" class="f-email" required>
+        <textarea name="message" placeholder="Cuéntame sobre tu proyecto" aria-label="Cuéntame sobre tu proyecto" class="f-message" required></textarea>
         <button type="submit" class="f-submit">HABLEMOS</button>
       </form>
     </div>

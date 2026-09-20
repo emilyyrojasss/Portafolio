@@ -251,84 +251,210 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
     });
   });
-  // Contact forms: the site is static, so sending opens the visitor's mail app
-  // with the message already written to contact.emilyrojas@gmail.com.
+  // Contact forms: the site is static, so the message is posted to FormSubmit,
+  // which forwards it to contact.emilyrojas@gmail.com (replies go to the visitor's
+  // email). The button label doubles as status so the layout never changes. If the
+  // request fails the visitor's mail app opens with the message already written.
+  const MAIL_TO = "contact.emilyrojas@gmail.com";
   document.querySelectorAll("form.freebie-form, form.ct-fields").forEach((form) => {
-    form.addEventListener("submit", (e) => {
+    const btn = form.querySelector("button[type=submit]");
+    const idleLabel = btn.textContent;
+    const setLabel = (text, ms) => {
+      btn.textContent = text;
+      if (ms) setTimeout(() => { btn.textContent = idleLabel; btn.disabled = false; }, ms);
+    };
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : "");
       const name = val("name") || [val("first"), val("last")].filter(Boolean).join(" ");
-      const subject = val("reason") || "Hola Emily, quiero hablar de un proyecto";
-      const body = [val("message"), "", name, val("email")].join("\n");
-      window.location.href =
-        "mailto:contact.emilyrojas@gmail.com?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
-      form.reset();
+      const subject = val("reason") || "Quiero hablar de un proyecto";
+      const message = val("message");
+      const email = val("email");
+
+      btn.disabled = true;
+      setLabel("ENVIANDO…");
+      try {
+        const res = await fetch("https://formsubmit.co/ajax/" + MAIL_TO, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name, email, message,
+            _subject: "Portafolio: " + subject,
+            _template: "table",
+            _captcha: "false",
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || String(data.success) !== "true") throw new Error(data.message || res.status);
+        form.reset();
+        setLabel("¡ENVIADO, GRACIAS!", 4000);
+      } catch (err) {
+        setLabel("ABRIENDO TU CORREO…", 4000);
+        window.location.href =
+          "mailto:" + MAIL_TO + "?subject=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent([message, "", name, email].join("\n"));
+      }
     });
   });
 
+  // Photo mosaic: split the photos (in order) into rows so that, with every row justified to the
+  // full width, the rows add up to the height of the area; tiles are then sized to fill it exactly.
+  const layoutMosaic = (gal) => {
+    if (!gal || gal.hidden) return;
+    const figs = Array.from(gal.querySelectorAll("figure"));
+    if (!figs.length) return;
+    gal.classList.add("is-mosaic");
+    const W = gal.clientWidth, H = gal.clientHeight;
+    if (!W || !H) return;
+    const g = window.innerWidth <= 800 ? 6 : Math.max(6, Math.round(window.innerWidth * 0.0055));
+    const ar = figs.map((f) => parseFloat(f.style.getPropertyValue("--ar")) || 1.5);
+    const n = ar.length;
+    const pre = [0];
+    ar.forEach((a, i) => pre.push(pre[i] + a));
+    const rowH = (i, k) => (W - (k - i - 1) * g) / (pre[k] - pre[i]);
+    let best = null;
+    for (let k = 1; k <= Math.min(n, 12); k++) {
+      const target = (H - (k - 1) * g) / k;
+      const dp = Array.from({ length: k + 1 }, () => Array(n + 1).fill(Infinity));
+      const from = Array.from({ length: k + 1 }, () => Array(n + 1).fill(0));
+      dp[0][0] = 0;
+      for (let r = 1; r <= k; r++) {
+        for (let e = r; e <= n; e++) {
+          for (let i = r - 1; i < e; i++) {
+            const c = dp[r - 1][i] + Math.pow(rowH(i, e) - target, 2);
+            if (c < dp[r][e]) { dp[r][e] = c; from[r][e] = i; }
+          }
+        }
+      }
+      const score = dp[k][n] / (k * target * target);
+      if (!best || score < best.score) {
+        const rows = [];
+        for (let r = k, e = n; r > 0; r--) { rows.unshift([from[r][e], e]); e = from[r][e]; }
+        best = { score, rows };
+      }
+    }
+    const heights = best.rows.map(([i, e]) => rowH(i, e));
+    const scale = (H - (best.rows.length - 1) * g) / heights.reduce((a, b) => a + b, 0);
+    let y = 0;
+    best.rows.forEach(([i, e], r) => {
+      const h = heights[r] * scale;
+      const avail = W - (e - i - 1) * g;
+      let x = 0;
+      for (let m = i; m < e; m++) {
+        const w = (avail * ar[m]) / (pre[e] - pre[i]);
+        Object.assign(figs[m].style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px" });
+        x += w + g;
+      }
+      y += h + g;
+    });
+  };
+  const relayoutAll = () => {
+    document.querySelectorAll(".pj:not([hidden]) .pj-gallery:not([hidden])").forEach(layoutMosaic);
+  };
+  window.addEventListener("resize", relayoutAll);
+  window.addEventListener("orientationchange", relayoutAll);
+  // any change to the area (browser toolbars, zoom, scrollbars) re-fits the tiles
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver(relayoutAll);
+    document.querySelectorAll(".pj-view--gallery").forEach((v) => ro.observe(v));
+  }
+
   // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
-  // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck > .pj-slide)
+  // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck, a case-study page)
   // or a photo collection (.pj-view--gallery). Esc steps back. No value = the first overlay, #pj.
+  // The "all projects" overlay only lists cards ([data-pj-goto="<overlay id>:<index>"]): choosing one
+  // opens that project in its own overlay, and Volver returns to the full list.
+  const pjApis = {};
+  // move focus into the overlay only for keyboard users (a mouse click must not paint a focus ring)
+  let usingKeyboard = false;
+  document.addEventListener("keydown", () => { usingKeyboard = true; }, true);
+  document.addEventListener("pointerdown", () => { usingKeyboard = false; }, true);
+  const focusIfKeyboard = (el) => { if (usingKeyboard && el) el.focus(); };
   document.querySelectorAll(".pj").forEach((pj) => {
     const listView = pj.querySelector(".pj-view--list");
     const deckView = pj.querySelector(".pj-view--deck");
     const galleryView = pj.querySelector(".pj-view--gallery");
     const decks = pj.querySelectorAll(".pj-deck");
-    const prevBtn = pj.querySelector(".pj-prev");
-    const nextBtn = pj.querySelector(".pj-next");
-    const count = pj.querySelector(".pj-count");
     let opener = null;
-    let slides = [];
-    let slideIndex = 0;
+    let from = null; // the "all projects" overlay we came from, if any
 
     const setScreen = (screen) => {
       listView.hidden = screen !== "list";
       if (deckView) deckView.hidden = screen !== "deck";
       if (galleryView) galleryView.hidden = screen !== "gallery";
       pj.classList.toggle("is-list", screen === "list");
-      pj.classList.toggle("is-gallery", screen === "gallery");
-    };
-    const showSlide = (i) => {
-      slideIndex = Math.max(0, Math.min(slides.length - 1, i));
-      slides.forEach((s, n) => s.classList.toggle("is-active", n === slideIndex));
-      count.textContent = String(slideIndex + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
-      prevBtn.disabled = slideIndex === 0;
-      nextBtn.disabled = slideIndex === slides.length - 1;
+      // a project (deck) is a full-screen page like the photo collection
+      pj.classList.toggle("is-gallery", screen === "gallery" || screen === "deck");
     };
     const showList = () => {
+      if (from) {
+        const back = from;
+        from = null;
+        closeNow();
+        back.reopen();
+        return;
+      }
       setScreen("list");
       const last = pj.querySelector(".pj-pill.is-last");
-      (last || pj.querySelector(".pj-pill")).focus();
+      focusIfKeyboard(last || pj.querySelector(".pj-pill"));
     };
     const showDetail = (i) => {
       pj.querySelectorAll(".pj-pill").forEach((b, n) => b.classList.toggle("is-last", n === i));
       if (galleryView) {
+        galleryView.querySelectorAll(".pj-gallery").forEach((g, n) => { g.hidden = n !== i; });
         setScreen("gallery");
+        layoutMosaic(galleryView.querySelector(".pj-gallery:not([hidden])"));
         galleryView.scrollTop = 0;
         pj.querySelector(".pj-panel").scrollTop = 0;
-        galleryView.querySelector(".pj-back-circle").focus();
+        focusIfKeyboard(galleryView.querySelector(".pj-back-circle"));
         return;
       }
       decks.forEach((d, n) => { d.hidden = n !== i; });
-      slides = Array.from(decks[i].querySelectorAll(".pj-slide"));
       deckView.dataset.tone = decks[i].dataset.tone;
       setScreen("deck");
-      showSlide(0);
-      nextBtn.focus();
+      deckView.scrollTop = 0;
+      pj.querySelector(".pj-panel").scrollTop = 0;
+      focusIfKeyboard(deckView.querySelector(".pj-back-circle"));
     };
     const openPj = () => {
       pj.hidden = false;
       setScreen("list");
       document.body.classList.add("pj-lock");
       requestAnimationFrame(() => pj.classList.add("is-open"));
-      pj.querySelector(".pj-pill").focus();
+      focusIfKeyboard(pj.querySelector(".pj-pill"));
+    };
+    const closeNow = () => {
+      pj.classList.remove("is-open");
+      pj.hidden = true;
     };
     const closePj = () => {
+      from = null;
       pj.classList.remove("is-open");
       document.body.classList.remove("pj-lock");
       setTimeout(() => { pj.hidden = true; }, prefersReducedMotion ? 0 : 250);
       if (opener) opener.focus();
+    };
+
+    pjApis[pj.id] = {
+      // open straight on project i, coming from another overlay (keeps the page locked)
+      openAt: (i, back, backOpener) => {
+        from = back;
+        opener = backOpener;
+        pj.hidden = false;
+        document.body.classList.add("pj-lock");
+        pj.classList.add("is-open");
+        showDetail(i);
+      },
+      // show the list again after coming back from a project
+      reopen: () => {
+        pj.hidden = false;
+        setScreen("list");
+        pj.classList.add("is-open");
+        const last = pj.querySelector(".pj-pill.is-last");
+        focusIfKeyboard(last || pj.querySelector(".pj-pill"));
+      },
+      hideNow: closeNow,
+      getOpener: () => opener,
     };
 
     document.querySelectorAll("[data-pj-open]").forEach((btn) => {
@@ -346,23 +472,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     pj.querySelectorAll(".pj-pill").forEach((btn) => {
-      btn.addEventListener("click", () => showDetail(Number(btn.dataset.pj)));
+      btn.addEventListener("click", () => {
+        if (btn.dataset.pjGoto) {
+          const [id, index] = btn.dataset.pjGoto.split(":");
+          const target = pjApis[id];
+          if (!target) return;
+          pj.querySelectorAll(".pj-pill").forEach((b) => b.classList.toggle("is-last", b === btn));
+          closeNow();
+          target.openAt(Number(index), pjApis[pj.id], opener);
+        } else {
+          showDetail(Number(btn.dataset.pj));
+        }
+      });
     });
     pj.querySelectorAll(".pj-close").forEach((btn) => btn.addEventListener("click", closePj));
-    pj.querySelectorAll(".pj-back, .pj-back-circle").forEach((btn) => btn.addEventListener("click", showList));
-    if (prevBtn) prevBtn.addEventListener("click", () => showSlide(slideIndex - 1));
-    if (nextBtn) nextBtn.addEventListener("click", () => showSlide(slideIndex + 1));
+    pj.querySelectorAll(".pj-back-circle").forEach((btn) => btn.addEventListener("click", showList));
     pj.addEventListener("click", (e) => { if (e.target === pj) closePj(); });
     // links from other pages (services.html#pj) open the overlay on load
     if (location.hash === "#" + pj.id) openPj();
 
     document.addEventListener("keydown", (e) => {
-      if (pj.hidden || document.querySelector(".lightbox")) return;
-      const inDeck = deckView && !deckView.hidden;
+      // another overlay may have handled this same key press already (Esc going back to the list)
+      if (e.defaultPrevented || pj.hidden || document.querySelector(".lightbox")) return;
       const inList = !listView.hidden;
-      if (e.key === "Escape") { inList ? closePj() : showList(); }
-      else if (inDeck && e.key === "ArrowRight") showSlide(slideIndex + 1);
-      else if (inDeck && e.key === "ArrowLeft") showSlide(slideIndex - 1);
+      if (e.key === "Escape") { e.preventDefault(); inList ? closePj() : showList(); }
       else if (e.key === "Tab") {
         // keep focus inside the dialog
         const f = Array.from(pj.querySelectorAll("button:not([disabled]), [data-zoom]")).filter((b) => b.offsetParent !== null || getComputedStyle(b).position === "fixed");
