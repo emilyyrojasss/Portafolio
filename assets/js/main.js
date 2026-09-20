@@ -297,86 +297,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Photo mosaic: split the photos (in order) into rows, justify every row to the full width, and
-  // size the tiles to fill the area. A tile is never cropped more than CROP_MAX: when the photos
-  // cannot fill the area within that limit, the whole mosaic shrinks and is centred instead.
-  const CROP_MAX = 1.25;
-  const layoutMosaic = (gal) => {
-    if (!gal || gal.hidden) return;
-    const figs = Array.from(gal.querySelectorAll("figure"));
-    if (!figs.length) return;
-    gal.classList.add("is-mosaic");
-    const W = gal.clientWidth, H = gal.clientHeight;
-    if (!W || !H) return;
-    const g = window.innerWidth <= 800 ? 6 : Math.max(6, Math.round(window.innerWidth * 0.0055));
-    const ar = figs.map((f) => parseFloat(f.style.getPropertyValue("--ar")) || 1.5);
-    const n = ar.length;
-    const pre = [0];
-    ar.forEach((a, i) => pre.push(pre[i] + a));
-    const sumAr = (i, e) => pre[e] - pre[i];
-    const rowH = (i, e, w) => (w - (e - i - 1) * g) / sumAr(i, e);
-    let best = null;
-    for (let k = 1; k <= Math.min(n, 12); k++) {
-      const hb = H - (k - 1) * g;
-      const target = hb / k;
-      const dp = Array.from({ length: k + 1 }, () => Array(n + 1).fill(Infinity));
-      const from = Array.from({ length: k + 1 }, () => Array(n + 1).fill(0));
-      dp[0][0] = 0;
-      for (let r = 1; r <= k; r++) {
-        for (let e = r; e <= n; e++) {
-          for (let i = r - 1; i < e; i++) {
-            const c = dp[r - 1][i] + Math.pow(rowH(i, e, W) - target, 2);
-            if (c < dp[r][e]) { dp[r][e] = c; from[r][e] = i; }
-          }
-        }
-      }
-      const rows = [];
-      for (let r = k, e = n; r > 0; r--) { rows.unshift([from[r][e], e]); e = from[r][e]; }
-      const natural = rows.reduce((s, [i, e]) => s + rowH(i, e, W), 0);
-      let u = hb / natural, w = W, ht = hb;
-      if (u > CROP_MAX) { u = CROP_MAX; ht = natural * u; }
-      else if (u < 1 / CROP_MAX) {
-        u = 1 / CROP_MAX;
-        const gaps = rows.reduce((s, [i, e]) => s + ((e - i - 1) * g) / sumAr(i, e), 0);
-        w = (hb / u + gaps) / rows.reduce((s, [i, e]) => s + 1 / sumAr(i, e), 0);
-        ht = hb;
-      }
-      const coverage = (w * (ht + (k - 1) * g)) / (W * H);
-      const score = coverage - dp[k][n] / (k * target * target) * 0.05;
-      if (!best || score > best.score) best = { score, rows, u, w, ht };
-    }
-    const { rows, u, w, ht } = best;
-    let y = (H - (ht + (rows.length - 1) * g)) / 2;
-    const x0 = (W - w) / 2;
-    rows.forEach(([i, e]) => {
-      const h = rowH(i, e, w) * u;
-      const avail = w - (e - i - 1) * g;
-      let x = x0;
-      for (let m = i; m < e; m++) {
-        const tw = (avail * ar[m]) / sumAr(i, e);
-        Object.assign(figs[m].style, { left: x + "px", top: y + "px", width: tw + "px", height: h + "px" });
-        x += tw + g;
-      }
-      y += h + g;
-    });
-  };
-  const relayoutAll = () => {
-    document.querySelectorAll(".pj:not([hidden]) .pj-gallery:not([hidden])").forEach(layoutMosaic);
-  };
-  window.addEventListener("resize", relayoutAll);
-  window.addEventListener("orientationchange", relayoutAll);
-  // any change to the area (browser toolbars, zoom, scrollbars) re-fits the tiles
-  if ("ResizeObserver" in window) {
-    const ro = new ResizeObserver(relayoutAll);
-    document.querySelectorAll(".pj-view--gallery").forEach((v) => ro.observe(v));
-  }
-
   // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
   // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck, a case-study page)
   // or a photo collection (.pj-view--gallery). Esc steps back. No value = the first overlay, #pj.
   // The "all projects" overlay only lists cards ([data-pj-goto="<overlay id>:<index>"]): choosing one
   // opens that project in its own overlay, and Volver returns to the full list.
   const pjApis = {};
+  // Entrance animation for every project page (design projects and photo collections): the header, the
+  // main image, the text columns and every image/mockup rise in one after the other, and the rest do the
+  // same when scrolled into view. Plain scroll + position check (no IntersectionObserver).
+  const REVEAL = ".pj-case-head, .pj-slot, .pj-case-cols section, .pj-mock-row figure, .pj-shots figure";
+  let revealCleanup = null;
+  const revealProject = (view) => {
+    if (revealCleanup) { revealCleanup(); revealCleanup = null; }
+    const box = view.querySelector(".pj-deck:not([hidden]), .pj-gallery:not([hidden])");
+    if (!box) return;
+    const items = Array.from(box.querySelectorAll(REVEAL));
+    if (prefersReducedMotion) { items.forEach((f) => f.classList.add("is-in")); return; }
+    items.forEach((f) => {
+      f.classList.add("pj-rv");
+      f.classList.remove("is-in");
+      const n = Array.from(f.parentElement.children).indexOf(f);
+      f.style.setProperty("--d", (n % 4) * 140 + "ms");
+    });
+    box.classList.add("is-armed");
+    const check = () => {
+      const limit = view.getBoundingClientRect().bottom - 60;
+      items.forEach((f) => {
+        if (!f.classList.contains("is-in") && f.getBoundingClientRect().top < limit) f.classList.add("is-in");
+      });
+      if (items.every((f) => f.classList.contains("is-in"))) view.removeEventListener("scroll", check);
+    };
+    view.addEventListener("scroll", check, { passive: true }); // a few getBoundingClientRect calls: cheap enough per scroll
+    window.addEventListener("resize", check);
+    revealCleanup = () => { view.removeEventListener("scroll", check); window.removeEventListener("resize", check); };
+    check();
+  };
   // move focus into the overlay only for keyboard users (a mouse click must not paint a focus ring)
   let usingKeyboard = false;
   document.addEventListener("keydown", () => { usingKeyboard = true; }, true);
@@ -415,16 +371,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (galleryView) {
         galleryView.querySelectorAll(".pj-gallery").forEach((g, n) => { g.hidden = n !== i; });
         setScreen("gallery");
-        layoutMosaic(galleryView.querySelector(".pj-gallery:not([hidden])"));
+        revealProject(galleryView);
         galleryView.scrollTop = 0;
         pj.querySelector(".pj-panel").scrollTop = 0;
-        focusIfKeyboard(galleryView.querySelector(".pj-back-circle"));
+        focusIfKeyboard(galleryView.querySelector(".pj-gallery:not([hidden]) .pj-back-circle"));
         return;
       }
       decks.forEach((d, n) => { d.hidden = n !== i; });
       deckView.dataset.tone = decks[i].dataset.tone;
       setScreen("deck");
       deckView.scrollTop = 0;
+      revealProject(deckView);
       pj.querySelector(".pj-panel").scrollTop = 0;
       focusIfKeyboard(deckView.querySelector(".pj-back-circle"));
     };
