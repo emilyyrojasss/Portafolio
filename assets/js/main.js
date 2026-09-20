@@ -297,8 +297,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Photo mosaic: split the photos (in order) into rows so that, with every row justified to the
-  // full width, the rows add up to the height of the area; tiles are then sized to fill it exactly.
+  // Photo mosaic: split the photos (in order) into rows, justify every row to the full width, and
+  // size the tiles to fill the area. A tile is never cropped more than CROP_MAX: when the photos
+  // cannot fill the area within that limit, the whole mosaic shrinks and is centred instead.
+  const CROP_MAX = 1.25;
   const layoutMosaic = (gal) => {
     if (!gal || gal.hidden) return;
     const figs = Array.from(gal.querySelectorAll("figure"));
@@ -311,39 +313,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const n = ar.length;
     const pre = [0];
     ar.forEach((a, i) => pre.push(pre[i] + a));
-    const rowH = (i, k) => (W - (k - i - 1) * g) / (pre[k] - pre[i]);
+    const sumAr = (i, e) => pre[e] - pre[i];
+    const rowH = (i, e, w) => (w - (e - i - 1) * g) / sumAr(i, e);
     let best = null;
     for (let k = 1; k <= Math.min(n, 12); k++) {
-      const target = (H - (k - 1) * g) / k;
+      const hb = H - (k - 1) * g;
+      const target = hb / k;
       const dp = Array.from({ length: k + 1 }, () => Array(n + 1).fill(Infinity));
       const from = Array.from({ length: k + 1 }, () => Array(n + 1).fill(0));
       dp[0][0] = 0;
       for (let r = 1; r <= k; r++) {
         for (let e = r; e <= n; e++) {
           for (let i = r - 1; i < e; i++) {
-            const c = dp[r - 1][i] + Math.pow(rowH(i, e) - target, 2);
+            const c = dp[r - 1][i] + Math.pow(rowH(i, e, W) - target, 2);
             if (c < dp[r][e]) { dp[r][e] = c; from[r][e] = i; }
           }
         }
       }
-      const score = dp[k][n] / (k * target * target);
-      if (!best || score < best.score) {
-        const rows = [];
-        for (let r = k, e = n; r > 0; r--) { rows.unshift([from[r][e], e]); e = from[r][e]; }
-        best = { score, rows };
+      const rows = [];
+      for (let r = k, e = n; r > 0; r--) { rows.unshift([from[r][e], e]); e = from[r][e]; }
+      const natural = rows.reduce((s, [i, e]) => s + rowH(i, e, W), 0);
+      let u = hb / natural, w = W, ht = hb;
+      if (u > CROP_MAX) { u = CROP_MAX; ht = natural * u; }
+      else if (u < 1 / CROP_MAX) {
+        u = 1 / CROP_MAX;
+        const gaps = rows.reduce((s, [i, e]) => s + ((e - i - 1) * g) / sumAr(i, e), 0);
+        w = (hb / u + gaps) / rows.reduce((s, [i, e]) => s + 1 / sumAr(i, e), 0);
+        ht = hb;
       }
+      const coverage = (w * (ht + (k - 1) * g)) / (W * H);
+      const score = coverage - dp[k][n] / (k * target * target) * 0.05;
+      if (!best || score > best.score) best = { score, rows, u, w, ht };
     }
-    const heights = best.rows.map(([i, e]) => rowH(i, e));
-    const scale = (H - (best.rows.length - 1) * g) / heights.reduce((a, b) => a + b, 0);
-    let y = 0;
-    best.rows.forEach(([i, e], r) => {
-      const h = heights[r] * scale;
-      const avail = W - (e - i - 1) * g;
-      let x = 0;
+    const { rows, u, w, ht } = best;
+    let y = (H - (ht + (rows.length - 1) * g)) / 2;
+    const x0 = (W - w) / 2;
+    rows.forEach(([i, e]) => {
+      const h = rowH(i, e, w) * u;
+      const avail = w - (e - i - 1) * g;
+      let x = x0;
       for (let m = i; m < e; m++) {
-        const w = (avail * ar[m]) / (pre[e] - pre[i]);
-        Object.assign(figs[m].style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px" });
-        x += w + g;
+        const tw = (avail * ar[m]) / sumAr(i, e);
+        Object.assign(figs[m].style, { left: x + "px", top: y + "px", width: tw + "px", height: h + "px" });
+        x += tw + g;
       }
       y += h + g;
     });

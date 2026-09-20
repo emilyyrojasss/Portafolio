@@ -1,5 +1,5 @@
 /* ============================================
-   Bloom Coaching — styles
+   Portafolio Emily Rojas — estilos
    Sizes are written in "u" units: 1u = 1/1470 of the
    viewport width, so the hero scales like the reference
    design (drawn at a 1470px-wide viewport).
@@ -910,14 +910,15 @@ a { color: inherit; text-decoration: none; }
 }
 .f-submit:hover { background: #92c4b9; }
 
-/* contact variant (home): two-line title + a message field, so the card and the
-   booklets grow taller; everything keeps the same sizes and horizontal positions */
-.freebie-card--contact { height: calc(var(--u) * 700); }
-.freebie-card--contact .freebie-title { top: calc(var(--u) * 38); font-size: calc(var(--u) * 78); text-align: center; }
-.freebie-card--contact .freebie-text { top: calc(var(--u) * 222); }
-.freebie-card--contact .f-first,
-.freebie-card--contact .f-last { top: calc(var(--u) * 326); }
-.freebie-card--contact .f-email { top: calc(var(--u) * 398); }
+/* contact variant: two-line title + a message field, so the card is taller. It has no magazines
+   beside it, so the card sits in the middle of the page and everything is centered in it (card 837u wide) */
+.freebie-card--contact { height: calc(var(--u) * 700); margin-left: auto; margin-right: auto; }
+.freebie-card--contact .freebie-title { top: calc(var(--u) * 38); left: 50%; font-size: calc(var(--u) * 78); text-align: center; }
+.freebie-card--contact .freebie-text { top: calc(var(--u) * 222); left: 50%; }
+.freebie-card--contact .f-first { top: calc(var(--u) * 326); left: calc(var(--u) * 134); }
+.freebie-card--contact .f-last { top: calc(var(--u) * 326); left: calc(var(--u) * 429); }
+.freebie-card--contact .f-email { top: calc(var(--u) * 398); left: calc(var(--u) * 134); }
+.freebie-card--contact .f-message { left: calc(var(--u) * 134); }
 .f-message {
   top: calc(var(--u) * 470);
   left: calc(var(--u) * 167);
@@ -926,85 +927,7 @@ a { color: inherit; text-decoration: none; }
   padding-top: calc(var(--u) * 18) !important;
   resize: none;
 }
-.freebie-card--contact .f-submit { top: calc(var(--u) * 596); }
-.freebie-card--contact .book { height: calc(var(--u) * 625); }
-.freebie-card--contact .book-title { top: calc(var(--u) * 464); }
-.freebie-card--contact .book-sub { top: calc(var(--u) * 512); }
-
-/* tilted freebie booklets, overlapping the card's left edge */
-.freebie-books {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-.book {
-  position: absolute;
-  top: calc(var(--u) * 10);
-  width: calc(var(--u) * 336);
-  height: calc(var(--u) * 523);
-  overflow: hidden;
-  background-color: #c1a283;
-  background-image:
-    linear-gradient(to bottom, rgba(40, 32, 28, 0) 55%, rgba(40, 32, 28, 0.85) 100%),
-    url("../img/citrus-slice.jpg");
-  background-size: cover;
-  background-position: 50% 30%;
-  box-shadow: calc(var(--u) * 8) calc(var(--u) * 12) calc(var(--u) * 16) rgba(0, 0, 0, 0.45);
-}
-.book-front { left: calc(var(--u) * -283); transform: rotate(-2deg); }
-.book-back  { left: calc(var(--u) * -208); transform: rotate(3.5deg); }
-
-.book-badge {
-  position: absolute;
-  top: calc(var(--u) * 22);
-  left: calc(var(--u) * 233);
-  width: calc(var(--u) * 85);
-  height: calc(var(--u) * 85);
-  display: grid;
-  place-items: center;
-  color: #111;
-  font-family: "Inter Tight", var(--font-sans);
-  font-size: calc(var(--u) * 15);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  text-align: center;
-}
-.book-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--lime); }
-.book-badge span { position: relative; }
-
-.book-title {
-  position: absolute;
-  left: calc(var(--u) * 35);
-  top: calc(var(--u) * 362);
-  margin: 0;
-  color: #fff;
-  font-family: "Inter Tight", var(--font-sans);
-  font-size: calc(var(--u) * 26);
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  white-space: nowrap;
-}
-.book-sub {
-  position: absolute;
-  left: calc(var(--u) * 36);
-  top: calc(var(--u) * 410);
-  margin: 0;
-  font-family: "Inter Tight", var(--font-sans);
-  font-size: calc(var(--u) * 22);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: calc(var(--u) * 30);
-  white-space: nowrap;
-  transform: rotate(-2.5deg);
-  transform-origin: left top;
-}
-.book-sub span {
-  padding: 0 calc(var(--u) * 6);
-  background: var(--passion);
-  color: var(--white);
-}
+.freebie-card--contact .f-submit { top: calc(var(--u) * 596); left: calc(var(--u) * 234); }
 
 /* ---------- Testimonials ---------- */
 
@@ -1015,21 +938,6 @@ a { color: inherit; text-decoration: none; }
   background: var(--ocean);
   color: var(--paper);
 }
-
-.testi-photo {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--u) * 919);
-  right: 0;
-  background-color: #8a6f5c;
-  background-image: url("../img/mangoes.jpg"), url("../img/toucan.jpg");
-  background-size: cover;
-  background-position: 30% 30%;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 40%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 40%);
-}
-
 .testi-label {
   position: absolute;
   top: calc(var(--u) * 31);
@@ -1059,20 +967,40 @@ a { color: inherit; text-decoration: none; }
   to { opacity: 1; transform: none; }
 }
 
+/* small square photo above the quote: a different picture of the referente */
 .t-avatar {
   flex: none;
   margin: 0 0 calc(var(--u) * 34);
   width: calc(var(--u) * 168);
   height: calc(var(--u) * 154);
-  background-color: #c9b6a0;
-  background-image: url("../img/ref-dieter-rams.jpg");
+  background-color: #2b6a68;
+  background-image: url("../img/ref-steve-jobs-2.jpg");
   background-size: cover;
-  background-position: 50% 22%;
+  background-repeat: no-repeat;
+  background-position: 50% 18%;
 }
+.t-avatar--2 { background-image: url("../img/ref-dieter-rams-2.jpg"); background-position: 50% 30%; }
+.t-avatar--3 { background-image: url("../img/ref-susan-kare-2.jpg"); background-position: 50% 30%; }
+.t-avatar--4 { background-image: url("../img/ref-exodo-2.jpg"); background-position: 50% 50%; }
 
-.t-avatar--2 { background-image: url("../img/ref-steve-jobs.jpg"); background-position: 50% 12%; }
-.t-avatar--3 { background-image: url("../img/ref-susan-kare.jpg"); background-position: 35% 32%; }
-.t-avatar--4 { background-image: url("../img/ref-exodo.jpg"); background-position: 50% 55%; }
+/* big photo on the right side of the section, fading into the green */
+.t-photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--u) * 919);
+  right: 0;
+  background-color: #2b6a68;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 40%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 40%);
+}
+.t-photo--1 { background-image: url("../img/ref-dieter-rams.jpg"); background-position: 50% 30%; }
+.t-photo--2 { background-image: url("../img/ref-steve-jobs.jpg"); background-position: 50% 0%; }
+.t-photo--3 { background-image: url("../img/ref-susan-kare.jpg"); background-position: 45% 30%; }
+.t-photo--4 { background-image: url("../img/ref-exodo.jpg"); background-position: 50% 45%; }
 
 .t-stars {
   position: absolute;
@@ -1315,7 +1243,7 @@ a { color: inherit; text-decoration: none; }
   display: block;
   margin-top: calc(var(--u) * 46);
   font-family: "Inter Tight", var(--font-sans);
-  font-size: calc(var(--u) * 127); /* longer name: same overall width as the 168u "Bloom Coaching" */
+  font-size: calc(var(--u) * 127); /* longer name: same overall width as the original 168u title */
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.043em;
@@ -2574,7 +2502,7 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 
-/* ---------- Sales page: The Bloom Method ---------- */
+/* ---------- Sales page: method ---------- */
 
 .bm {
   position: relative;
@@ -2957,10 +2885,6 @@ a { color: inherit; text-decoration: none; }
   .tilt-track span { font-size: 15px; }
   .freebie { padding: 88px 20px 64px; }
   .freebie-card { width: auto; height: auto; margin-left: 0; padding: 32px 20px 36px; }
-  .freebie-books { position: static; display: flex; justify-content: center; margin: 0 0 32px; }
-  .book-back { display: none; }
-  .book { position: relative; top: auto; }
-  .book-front { left: auto; }
   .freebie-title, .freebie-text { position: static; transform: none; white-space: normal; text-align: center; }
   .freebie-title { font-size: 46px; }
   .freebie-text { font-size: 16px; line-height: 1.5; margin-top: 16px; }
@@ -2971,13 +2895,13 @@ a { color: inherit; text-decoration: none; }
   .dark-block { padding-bottom: 40px; }
   .freebie { padding-bottom: 40px; }
   .testi { height: auto; padding: 72px 20px 110px; }
-  .testi-photo { display: none; }
   .testi-label { position: static; margin-bottom: 20px; }
   .testi-label--right { display: none; }
   .t-slide, .t-slide.is-active { position: static; }
   .t-slide.is-active { display: block; padding: 0; }
-  .t-avatar, .t-stars, .t-quote, .t-text, .t-name { position: static; }
+  .t-stars, .t-quote, .t-text, .t-name { position: static; }
   .t-avatar { width: 140px; height: 128px; }
+  .t-photo { position: static; width: 100%; height: auto; aspect-ratio: 4 / 3; margin: 0 0 24px; -webkit-mask-image: none; mask-image: none; }
   .t-stars { width: 120px; margin-top: 24px; }
   .t-quote { margin-top: 16px; font-size: 32px; line-height: 1.05; white-space: normal; }
   .t-quote br { display: none; }
@@ -3441,14 +3365,15 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 .pj-gallery[hidden] { display: none; }
 .pj-gallery--tall { --rh: calc(var(--u) * 330); }
 .pj-gallery::after { content: ""; flex-grow: 1000; }
-.pj-gallery figure { flex: calc(var(--ar) * 100) 1 calc(var(--ar) * var(--rh)); margin: 0; overflow: hidden; border-radius: calc(var(--u) * 6); background: var(--wave); }
-.pj-gallery img { display: block; width: 100%; height: auto; transition: transform 0.4s ease; }
+.pj-gallery figure { flex: calc(var(--ar) * 100) 1 calc(var(--ar) * var(--rh)); margin: 0; overflow: hidden; isolation: isolate; contain: paint; border-radius: calc(var(--u) * 6); background: var(--wave); }
+.pj-gallery img { display: block; width: 100%; height: auto; transition: filter 0.25s ease; }
 /* JS lays the tiles out to exactly fill the area (desktop) */
 .pj-gallery.is-mosaic { position: absolute; inset: calc(var(--u) * 122) calc(var(--u) * 24) calc(var(--u) * 24); display: block; }
 .pj-gallery.is-mosaic::after { display: none; }
 .pj-gallery.is-mosaic figure { position: absolute; }
 .pj-gallery.is-mosaic img { height: 100%; object-fit: cover; }
-.pj-gallery figure:hover img { transform: scale(1.04); }
+/* no zoom on hover: a scaled <img> can spill past the rounded tile (Safari) and show over its neighbours */
+.pj-gallery figure:hover img { filter: brightness(1.06); }
 .pj-back-circle {
   position: fixed;
   top: calc(var(--u) * 40);
