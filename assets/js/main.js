@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // pinned by their top edge (their bottom would never show), so they stick
   // once their bottom edge reaches the bottom of the screen and the next one
   // slides over. --pin-top holds that offset, kept in sync with the size.
-  const pinEls = document.querySelectorAll(".over-group .about, .feel--paper, .how--incl, .sv-card");
+  const pinEls = document.querySelectorAll(".over-group .about, .feel--paper, .how--incl, .sv-card, .coach-card");
   if (pinEls.length && !prefersReducedMotion) {
     const pinMq = window.matchMedia("(max-width: 800px)");
     pinEls.forEach((el) => el.classList.add("is-pinned"));
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const headerH = header ? header.offsetHeight : 0;
       pinEls.forEach((el) => {
         if (!pinMq.matches) { el.style.removeProperty("--pin-top"); return; }
-        const isCard = el.classList.contains("sv-card");
+        const isCard = el.classList.contains("sv-card") || el.classList.contains("coach-card");
         const gap = isCard ? headerH + 12 : 0;
         const bottom = isCard ? 16 : 0;
         el.style.setProperty("--pin-top", `${Math.min(gap, window.innerHeight - el.offsetHeight - bottom)}px`);
@@ -240,6 +240,22 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
     });
   });
+  // Contact forms: the site is static, so sending opens the visitor's mail app
+  // with the message already written to contact.emilyrojas@gmail.com.
+  document.querySelectorAll("form.freebie-form, form.ct-fields").forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = (n) => (form.elements[n] ? form.elements[n].value.trim() : "");
+      const name = val("name") || [val("first"), val("last")].filter(Boolean).join(" ");
+      const subject = val("reason") || "Hola Emily, quiero hablar de un proyecto";
+      const body = [val("message"), "", name, val("email")].join("\n");
+      window.location.href =
+        "mailto:contact.emilyrojas@gmail.com?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+      form.reset();
+    });
+  });
+
   // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
   // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck > .pj-slide)
   // or a photo collection (.pj-view--gallery). Esc steps back. No value = the first overlay, #pj.
@@ -306,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-pj-open]").forEach((btn) => {
       if ((btn.dataset.pjOpen || "pj") !== pj.id) return;
-      btn.addEventListener("click", () => { opener = btn; openPj(); });
+      btn.addEventListener("click", (e) => { e.preventDefault(); opener = btn; openPj(); });
       // the whole card opens it too; the button stays the keyboard/screen-reader entry point
       const card = btn.closest(".sv-card");
       if (card) {
@@ -326,6 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (prevBtn) prevBtn.addEventListener("click", () => showSlide(slideIndex - 1));
     if (nextBtn) nextBtn.addEventListener("click", () => showSlide(slideIndex + 1));
     pj.addEventListener("click", (e) => { if (e.target === pj) closePj(); });
+    // links from other pages (services.html#pj) open the overlay on load
+    if (location.hash === "#" + pj.id) openPj();
 
     document.addEventListener("keydown", (e) => {
       if (pj.hidden || document.querySelector(".lightbox")) return;

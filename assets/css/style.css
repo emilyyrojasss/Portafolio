@@ -102,10 +102,10 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   background-color: #9b7d5a;
-  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/hero-cascadas.jpg");
+  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/toucan.jpg");
   background-size: 100% 100%, cover;
   background-repeat: no-repeat;
-  background-position: 0 0, 50% 38%;
+  background-position: 0 0, 50% 22%;
 }
 
 /* photos dissolve into the page background at the bottom */
@@ -537,7 +537,16 @@ a { color: inherit; text-decoration: none; }
    screen: the container gets a tail (::after) and the next section is pulled up over it,
    so "Why" slides over the pinned fan instead of the last cards squeezing together. */
 .coaching,
-.coaching + .why { --fan-tail: max(calc(var(--u) * 1010), 100svh); }
+.coaching + .why { --fan-tail: max(calc(var(--fan-u) * 1010), 100svh); }
+/* The last pinned card ends 945 units down: on short windows the whole fan scales down
+   (same proportions) so it never runs past the bottom of the screen. */
+.coaching,
+.coaching + .why { --fan-u: var(--u); }
+@media (min-width: 801px) {
+  .coaching,
+  .coaching + .why { --fan-u: min(calc(100vw / 1470), calc(100svh / 985)); }
+  .coaching { --u: var(--fan-u); }
+}
 .coaching { padding: calc(var(--u) * 150) 0 0; }
 .coaching::after { content: ""; display: block; height: var(--fan-tail); }
 .coaching + .why { margin-top: calc(var(--u) * 150 - var(--fan-tail)); }
@@ -1404,10 +1413,7 @@ a { color: inherit; text-decoration: none; }
   width: calc(var(--u) * 435);
   height: calc(var(--u) * 496);
   transform: translateX(-50%);
-  background-color: #c9a27c;
-  background-image: url("../img/fruit-cart-blue.jpg");
-  background-size: cover;
-  background-position: 50% 20%;
+  background-color: #c9c9c9; /* matches the video's grey backdrop while it loads */
 }
 
 .ab-portrait video {
@@ -2846,7 +2852,7 @@ a { color: inherit; text-decoration: none; }
     display: block;
     width: 24px;
     height: 2px;
-    background: var(--black);
+    background: var(--white);
   }
 
   .main-nav {
@@ -2963,23 +2969,23 @@ a { color: inherit; text-decoration: none; }
   .foot-links { width: auto; margin-top: 28px; grid-template-columns: 1fr; }
   .foot-links .pill { height: 60px; padding: 0 10px 0 20px; font-size: 13px; }
   .foot-links .pill-icon { width: 42px; height: 42px; }
-  .foot-mark { margin-top: 36px; font-size: 9.6vw; }
+  .foot-mark { margin-top: 36px; font-size: 9vw; }
   .foot-credit { margin: 12px 0 0; font-size: 12px; text-align: center; }
   .ab-hero { height: 640px; margin-bottom: 280px; }
   .ab-copy { top: 96px; left: 20px; right: 20px; }
-  .ab-title { font-size: 52px; }
+  .ab-title { font-size: 52px; white-space: normal; }
   .ab-text { width: auto; margin-top: 20px; font-size: 15px; line-height: 1.5; }
   .ab-marquee { top: 400px; font-size: 34vw; }
   .ab-track { padding-left: 12px; margin-left: -100vw; }
   .ab-track span { width: 100vw; }
-  .ab-pill { top: 660px; left: 50%; width: 250px; height: 60px; padding: 0 10px 0 22px; font-size: 13px; margin-left: -40px; }
+  .ab-pill { top: 660px; left: auto; right: 20px; width: 250px; height: 60px; padding: 0 10px 0 22px; font-size: 13px; }
   .ab-pill .pill-icon { width: 42px; height: 42px; }
   .ab-portrait { top: 380px; width: 260px; height: 340px; }
   .ab-story { display: block; margin-left: 0; padding: 24px 20px 48px; }
   .ab-story-copy { padding-top: 0; }
   .ab-story-photo { height: auto; aspect-ratio: 548 / 678; margin-top: 32px; }
   .ab-values { padding: 64px 20px 72px; }
-  .ab-values-title { margin: 0 0 32px; font-size: 26vw; }
+  .ab-values-title { margin: 0 0 32px; font-size: calc((100vw - 40px) / 3.9); }
   .ab-values-cols { display: block; margin-left: 0; }
   .ab-vtext { font-size: 15px; line-height: 1.5; margin-bottom: 20px; text-align: left; }
   .ab-values-main { display: block; margin: 40px 0 0; }
@@ -3121,8 +3127,10 @@ a { color: inherit; text-decoration: none; }
   .over-group .about { position: relative; top: auto; padding-bottom: 64px; }
   .over-group .feel { margin-top: 0; padding-top: 64px; background: var(--ocean); }
   .coaching { padding: 64px 20px; }
-  .coaching + .why { margin-top: calc(0px - var(--fan-tail)); }
-  .coach-card { position: sticky; top: calc(var(--nav-h) + 12px + var(--i) * 108px); width: auto; height: auto !important; margin-bottom: 20px; padding: 28px 22px 32px; border-radius: 32px; }
+  /* phones: the cards pin one over another via .is-pinned (main.js), aligned so each shows whole before the next slides over it */
+  .coaching::after { display: none; }
+  .coaching + .why { margin-top: 0; }
+  .coach-card { position: relative; top: auto; width: auto; height: auto !important; margin-bottom: 20px; padding: 28px 22px 32px; border-radius: 32px; }
   .coach-title { position: static; font-size: 40px; white-space: normal; padding-right: 64px; }
   .coach-arrow { top: 18px; right: 18px; width: 46px; height: 46px; }
   .coach-photo { position: static; width: 100%; height: auto; aspect-ratio: 317 / 224; margin-top: 24px; }
@@ -3136,8 +3144,9 @@ a { color: inherit; text-decoration: none; }
   .hero-tagline {
     top: 22px;
     left: 18px;
-    font-size: 16px;
-    line-height: 1.3;
+    right: 132px; /* keeps the copy well clear of the badge */
+    font-size: 14px;
+    line-height: 1.35;
   }
 
   .hero-title { top: 36%; font-size: calc(var(--u) * 98); }
@@ -3151,10 +3160,20 @@ a { color: inherit; text-decoration: none; }
     line-height: 14px;
   }
 
+  /* the whole wave fits the screen width, same shape as on desktop, just smaller */
   .hero-ribbon {
-    width: 260%;
-    left: -80%;
+    width: 100%;
+    left: 0;
   }
+  .hero-ribbon .ribbon-text { font-size: 56px; }
+}
+
+/* narrow phones: the About hero copy wraps to more lines, so the portrait block moves down with it */
+@media (max-width: 400px) {
+  .ab-hero { height: 700px; }
+  .ab-marquee { top: 460px; }
+  .ab-portrait { top: 440px; }
+  .ab-pill { top: 720px; }
 }
 
 /* JS marks the sections it pins on mobile (never with reduced motion) */
@@ -3269,7 +3288,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
   padding: calc(var(--u) * 104) calc(var(--u) * 48) calc(var(--u) * 52);
   border: 1px dashed var(--black);
   border-radius: calc(var(--u) * 56);
-  background: #f9f8f5;
+  background: #fff;
   color: var(--black);
   font: inherit;
   text-align: center;
