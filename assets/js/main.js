@@ -114,7 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const cards = know.querySelectorAll(".know-card");
     const steps = [0.08, 0.36, 0.62];
     know.classList.add("is-armed");
+    // Mobile: the stage isn't pinned, so each card lands as it scrolls into view.
+    const mobileMq = window.matchMedia("(max-width: 800px)");
     const updateKnow = () => {
+      if (mobileMq.matches) {
+        cards.forEach((card) => {
+          if (card.getBoundingClientRect().top < window.innerHeight * 0.9) card.classList.add("is-in");
+        });
+        return;
+      }
       const rect = know.getBoundingClientRect();
       const spacer = know.querySelector(".know-spacer");
       const span = spacer ? spacer.offsetHeight : 0;
@@ -126,6 +134,34 @@ document.addEventListener("DOMContentLoaded", () => {
     updateKnow();
   }
 
+  // Mobile pinned sections: sections and cards taller than the screen can't be
+  // pinned by their top edge (their bottom would never show), so they stick
+  // once their bottom edge reaches the bottom of the screen and the next one
+  // slides over. --pin-top holds that offset, kept in sync with the size.
+  const pinEls = document.querySelectorAll(".over-group .about, .feel--paper, .how--incl, .sv-card");
+  if (pinEls.length && !prefersReducedMotion) {
+    const pinMq = window.matchMedia("(max-width: 800px)");
+    pinEls.forEach((el) => el.classList.add("is-pinned"));
+    const updatePins = () => {
+      const header = document.querySelector(".site-header");
+      const headerH = header ? header.offsetHeight : 0;
+      pinEls.forEach((el) => {
+        if (!pinMq.matches) { el.style.removeProperty("--pin-top"); return; }
+        const isCard = el.classList.contains("sv-card");
+        const gap = isCard ? headerH + 12 : 0;
+        const bottom = isCard ? 16 : 0;
+        el.style.setProperty("--pin-top", `${Math.min(gap, window.innerHeight - el.offsetHeight - bottom)}px`);
+      });
+    };
+    window.addEventListener("resize", updatePins);
+    window.addEventListener("load", updatePins);
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(updatePins);
+      pinEls.forEach((el) => ro.observe(el));
+    }
+    updatePins();
+  }
+
   // Testimonials: auto-advance every few seconds, arrows also work. The timer
   // pauses while the pointer or keyboard focus is inside the section and
   // never runs with reduced motion.
@@ -133,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tPrev = document.querySelector(".t-prev");
   const tNext = document.querySelector(".t-next");
   if (tSlides.length > 1 && tPrev && tNext) {
-    const T_DELAY = 6000;
+    const T_DELAY = 12000;
     let tIndex = 0;
     let tTimer = null;
     const showT = (i) => {
@@ -175,4 +211,31 @@ document.addEventListener("DOMContentLoaded", () => {
       setInterval(() => show(index + 1), 6000);
     }
   }
+
+  // Zoom: clicking a [data-zoom] image (or its circle button) opens it full size
+  const openZoom = (src, label) => {
+    const box = document.createElement("div");
+    box.className = "lightbox";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-label", label || "Imagen ampliada");
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = label || "";
+    box.appendChild(img);
+    const close = () => {
+      box.remove();
+      document.removeEventListener("keydown", onKey);
+    };
+    const onKey = (e) => { if (e.key === "Escape") close(); };
+    box.addEventListener("click", close);
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(box);
+  };
+  document.querySelectorAll("[data-zoom]").forEach((el) => {
+    const open = () => openZoom(el.dataset.zoom, el.getAttribute("aria-label"));
+    el.addEventListener("click", (e) => { e.preventDefault(); open(); });
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+    });
+  });
 });
