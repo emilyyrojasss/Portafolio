@@ -127,7 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const spacer = know.querySelector(".know-spacer");
       const span = spacer ? spacer.offsetHeight : 0;
       const p = span > 0 ? Math.min(1, Math.max(0, -rect.top / span)) : 1;
-      cards.forEach((card, i) => card.classList.toggle("is-in", p >= steps[i]));
+      // the first card lands as soon as the section comes into view, before the stage pins
+      const seen = rect.top < window.innerHeight * 0.6;
+      cards.forEach((card, i) => card.classList.toggle("is-in", (i === 0 && seen) || p >= steps[i]));
     };
     window.addEventListener("scroll", updateKnow, { passive: true });
     window.addEventListener("resize", updateKnow);

@@ -379,6 +379,7 @@ a { color: inherit; text-decoration: none; }
   stroke-linejoin: round;
 }
 .pill-lavender { background: var(--wave); }
+.pill-passion { background: var(--passion); }
 .pill-orange { background: var(--papaya); }
 .pill-butter { background: var(--lime); }
 
@@ -461,6 +462,21 @@ a { color: inherit; text-decoration: none; }
   font-size: calc(var(--u) * 16.75);
   line-height: calc(var(--u) * 18.7);
 }
+
+/* home: three project cards (one per area), each with a cover image */
+.feel--projects .feel-card { height: calc(var(--u) * 490); padding-top: calc(var(--u) * 70); }
+.feel--projects .feel-card p { margin-top: calc(var(--u) * 20); }
+.feel-card-photo {
+  height: calc(var(--u) * 190);
+  margin-top: calc(var(--u) * 34);
+  border-radius: calc(var(--u) * 20);
+  background-color: var(--lime);
+  background-size: cover;
+  background-position: center;
+}
+.feel-card-photo--ux { background-color: var(--wave); }
+.feel-card-photo--brand { background-color: var(--lime); }
+.feel-card-photo--photo { background-color: #e9a27f; }
 
 .feel-cta {
   display: flex;
@@ -1236,8 +1252,9 @@ a { color: inherit; text-decoration: none; }
 
 .foot-links {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: calc(var(--u) * 13);
-  width: calc(var(--u) * 416);
+  width: calc(var(--u) * 640);
 }
 .foot-links .pill {
   height: calc(var(--u) * 64);
@@ -1260,7 +1277,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .foot-credit {
-  margin: calc(var(--u) * 11) 0 0 calc(var(--u) * 1132);
+  margin: calc(var(--u) * 14) 0 0;
+  text-align: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: calc(var(--u) * 11.7);
   font-weight: 700;
@@ -1361,6 +1379,13 @@ a { color: inherit; text-decoration: none; }
   background-image: url("../img/fruit-cart-blue.jpg");
   background-size: cover;
   background-position: 50% 20%;
+}
+
+.ab-portrait video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .ab-pill {
@@ -1509,19 +1534,6 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
 }
 
-.know-label {
-  position: absolute;
-  top: calc(var(--u) * 68);
-  margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: calc(var(--u) * 18.3);
-  font-weight: 700;
-  line-height: calc(var(--u) * 20);
-  text-transform: uppercase;
-}
-.know-label--left { left: calc(var(--u) * 28); }
-.know-label--right { right: calc(var(--u) * 28); }
-
 .know-card {
   --dy: 0px;
   position: absolute;
@@ -1535,9 +1547,9 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(var(--dy)) rotate(var(--rot));
   transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.know-card--orange   { --rot: 4deg;  left: calc(var(--u) * 230);  background: var(--papaya); }
-.know-card--lavender { --rot: -6deg; left: calc(var(--u) * 570);  top: calc(var(--u) * 183); background: var(--wave); }
-.know-card--butter   { --rot: 8deg;  left: calc(var(--u) * 893);  top: calc(var(--u) * 187); background: var(--lime); }
+.know-card--orange   { --rot: 4deg;  left: calc(var(--u) * 200);  background: var(--papaya); }
+.know-card--lavender { --rot: -6deg; left: calc(var(--u) * 540);  top: calc(var(--u) * 183); background: var(--wave); }
+.know-card--butter   { --rot: 8deg;  left: calc(var(--u) * 863);  top: calc(var(--u) * 187); background: var(--lime); }
 
 .know-card h3 {
   margin: 0;
@@ -2830,6 +2842,8 @@ a { color: inherit; text-decoration: none; }
   .feel-card { height: auto; margin-bottom: 18px; padding: 72px 28px 32px; border-radius: 36px; }
   .feel-card-title { font-size: 44px; }
   .feel-card p { font-size: 16px; line-height: 1.4; margin-top: 26px; }
+  .feel--projects .feel-card { height: auto; padding-top: 72px; }
+  .feel-card-photo { height: auto; aspect-ratio: 16 / 9; margin-top: 24px; }
   .feel-cta { flex-direction: column; align-items: flex-start; gap: 28px; width: auto; margin: 56px 0 0; }
   .feel-cta-title { font-size: 34px; }
   .feel-cta-title br { display: none; }
@@ -2893,11 +2907,11 @@ a { color: inherit; text-decoration: none; }
   .site-footer > .foot-mid:first-child { margin-top: 0; }
   .foot-tag { margin: 0; font-size: 34px; line-height: 1.05; white-space: normal; }
   .foot-tag br { display: none; }
-  .foot-links { width: auto; margin-top: 28px; }
+  .foot-links { width: auto; margin-top: 28px; grid-template-columns: 1fr; }
   .foot-links .pill { height: 60px; padding: 0 10px 0 20px; font-size: 13px; }
   .foot-links .pill-icon { width: 42px; height: 42px; }
   .foot-mark { margin-top: 36px; font-size: 9.6vw; }
-  .foot-credit { margin: 12px 0 0; font-size: 12px; text-align: right; }
+  .foot-credit { margin: 12px 0 0; font-size: 12px; text-align: center; }
   .ab-hero { height: 640px; margin-bottom: 280px; }
   .ab-copy { top: 96px; left: 20px; right: 20px; }
   .ab-title { font-size: 52px; }
@@ -2924,8 +2938,6 @@ a { color: inherit; text-decoration: none; }
   .know { height: auto; padding: 56px 20px 64px; }
   .know-spacer { display: none; }
   .know-stage { position: static; height: auto; min-height: 0; overflow: visible; }
-  .know-label { position: static; margin-bottom: 16px; }
-  .know-label--right { display: none; }
   .know-cards { display: grid; gap: 22px; margin-top: 24px; }
   .know-card, .know-card--lavender, .know-card--butter { position: relative; left: auto; top: auto; width: auto; height: auto; padding: 44px 28px 40px; border-radius: 32px; }
   .know-card { --rot: 0deg; }
@@ -3099,4 +3111,151 @@ a { color: inherit; text-decoration: none; }
   html { scroll-behavior: auto; }
   .tilt-track { animation: none; }
   .t-slide.is-active { animation: none; }
+}
+
+/* ============================================
+   Projects page (portfolio.html) — palette colors only,
+   warm beige background instead of white
+   ============================================ */
+
+:root { --beige: #efe2c8; --beige-deep: #e4d3b1; }
+
+.page-projects { background: var(--beige); }
+.page-projects .pill { background: var(--beige); }
+/* shared closing blocks look the same on every page */
+.page-projects .cta .pill,
+.page-projects .foot-links .pill { background: #f9f8f5; }
+
+.pf-hero {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 240) 1fr calc(var(--u) * 240);
+  align-items: center;
+  gap: calc(var(--u) * 40);
+  padding: calc(var(--u) * 70) calc(var(--u) * 40) calc(var(--u) * 60);
+}
+.pf-tile {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  padding: calc(var(--u) * 16);
+  border-radius: calc(var(--u) * 8);
+  text-align: center;
+  font-size: calc(var(--u) * 15);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.pf-tile--a { background: var(--wave); color: var(--ocean); }
+.pf-tile--b { background: var(--papaya); color: var(--beige); }
+
+.pf-hero-copy { text-align: center; }
+.pf-title {
+  margin: 0;
+  color: var(--ocean);
+  font-family: "Inter Tight", var(--font-sans);
+  font-size: calc(var(--u) * 85);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+.pf-lede {
+  max-width: calc(var(--u) * 480);
+  margin: calc(var(--u) * 28) auto 0;
+  color: var(--ocean);
+  font-size: calc(var(--u) * 15);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.pf-list { padding: 0 calc(var(--u) * 40) calc(var(--u) * 90); }
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--u) * 28);
+}
+.pf-card-image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  padding: calc(var(--u) * 20);
+  border-radius: calc(var(--u) * 8);
+  text-align: center;
+}
+.pf-mark {
+  font-family: "Instrument Serif", "Playfair Display", Georgia, serif;
+  font-size: calc(var(--u) * 46);
+  font-style: italic;
+  line-height: 1;
+}
+.pf-card-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: calc(var(--u) * 12);
+  padding-top: calc(var(--u) * 14);
+  color: var(--black);
+  font-size: calc(var(--u) * 15);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.pf-more { color: var(--papaya); border-bottom: 1px solid currentColor; }
+
+.pf-card:nth-child(9n+1) .pf-card-image { background: var(--ocean);  color: var(--beige); }
+.pf-card:nth-child(9n+2) .pf-card-image { background: var(--lime);   color: var(--ocean); }
+.pf-card:nth-child(9n+3) .pf-card-image { background: var(--passion); color: var(--beige); }
+.pf-card:nth-child(9n+4) .pf-card-image { background: var(--wave);   color: var(--ocean); }
+.pf-card:nth-child(9n+5) .pf-card-image { background: var(--papaya); color: var(--beige); }
+.pf-card:nth-child(9n+6) .pf-card-image { background: var(--mango);  color: var(--black); }
+.pf-card:nth-child(9n+7) .pf-card-image { background: var(--passion); color: var(--beige); }
+.pf-card:nth-child(9n+8) .pf-card-image { background: var(--ocean);  color: var(--beige); }
+.pf-card:nth-child(9n+9) .pf-card-image { background: var(--lime);   color: var(--ocean); }
+
+.pf-outro {
+  display: block;
+  margin-top: calc(var(--u) * 60);
+  color: var(--ocean);
+  font-size: calc(var(--u) * 20);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pf-cta {
+  padding: calc(var(--u) * 90) calc(var(--u) * 40);
+  background: var(--lime);
+  color: var(--ocean);
+  text-align: center;
+}
+.pf-cta-title {
+  margin: 0;
+  font-family: "Inter Tight", var(--font-sans);
+  font-size: calc(var(--u) * 64);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+.pf-cta-text {
+  margin: calc(var(--u) * 20) 0 calc(var(--u) * 36);
+  font-size: calc(var(--u) * 18);
+}
+.pf-cta-pill { display: inline-flex; width: calc(var(--u) * 420); }
+
+@media (max-width: 800px) {
+  .pf-hero { grid-template-columns: 1fr; gap: 24px; padding: 40px 20px; }
+  .pf-tile { display: none; }
+  .pf-title { font-size: 44px; }
+  .pf-lede { max-width: none; margin-top: 18px; font-size: 13px; }
+  .pf-list { padding: 0 20px 56px; }
+  .pf-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pf-mark { font-size: 40px; }
+  .pf-card-caption { font-size: 13px; }
+  .pf-outro { margin-top: 36px; font-size: 15px; }
+  .pf-cta { padding: 56px 20px; }
+  .pf-cta-title { font-size: 40px; }
+  .pf-cta-text { font-size: 15px; }
+  .pf-cta-pill { width: 100%; }
 }

@@ -8,9 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Unbounded:wght@700;800;900&family=Space+Mono:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="page-projects">
 
 <header class="site-header">
   <a href="index.html" class="logo" aria-label="Emily Rojas S.">ERS</a>
@@ -28,155 +29,113 @@
   </nav>
 </header>
 
-<main>
+<main class="page-main">
 
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="collage">
-        <div class="collage-tile tile-pink" style="border-radius:6px;">
-          <div>
-            <div class="tile-label">Weekend Quilter</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-copy">
-        <h1>Creative Brand &amp; Website Design</h1>
-        <p class="lede" style="font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.08em; font-size:0.82rem; font-weight:700; opacity:0.75; max-width:480px; margin:0 auto;">Take a look through some of my recent branding work &amp; featured projects</p>
-      </div>
-
-      <div class="collage collage-right">
-        <div class="collage-tile tile-burgundy" style="border-radius:6px;">
-          <div class="tile-label">Paperback Post</div>
-        </div>
-      </div>
+  <section class="pf-hero">
+    <div class="pf-tile pf-tile--a"><span>Weekend Quilter</span></div>
+    <div class="pf-hero-copy">
+      <h1 class="pf-title">Creative Brand &amp; Website Design</h1>
+      <p class="pf-lede">Take a look through some of my recent branding work &amp; featured projects</p>
     </div>
+    <div class="pf-tile pf-tile--b"><span>Paperback Post</span></div>
   </section>
 
-  <section class="portfolio-list">
-    <div class="wrap wrap-wide">
-      <div class="portfolio-grid">
+  <section class="pf-list">
+    <div class="pf-grid">
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-burgundy">
-            <span class="wordmark">Genevieve Vaughn</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Genevieve Vaughn Floral Artistry</span>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Genevieve Vaughn</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Genevieve Vaughn Floral Artistry</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-pink-soft">
-            <span class="badge-hex">the healing hive</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">The Healing Hive</span>
-            <a href="#" class="cap-more">See More</a>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">the healing hive</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">The Healing Hive</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-orange">
-            <span class="wordmark block">Playful Threads</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Playful Threads</span>
-          </div>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-cream-soft">
-            <span class="wordmark">honey house <br>art studio</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Honey House Art Studio</span>
-            <a href="#" class="cap-more">See More</a>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Playful Threads</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Playful Threads</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-pink">
-            <span class="wordmark">Katherine Bowes</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Katherine Bowes</span>
-          </div>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-burgundy-dark">
-            <span class="badge-circle">Onward Studio</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Onward Studio</span>
-            <a href="#" class="cap-more">See More</a>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">honey house <br>art studio</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Honey House Art Studio</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-orange-dark">
-            <span class="wordmark block">OLIMAR</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">OLIMAR Creative Strategies</span>
-          </div>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-cream-soft">
-            <span class="wordmark">Weekend <br>Quilter</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">The Weekend Quilter</span>
-            <a href="#" class="cap-more">See More</a>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Katherine Bowes</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Katherine Bowes</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-pink-soft">
-            <span class="wordmark">Aly Cross</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Aly Cross</span>
-          </div>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="portfolio-card-image bg-burgundy">
-            <span class="badge-circle">Maebel</span>
-          </div>
-          <div class="portfolio-card-caption">
-            <span class="cap-name">Maebel</span>
-            <a href="#" class="cap-more">See More</a>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Onward Studio</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Onward Studio</span>
+            <a href="#" class="pf-more">See More</a>
           </div>
         </article>
 
-      </div>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">OLIMAR</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">OLIMAR Creative Strategies</span>
+            <a href="#" class="pf-more">See More</a>
+          </div>
+        </article>
 
-      <div class="portfolio-outro">
-        <a href="contact.html">Let's create your next feature &rarr;</a>
-      </div>
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Weekend <br>Quilter</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">The Weekend Quilter</span>
+            <a href="#" class="pf-more">See More</a>
+          </div>
+        </article>
+
+        <article class="pf-card">
+          <div class="pf-card-image"><span class="pf-mark">Maebel</span></div>
+          <div class="pf-card-caption">
+            <span class="pf-name">Maebel</span>
+            <a href="#" class="pf-more">See More</a>
+          </div>
+        </article>
+
     </div>
+
+    <a href="contact.html" class="pf-outro">Let's create your next feature &rarr;</a>
   </section>
 
-  <section class="cta-banner">
-    <div class="wrap center">
-      <h2 class="section-title center">Like what you see?</h2>
-      <p class="cta-text">Let's talk about what a brand like this could look like for you.</p>
-      <a href="contact.html" class="btn btn-pink">Start Your Project</a>
-    </div>
+  <section class="cta cta--compact">
+    <p class="cta-eyebrow">Y AHORA, ¿QUÉ SIGUE?</p>
+    <h2 class="cta-title">¿Y si hacemos <br>algo <em>juntos?</em></h2>
+    <p class="cta-text">Cada proyecto empieza con una idea, una pregunta o algo que queremos mejorar. Si tienes algo en mente, me encantaría conocerlo, explorarlo contigo y descubrir cómo podemos convertirlo en algo que realmente tenga sentido. No importa si todavía es solo una intuición: a veces lo más valioso es empezar la conversación.</p>
   </section>
 
 </main>
 
 <footer class="site-footer">
     <div class="foot-mid">
-      <p class="foot-tag">Sigo creando, <br><em>explorando</em> y <br>descubriendo lo que <br>puede ser posible.</p>
+      <p class="foot-tag">Las mejores ideas nacen<br>de conversaciones<br><em>reales.</em></p>
       <div class="foot-links">
         <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
         <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
         <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
       </div>
     </div>
 
