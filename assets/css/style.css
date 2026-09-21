@@ -3354,7 +3354,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 }
 .pj.is-list .pj-photo { display: none; }
 .pj-cover--yellowmaps { background-image: url("../img/yellowmaps/logo yellowmaps.png"); background-position: 50% 50%; }
-.pj-cover--ceipa { background-image: url("../img/ceipa/portada.jpg"); background-position: 50% 50%; }
+.pj-cover--ceipa { background-image: url("../img/ceipa/portada-isotipo.jpg"); background-position: 50% 45%; }
 .pj-cover--costarica { background-image: url("../img/costa rica/6695d2b3-8d9d-4938-b66b-b53845c71db7.jpg"); background-position: 50% 48%; }
 .pj-cover--newyork { background-image: url("../img/new york/77964F49-C555-4FBE-85BA-6E4B788050EB_1_105_c.jpeg"); background-position: 50% 50%; }
 .pj-close {
