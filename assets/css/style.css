@@ -216,6 +216,7 @@ a { color: inherit; text-decoration: none; }
   stroke-width: 126;
 }
 .hero-ribbon--pink .ribbon-band { stroke: var(--passion); }
+.ribbon-tools { font-size: 50px; }
 .ribbon-text {
   fill: var(--paper);
   font-family: "Helvetica Neue", Helvetica, Arial, "Inter", sans-serif;
@@ -477,7 +478,8 @@ a { color: inherit; text-decoration: none; }
   line-height: calc(var(--u) * 18.7);
 }
 
-/* home: three project cards (one per area), each with a cover image */
+/* home: two project cards (one per area), each with a cover image; same card size as the 3-column grid, centred */
+.feel--projects .feel-grid { grid-template-columns: repeat(2, calc((var(--u) * 1061 - var(--u) * 52) / 3)); justify-content: center; }
 .feel--projects .feel-card {
   height: calc(var(--u) * 490);
   padding-top: calc(var(--u) * 70);
@@ -2094,7 +2096,6 @@ a { color: inherit; text-decoration: none; }
   background: var(--card-bg);
 }
 .sv-card--group { --card-bg: var(--lime); }
-.sv-card--intensive { --card-bg: var(--papaya); }
 .sv-card.is-clickable { cursor: pointer; }
 
 .sv-card-photo {
@@ -2107,7 +2108,6 @@ a { color: inherit; text-decoration: none; }
 }
 .sv-card--individual .sv-card-photo { background-image: url("../img/tropical/poco-a-poco.jpg"), url("../img/tropical/fruit-macro.jpg"); }
 .sv-card--group .sv-card-photo { background-color: #b78e6b; background-image: url("../img/tropical/sun-season.jpg"), url("../img/tropical/toucan.jpg"); }
-.sv-card--intensive .sv-card-photo { background-color: #c9b98a; background-image: url("../img/tropical/fruit-macro.jpg"), url("../img/tropical/fruit-collage.jpg"); }
 
 .sv-card-title {
   position: absolute;
@@ -3179,6 +3179,7 @@ a { color: inherit; text-decoration: none; }
     bottom: 9vw; /* lifted so the whole band, including its lowest dip, stays inside the hero */
   }
   .hero-ribbon .ribbon-text { font-size: 56px; }
+  .hero-ribbon .ribbon-tools { font-size: 56px; }
 }
 
 /* narrow phones: the About hero copy wraps to more lines, so the portrait block moves down with it */
@@ -3354,8 +3355,6 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 .pj.is-list .pj-photo { display: none; }
 .pj-cover--yellowmaps { background-image: url("../img/yellowmaps/web/portada.jpg"); background-position: 40% 45%; }
 .pj-cover--ceipa { background-image: url("../img/ceipa/portada-isotipo.jpg"); background-position: 50% 45%; }
-.pj-cover--costarica { background-image: url("../img/costa rica/6695d2b3-8d9d-4938-b66b-b53845c71db7.jpg"); background-position: 50% 48%; }
-.pj-cover--newyork { background-image: url("../img/new york/77964F49-C555-4FBE-85BA-6E4B788050EB_1_105_c.jpeg"); background-position: 50% 50%; }
 .pj-close {
   position: fixed;
   top: calc(var(--u) * 40);
@@ -3533,6 +3532,7 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 .pj-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .pj-slot:has(img) span { display: none; }
 .pj-slot--hero { aspect-ratio: 2.3 / 1; margin-top: calc(var(--u) * 36); background: var(--tone); }
+.pj-case-about + .pj-mockups { margin-top: calc(var(--u) * 64); }
 
 /* "what is this project" paragraph: label on the left, text on the right */
 .pj-case-about {

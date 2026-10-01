@@ -94,6 +94,94 @@ document.addEventListener("DOMContentLoaded", () => {
     else start();
   }
 
+  // Home hero ribbon: instead of words, the logos (and names) of the tools I use
+  // travel along the same curve. Each logo is an <image> laid on the path (position
+  // and angle read from the path itself); each name is a <textPath>.
+  const toolsG = document.getElementById("ribbon-tools");
+  const toolsPath = document.getElementById("ribbon-path");
+  if (toolsG && toolsPath) {
+    const NS = "http://www.w3.org/2000/svg";
+    const RIBBON_SPEED = 70; // svg units per second
+    const total = toolsPath.getTotalLength();
+    const start = parseFloat(toolsG.dataset.start) || 975;
+    const fontSize = parseFloat(getComputedStyle(toolsG).fontSize) || 50;
+    const logoH = fontSize * 1.3;
+    const gap = fontSize * 0.42;   // logo <-> name
+    const after = fontSize * 1.05; // space around the separator dot
+
+    const mk = (tag, attrs, parent) => {
+      const el = document.createElementNS(NS, tag);
+      Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
+      if (parent) parent.appendChild(el);
+      return el;
+    };
+    const probe = mk("text", { class: "ribbon-text", opacity: 0 }, toolsG);
+    const measure = (str) => { probe.textContent = str; return probe.getComputedTextLength(); };
+
+    const build = () => {
+      // one cycle = every tool once, each followed by a dot
+      const cycle = [];
+      toolsG.dataset.tools.split("|").forEach((entry) => {
+        const [name, file, ratio] = entry.split(":");
+        const w = logoH * (parseFloat(ratio) || 1);
+        cycle.push({ kind: "logo", file, w, len: w });
+        if (name) cycle.push({ kind: "text", str: name.toUpperCase(), len: measure(name.toUpperCase()), lead: gap });
+        cycle.push({ kind: "text", str: "•", len: measure("•"), lead: after });
+        cycle[cycle.length - 1].tail = after;
+      });
+      // place items one after another (offset = arc length from the cycle start)
+      let x = 0;
+      cycle.forEach((it, i) => {
+        if (it.kind === "logo" && i > 0) x += 0;
+        x += it.lead || 0;
+        it.at = x;
+        x += it.len + (it.tail || 0);
+      });
+      const cycleLen = x;
+      probe.remove();
+
+      const copies = Math.ceil((total + cycleLen) / cycleLen) + 1;
+      const nodes = [];
+      for (let c = 0; c < copies; c++) {
+        cycle.forEach((it) => {
+          const node = { it, off: c * cycleLen + it.at };
+          if (it.kind === "logo") {
+            node.el = mk("image", { href: "assets/img/tools/" + it.file, width: it.w, height: logoH, filter: "url(#ribbon-tint)" }, toolsG);
+          } else {
+            const t = mk("text", { class: "ribbon-text", dy: ".36em" }, toolsG);
+            node.el = mk("textPath", { href: "#ribbon-path" }, t);
+            node.el.textContent = it.str;
+          }
+          nodes.push(node);
+        });
+      }
+
+      const render = (time) => {
+        const shift = prefersReducedMotion ? 0 : ((time / 1000) * RIBBON_SPEED) % cycleLen;
+        const base = start - cycleLen - shift;
+        nodes.forEach((n) => {
+          const pos = base + n.off;
+          if (n.it.kind === "text") {
+            n.el.setAttribute("startOffset", pos);
+            return;
+          }
+          const mid = pos + n.it.w / 2;
+          if (mid < -logoH || mid > total + logoH) { n.el.style.display = "none"; return; }
+          n.el.style.display = "";
+          const a = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid - 2)));
+          const b = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid + 2)));
+          const p = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid)));
+          const deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+          n.el.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${deg}) translate(${-n.it.w / 2} ${-logoH / 2})`);
+        });
+        if (!prefersReducedMotion) requestAnimationFrame(render);
+      };
+      requestAnimationFrame(render);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    else build();
+  }
+
   // About hero: the giant "ABOUT" drifts right at half the scroll speed.
   // Spans repeat every one span-width, so wrap the offset by that width.
   const abTrack = document.querySelector(".ab-track");
