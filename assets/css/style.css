@@ -286,10 +286,10 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   height: calc(var(--u) * 651);
   background-color: #c9a27c;
-  background-image: url("../img/me/emily-rojas.jpg");
+  background-image: url("../img/me/emily-sobre-mi.jpg");
   background-repeat: no-repeat;
-  background-size: 120% auto; /* closer crop: the whole figure fits, less empty wall on top */
-  background-position: 32% 85%;
+  background-size: cover;
+  background-position: 50% 35%;
 }
 
 .about-badge {
@@ -745,9 +745,9 @@ a { color: inherit; text-decoration: none; }
 .why-photo {
   height: calc(var(--u) * 680);
   background-color: #d9e4ec;
-  background-image: url("../img/tropical/mesh-bags.jpg");
+  background-image: url("../img/me/emily-como-pienso.jpg");
   background-size: cover;
-  background-position: 50% 20%;
+  background-position: 50% 30%;
   box-shadow: 0 calc(var(--u) * 8) calc(var(--u) * 40) rgba(150, 130, 50, 0.14);
 }
 
