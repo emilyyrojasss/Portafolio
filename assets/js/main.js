@@ -490,6 +490,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const LIME = "221,212,128", WAVE = "176,215,206", PAPER = "244,242,238", PAPAYA = "232,88,42", OLIVE = "206,198,72";
     const smooth = (v) => { v = Math.min(1, Math.max(0, v)); return v * v * (3 - 2 * v); };
     let W = 0, H = 0, dpr = 1, pts = [];
+    // the scribble stops at END, at the bottom of its outer loop heading down and to the left,
+    // so it's clear where the tail comes from as it carries on towards the photo
+    const END = 0.935;
     const scribble = (t) => {
       const T = Math.PI * 2;
       const cx = Math.cos(T * t * 1.3 + 0.6) * 0.3 + Math.sin(T * t * 2.9) * 0.08;
@@ -516,18 +519,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // what each particle is in the hero
     const ROLES = [[0.7, "stroke"], [0.08, "anchor"], [0.07, "handle"], [0.04, "knob"], [0.11, "box"]];
+    // Scribble and tail are one line. Particles are spread evenly by length along it (not by the
+    // curve's parameter), so the line has the same density and width all the way and the pen
+    // moves at a steady speed. scribAt/tailLUT map "fraction of the length" to a point.
+    let scribLUT = [], tailFrac = 0.8;
+    const lengthTable = (fn, n) => { // [{x, y, d}] with d = length so far, normalised to 0..1
+      const out = []; let d = 0, px, py;
+      for (let i = 0; i <= n; i++) {
+        const [x, y] = fn(i / n);
+        if (i) d += Math.hypot(x - px, y - py);
+        out.push({ x, y, d }); px = x; py = y;
+      }
+      out.forEach((q) => { q.d /= d || 1; });
+      out.total = d;
+      return out;
+    };
+    const atLength = (lut, f) => { // point + unit tangent at fraction f of the length
+      f = Math.min(1, Math.max(0, f));
+      let lo = 0, hi = lut.length - 1;
+      while (hi - lo > 1) { const m = (lo + hi) >> 1; if (lut[m].d < f) lo = m; else hi = m; }
+      const a = lut[lo], b = lut[hi], k = (f - a.d) / ((b.d - a.d) || 1);
+      const tx = b.x - a.x, ty = b.y - a.y, tl = Math.hypot(tx, ty) || 1;
+      return [a.x + tx * k, a.y + ty * k, tx / tl, ty / tl];
+    };
     const build = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = orb.clientWidth; H = orb.clientHeight;
       orb.width = W * dpr; orb.height = H * dpr;
+      const A = Math.min(W * 0.42, 560), B = Math.min(H * 0.5, 430);
+      scribLUT = lengthTable((t) => { const [x, y] = scribble(t * END); return [x * A, y * B]; }, 2400);
+      // share of particles for the tail = its share of the whole line's length, measured on the page
+      if (photo && introTitle) {
+        const ir = introTitle.getBoundingClientRect(), pr = photo.getBoundingClientRect();
+        const tail = makeTail(ir.top + ir.height / 2, pr, A, B, W / 2);
+        const tl = lengthTable(tail, 160).total;
+        tailFrac = Math.min(0.88, Math.max(0.6, scribLUT.total / (scribLUT.total + tl)));
+      }
       const n = W < 800 ? 3000 : 6500;
       pts = Array.from({ length: n }, (_, i) => {
         let roll = Math.random(), role = "box";
         for (const [share, name] of ROLES) { if (roll < share) { role = name; break; } roll -= share; }
-        const t = i / n;
-        const loop = Math.min(1, t / TAIL); // position along the scribble loops
-        const [sx, sy] = scribble(loop), [nx, ny] = scribble(loop + 0.0004);
-        const len = Math.hypot(nx - sx, ny - sy) || 1;
+        const t = (i + Math.random()) / n;
+        const loop = Math.min(1, t / tailFrac); // fraction of the scribble's length
+        const [sx, sy, ux, uy] = atLength(scribLUT, loop);
         const across = (Math.random() + Math.random() - 1) * 0.034;
         const a = Math.random() * Math.PI * 2;
         return {
@@ -536,13 +570,35 @@ document.addEventListener("DOMContentLoaded", () => {
           k: Math.floor(Math.random() * NODES.length),      // which anchor
           side: Math.random() < 0.5 ? -1 : 1,               // which handle (in / out)
           w: Math.random() + Math.random() - 1,             // across the stroke
-          t, loop, tail: t > TAIL ? (t - TAIL) / (1 - TAIL) : -1, across,
-          gx: sx - ((ny - sy) / len) * across, gy: sy + ((nx - sx) / len) * across,
+          t, loop, tail: t > tailFrac ? (t - tailFrac) / (1 - tailFrac) : -1, across,
+          gx: sx - uy * across * A, gy: sy + ux * across * A, // scribble spot, in px from its centre
           dx: Math.cos(a), dy: Math.sin(a), far: 0.3 + Math.random() * 1.2,
           seed: Math.random() * 100,
           px: 0, py: 0,
         };
       });
+    };
+    // tail: carries on from the scribble's last point in the direction the stroke was going,
+    // curls into two loose loops on the way down and slips in behind the photo.
+    // cy = the scribble's centre line, pr = the photo's rect, both in the same coordinates.
+    const makeTail = (cy, pr, A, B, ox) => {
+      const [ex, ey] = scribble(END), [px0, py0] = scribble(END - 0.002);
+      const sx0 = ox + ex * A, sy0 = cy + ey * B;
+      const dl = Math.hypot((ex - px0) * A, (ey - py0) * B) || 1, ux = ((ex - px0) * A) / dl, uy = ((ey - py0) * B) / dl;
+      const tx = pr.left + pr.width * 0.62, ty = pr.top + pr.height * 0.3;
+      const reach = Math.max(B * 0.7, (ty - sy0) * 0.4);
+      const c1x = sx0 + ux * reach, c1y = sy0 + uy * reach, c2x = tx + A * 0.35, c2y = pr.top - B * 0.9; // drops into the photo from above
+      const LOOPS = 2, len = Math.hypot(tx - sx0, ty - sy0) * 1.25;
+      const L = (len / (Math.PI * 2 * LOOPS)) * 1.9; // loop size: big enough that the wave closes into real loops
+      return (v) => {
+        const w = 1 - v;
+        const bx = w * w * w * sx0 + 3 * w * w * v * c1x + 3 * w * v * v * c2x + v * v * v * tx;
+        const by = w * w * w * sy0 + 3 * w * w * v * c1y + 3 * w * v * v * c2y + v * v * v * ty;
+        // a turning offset that is zero at both ends, so the joint and the arrival stay smooth
+        // the first loop is the widest and the next one smaller, like a hand letting go
+        const env = Math.pow(Math.sin(Math.PI * v), 1.4) * L * (1.25 - 0.6 * v), ph = Math.PI * 2 * LOOPS * v;
+        return [bx + (Math.cos(ph) - 1) * env, by - Math.sin(ph) * env];
+      };
     };
     // the canvas layer covers the whole scene (hero + intro + about), so the scribble's tail
     // can run down and hide behind the "Hola, soy Mimi" photo
@@ -559,7 +615,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     sky.addEventListener("pointerleave", () => { mouse.x = mouse.y = -9999; mouse.inHero = false; });
 
-    const TAIL = 0.72; // the last 28% of the particles make the tail
     let running = false, visible = true, last = 0, active = 2, idleSwitch = 0;
     const draw = (time) => {
       last = time;
@@ -568,7 +623,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const skyRect = sky.getBoundingClientRect();
       const past = -heroRect.top / heroRect.height;
       const e = smooth(past / 0.8);
-      const pen = Math.min(1, Math.max(0, (past - 0.35) / 0.95));
+      const draws = (past - 0.35) / 0.7; // how far the pen has gone: 0..1 along the scribble, then beyond
+      const pen = Math.min(1, Math.max(0, draws));
       // loose particles (not on the scribble) fade out as the dark part ends
       const fade = smooth((window.innerHeight * 1.15 - skyRect.bottom) / (window.innerHeight * 0.55));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -583,7 +639,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const oy = oy0 + (oy1 - oy0) * e;
       // tail: from the scribble's last point, a swoop down to the middle of the photo
       const pr = photo ? photo.getBoundingClientRect() : null;
-      const tailPen = pr ? smooth((window.innerHeight - pr.top) / (window.innerHeight * 0.75)) : 0;
       const CW = Math.min(W * (W < 800 ? 0.4 : 0.34), 520), CH = Math.min(heroRect.height * (W < 800 ? 0.24 : 0.36), 300);
       const tt = prefersReducedMotion ? 0 : time * 0.0006;
 
@@ -623,6 +678,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const boil = prefersReducedMotion ? 0 : Math.floor(time / 120);
       const R = Math.min(W, H) * 0.35;
 
+      // the tail in screen space, measured by length; it draws itself as you scroll: its tip stays
+      // a bit above the bottom of the screen, so you always see the line growing out of the scribble
+      let tailLUT = null, tailPen = 0;
+      if (pr) {
+        const tail = makeTail(oy - H * 0.04, { left: pr.left, top: pr.top - canvasTop, width: pr.width, height: pr.height }, A, B, ox);
+        tailLUT = lengthTable(tail, 160);
+        const lim = window.innerHeight * 0.9 - canvasTop;
+        tailPen = 1;
+        for (let i = 1; i < tailLUT.length; i++) { if (tailLUT[i].y > lim) { tailPen = tailLUT[i - 1].d; break; } }
+        // and it starts from the scribble's end and grows at a steady pace, so no stretch pops in at once
+        tailPen = Math.min(tailPen, Math.max(0, (draws - 1) * 2.5));
+      }
+
       for (const p of pts) {
         let X, Y, size = 1.6, alpha = 0.9, col = PAPER;
         if (p.role === "stroke") {
@@ -659,25 +727,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         X += p.dx * p.far * R * e; Y += p.dy * p.far * R * e;
         alpha *= 1 - e * 0.55;
-        const on = p.tail < 0 ? smooth((pen - p.loop) * 14) : pen >= 1 && pr ? smooth((tailPen * 1.05 - p.tail) * 10) : 0;
+        // one pen for the whole line: it runs along the scribble with the scroll, then on down the tail
+        const on = p.tail < 0 ? smooth((pen - p.loop) * 14) : tailLUT && draws >= 1 ? smooth((tailPen - p.tail) * 40 + 0.5) : 0;
         if (on > 0) {
           const jx = Math.sin(p.seed + boil * 1.7) * 0.9, jy = Math.cos(p.seed * 1.3 + boil * 2.1) * 0.9;
-          let GX, GY;
-          if (p.tail < 0) { GX = ox + p.gx * A + jx; GY = oy - H * 0.04 + p.gy * B + jy; }
-          else {
-            const [ex, ey] = scribble(1), sx0 = ox + ex * A, sy0 = oy - H * 0.04 + ey * B;
-            const tx = pr.left + pr.width * 0.5, ty = pr.top + pr.height * 0.45 - canvasTop;
-            const c1x = sx0 + A * 0.2, c1y = sy0 + B * 1.1, c2x = tx + A * 1.1, c2y = ty - B * 0.7; // a wide swoop, not a straight drop
-            const v = p.tail, w = 1 - v;
-            const bx = w * w * w * sx0 + 3 * w * w * v * c1x + 3 * w * v * v * c2x + v * v * v * tx;
-            const by = w * w * w * sy0 + 3 * w * w * v * c1y + 3 * w * v * v * c2y + v * v * v * ty;
-            GX = bx + p.across * 260 + jx; GY = by + p.across * 120 + jy;
+          if (p.tail < 0) {
+            // the scribble gathers out of the loose particles
+            const GX = ox + p.gx + jx, GY = oy - H * 0.04 + p.gy + jy;
+            X += (GX - X) * on; Y += (GY - Y) * on;
+            alpha += (0.6 - alpha) * on;
+            size += (2.7 - size) * on;
+            if (on > 0.5) col = OLIVE;
+          } else {
+            // the tail is inked in place, right behind the pen (no particles flying across the screen);
+            // same width as the scribble, thinning out only as it slips behind the photo
+            const [bx, by, ux, uy] = atLength(tailLUT, p.tail);
+            const taper = 1 - smooth((p.tail - 0.8) / 0.2) * 0.7;
+            X = bx - uy * p.across * A * taper + jx; Y = by + ux * p.across * A * taper + jy;
+            // same olive as the scribble at the joint, deepening so it still reads on the paper colour
+            const k = smooth(p.tail * 1.4);
+            alpha = (0.6 + 0.25 * k) * on; size = (2.7 + 0.2 * k) * (0.6 + 0.4 * on);
+            col = `${Math.round(206 - 30 * k)},${Math.round(198 - 32 * k)},${Math.round(72 - 32 * k)}`;
           }
-          X += (GX - X) * on; Y += (GY - Y) * on;
-          alpha += (0.6 - alpha) * on;
-          size += (2.7 - size) * on;
-          if (on > 0.5) col = OLIVE;
-          if (p.tail >= 0) { alpha = 0.85 * on; size = 3; col = "176,166,40"; } // deeper olive so it still reads on the paper colour
         }
         if (e > 0.05) {
           const mx = X - mouse.x, my = Y - mouse.y, d2 = mx * mx + my * my, rad = 100;
