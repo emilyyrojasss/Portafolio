@@ -238,8 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // Contact forms: the site is static, so the message is posted to FormSubmit,
   // which forwards it to contact.emilyrojas@gmail.com (replies go to the visitor's
-  // email). The button label doubles as status so the layout never changes. If the
-  // request fails the visitor's mail app opens with the message already written.
+  // email). The button label doubles as status so the layout never changes.
   const MAIL_TO = "contact.emilyrojas@gmail.com";
   document.querySelectorAll("form.freebie-form, form.ct-fields").forEach((form) => {
     const btn = form.querySelector("button[type=submit]");
@@ -274,10 +273,8 @@ document.addEventListener("DOMContentLoaded", () => {
         form.reset();
         setLabel("¡ENVIADO, GRACIAS!", 4000);
       } catch (err) {
-        setLabel("ABRIENDO TU CORREO…", 4000);
-        window.location.href =
-          "mailto:" + MAIL_TO + "?subject=" + encodeURIComponent(subject) +
-          "&body=" + encodeURIComponent([message, "", name, email].join("\n"));
+        console.warn("FormSubmit:", err.message);
+        setLabel("NO SE PUDO ENVIAR, PROBÁ DE NUEVO", 4000);
       }
     });
   });
