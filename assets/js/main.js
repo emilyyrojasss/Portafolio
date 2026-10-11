@@ -783,7 +783,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Entrance animation for every project page (design projects and photo collections): the header, the
   // main image, the text columns and every image/mockup rise in one after the other, and the rest do the
   // same when scrolled into view. Plain scroll + position check (no IntersectionObserver).
-  const REVEAL = ".pj-case-head, .pj-slot, .pj-case-about, .pj-stats div, .pj-block-head, .pj-case-cols section, .pj-mock-row figure, .pj-shots figure";
+  const REVEAL = ".pj-case-head, .pj-slot, .pj-case-about, .pj-stats div, .pj-block-head, .pj-case-cols section, .pj-mock-row figure, .pj-shots figure, .cs-intro, .cs-ch-label, .cs-full, .cs-pair figure, .cs-logo, .cs-end";
   let revealCleanup = null;
   const revealProject = (view) => {
     if (revealCleanup) { revealCleanup(); revealCleanup = null; }
@@ -820,6 +820,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const deckView = pj.querySelector(".pj-view--deck");
     const galleryView = pj.querySelector(".pj-view--gallery");
     const decks = pj.querySelectorAll(".pj-deck");
+    // case cover drifts down slower than the page (parallax); the deck view scrolls on desktop, the panel on phones
+    if (deckView && !prefersReducedMotion) {
+      const panel = pj.querySelector(".pj-panel");
+      const drift = () => {
+        const hero = deckView.querySelector(".pj-deck:not([hidden]) .cs-hero");
+        if (hero) hero.style.setProperty("--hy", ((deckView.scrollTop || panel.scrollTop) * 0.35).toFixed(1) + "px");
+      };
+      deckView.addEventListener("scroll", drift, { passive: true });
+      panel.addEventListener("scroll", drift, { passive: true });
+    }
     let opener = null;
     let from = null; // the "all projects" overlay we came from, if any
     let direct = false; // opened straight on a case from the gallery page: back closes the overlay
@@ -970,7 +980,11 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       const [id, index] = btn.dataset.pjCase.split(":");
       const api = pjApis[id];
-      if (api) api.openCase(Number(index), btn);
+      if (!api) return;
+      // "Siguiente proyecto" inside a case: swap overlays without unlocking the page
+      const host = btn.closest(".pj");
+      if (host && pjApis[host.id]) pjApis[host.id].hideNow();
+      api.openCase(Number(index), host ? null : btn);
     });
   });
 });
@@ -1063,4 +1077,30 @@ document.addEventListener("DOMContentLoaded", () => {
   // fonts and late layout can change the track width after the first measurement
   if ("ResizeObserver" in window) new ResizeObserver(measure).observe(track);
   measure();
+})();
+
+// Projects page: each cover starts as a small framed picture and grows to fill the screen while its
+// stage is pinned; --e (0 → 1) drives the CSS clip, zoom, name position and the footer fade.
+(() => {
+  const items = Array.from(document.querySelectorAll(".gx-item"));
+  if (!items.length) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) { items.forEach((el) => el.style.setProperty("--e", "1")); return; }
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const update = () => {
+    const vh = window.innerHeight;
+    items.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      // starts as the block reaches the top, complete after 60% of its pinned run
+      const run = Math.max(1, r.height - vh);
+      const t = Math.min(1, Math.max(0, -r.top / (run * 0.6)));
+      el.style.setProperty("--e", ease(t).toFixed(4));
+    });
+  };
+  let queued = false;
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; update(); }); } };
+  window.addEventListener("scroll", queue, { passive: true });
+  window.addEventListener("resize", queue);
+  update();
 })();

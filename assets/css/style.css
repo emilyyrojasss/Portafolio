@@ -1899,10 +1899,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- Projects page: only the gallery ---------- */
-.gx { min-height: calc(100vh - var(--nav-h)); padding: calc(var(--u) * 90) 0 calc(var(--u) * 150); background: var(--ocean); color: var(--paper); }
+.gx { padding: calc(var(--u) * 90) 0 0; background: var(--ocean); color: var(--paper); }
 .gx-title {
   width: calc(var(--u) * 1300);
-  margin: 0 auto calc(var(--u) * 70);
+  margin: 0 auto calc(var(--u) * 20);
   font-family: var(--font-display);
   font-size: calc(var(--u) * 190);
   font-weight: 600;
@@ -1911,16 +1911,113 @@ a { color: inherit; text-decoration: none; }
 }
 .gx-title em { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
 .gx-count { margin-left: calc(var(--u) * 14); font-family: var(--font-sans); font-size: calc(var(--u) * 22); font-weight: 500; letter-spacing: 0.12em; vertical-align: top; position: relative; top: calc(var(--u) * 26); color: var(--lime); }
-.gx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: calc(var(--u) * 70) calc(var(--u) * 30); width: calc(var(--u) * 1300); margin: 0 auto; padding: 0; list-style: none; }
-.gx-card { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.gx-media { display: block; overflow: hidden; aspect-ratio: 4 / 3.3; border-radius: var(--radius-photo); background: rgba(0, 0, 0, 0.15); }
-.gx-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.gx-card:hover .gx-media img, .gx-card:focus-visible .gx-media img { scale: 1.05; }
-.gx-meta { display: flex; align-items: center; gap: calc(var(--u) * 18); margin-top: calc(var(--u) * 22); padding-top: calc(var(--u) * 18); border-top: 1px dashed rgba(244, 242, 238, 0.5); }
-.gx-name { font-family: var(--font-display); font-size: calc(var(--u) * 46); font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-.gx-kind { margin-left: auto; font-size: calc(var(--u) * 13); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 242, 238, 0.75); }
-.gx-meta .pill-icon { flex: none; width: calc(var(--u) * 50); height: calc(var(--u) * 50); transition: transform 0.3s ease; }
-.gx-card:hover .gx-meta .pill-icon, .gx-card:focus-visible .gx-meta .pill-icon { transform: rotate(45deg); }
+/* each project: a tall block whose stage pins to the screen while the cover grows from a small
+   framed picture to the full screen (--e goes 0 → 1, set in main.js); the name sits on top, huge */
+.gx-item { height: 250vh; }
+.gx-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.gx-card { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.gx-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(calc((1 - var(--e, 0)) * 24vh) calc((1 - var(--e, 0)) * 28vw) round calc((1 - var(--e, 0)) * var(--radius-media)));
+}
+.gx-frame img { display: block; width: 100%; height: 100%; object-fit: cover; scale: calc(1.3 - var(--e, 0) * 0.3); transition: filter 0.4s ease; }
+.gx-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12, 44, 44, 0.7), rgba(12, 44, 44, 0) 55%); opacity: var(--e, 0); }
+.gx-card:hover .gx-frame img { filter: brightness(1.06); }
+.gx-name {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + var(--e, 0) * 18vh);
+  translate: -50% -50%;
+  scale: calc(1 - var(--e, 0) * 0.2);
+  font-family: var(--font-display);
+  font-size: 15vw;
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  color: var(--paper);
+  pointer-events: none;
+}
+.gx-foot {
+  position: absolute;
+  left: calc(var(--u) * 85);
+  right: calc(var(--u) * 85);
+  bottom: calc(var(--u) * 44);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 28);
+  opacity: clamp(0, calc((var(--e, 0) - 0.75) * 4), 1);
+  translate: 0 calc((1 - var(--e, 0)) * 40px);
+}
+.gx-num { font-size: calc(var(--u) * 15); font-weight: 500; letter-spacing: 0.14em; color: var(--lime); }
+.gx-kind { font-size: calc(var(--u) * 14); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 242, 238, 0.85); }
+.gx-go { display: inline-flex; align-items: center; gap: calc(var(--u) * 14); margin-left: auto; font-size: calc(var(--u) * 14); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.gx-go .pill-icon { width: calc(var(--u) * 54); height: calc(var(--u) * 54); transition: transform 0.3s ease; }
+.gx-card:hover .gx-go .pill-icon, .gx-card:focus-visible .gx-go .pill-icon { transform: rotate(45deg); }
+@media (prefers-reduced-motion: reduce) {
+  .gx-item { height: auto; }
+  .gx-stage { position: relative; height: 90vh; }
+}
+
+/* ---------- Case study (inside the project overlay): big cover, one line, then the work ---------- */
+.pj-view--deck:has(.cs) { padding: 0; }
+.pj-deck.cs { max-width: none; margin: 0; }
+.cs-hero { position: relative; height: 100vh; overflow: hidden; background: var(--ocean); color: var(--paper); }
+.cs-hero-img { position: absolute; inset: 0; display: block; width: 100%; height: 115%; object-fit: cover; translate: 0 var(--hy, 0px); animation: cs-zoom 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12, 44, 44, 0.75), rgba(12, 44, 44, 0) 60%); }
+.cs-hero-copy { position: absolute; left: calc(var(--u) * 85); right: calc(var(--u) * 85); bottom: calc(var(--u) * 64); z-index: 1; animation: cs-rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both; }
+.cs-kicker { margin: 0; font-size: calc(var(--u) * 14); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--lime); }
+.cs-title { margin: calc(var(--u) * 14) 0 0; font-family: var(--font-display); font-size: calc(var(--u) * 210); font-weight: 600; line-height: 0.85; letter-spacing: -0.055em; }
+.cs-line { margin: calc(var(--u) * 18) 0 0; font-family: var(--font-display); font-size: calc(var(--u) * 36); font-weight: 600; letter-spacing: -0.03em; }
+.cs-line em, .cs-end-line em { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 1.1em; letter-spacing: -0.01em; }
+@keyframes cs-zoom { from { scale: 1.18; } to { scale: 1; } }
+@keyframes cs-rise { from { opacity: 0; transform: translateY(calc(var(--u) * 50)); } to { opacity: 1; transform: none; } }
+
+.cs-body { max-width: calc(var(--u) * 1330); margin: 0 auto; padding: calc(var(--u) * 110) calc(var(--u) * 70) calc(var(--u) * 120); }
+.cs-intro { max-width: calc(var(--u) * 1000); margin: 0; font-family: var(--font-display); font-size: calc(var(--u) * 48); font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+.pj-stats.cs-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: calc(var(--u) * 64); }
+.cs-ch { margin-top: calc(var(--u) * 130); }
+.cs-ch-label {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 16);
+  margin: 0 0 calc(var(--u) * 30);
+  padding-top: calc(var(--u) * 22);
+  border-top: 1px dashed var(--black);
+  font-family: var(--font-display);
+  font-size: calc(var(--u) * 60);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.cs-ch-label span { font-family: var(--font-sans); font-size: calc(var(--u) * 15); font-weight: 500; letter-spacing: 0.14em; color: var(--ocean); }
+.cs-full, .cs-pair figure { margin: 0; overflow: hidden; isolation: isolate; border-radius: var(--radius-media); background: var(--tone-soft); cursor: zoom-in; }
+.cs-full { margin-bottom: calc(var(--u) * 22); }
+.cs-pair { display: flex; gap: calc(var(--u) * 22); margin-bottom: calc(var(--u) * 22); }
+.cs-pair figure { flex: var(--ar) 1 0; min-width: 0; }
+.cs-full img, .cs-pair img { display: block; width: 100%; height: auto; transition: filter 0.25s ease; }
+.cs-full:hover img, .cs-pair figure:hover img { filter: brightness(1.05); }
+/* Ceipa logo drawn line by line when it reaches the screen */
+.cs-logo { display: grid; place-items: center; aspect-ratio: 2.4 / 1; margin-bottom: calc(var(--u) * 22); border-radius: var(--radius-media); background: #ece8dc; }
+.cs-logo-svg { width: 30%; height: auto; }
+.cs-logo-svg * { fill: none; stroke: #9c960b; stroke-width: 90.79; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.3s cubic-bezier(0.6, 0, 0.2, 1); }
+.cs-logo.is-in .cs-logo-svg * { stroke-dashoffset: 0; }
+.cs-logo-svg :nth-child(2) { transition-delay: 0.25s; }
+.cs-logo-svg :nth-child(3) { transition-delay: 0.5s; }
+.cs-logo-svg :nth-child(4) { transition-delay: 0.7s; }
+.cs-logo-svg :nth-child(5) { transition-delay: 0.9s; }
+.cs-logo-svg :nth-child(6) { transition-delay: 1.1s; }
+@media (prefers-reduced-motion: reduce) { .cs-logo-svg * { stroke-dashoffset: 0; transition: none; } .cs-hero-img, .cs-hero-copy { animation: none; } }
+
+.cs-end { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: calc(var(--u) * 60); margin-top: calc(var(--u) * 140); padding-top: calc(var(--u) * 50); border-top: 1px dashed var(--black); }
+.cs-end-line { max-width: calc(var(--u) * 760); margin: 0; font-family: var(--font-display); font-size: calc(var(--u) * 44); font-weight: 600; line-height: 1.08; letter-spacing: -0.035em; }
+.cs-next { display: grid; grid-template-columns: auto auto; align-items: center; column-gap: calc(var(--u) * 22); padding: 0; border: 0; background: none; color: var(--black); font: inherit; text-align: left; cursor: pointer; }
+.cs-next span { grid-column: 1; font-size: calc(var(--u) * 13); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-body); }
+.cs-next b { grid-column: 1; font-family: var(--font-display); font-size: calc(var(--u) * 64); font-weight: 600; line-height: 1; letter-spacing: -0.045em; }
+.cs-next .pill-icon { grid-column: 2; grid-row: 1 / 3; width: calc(var(--u) * 64); height: calc(var(--u) * 64); transition: transform 0.3s ease; }
+.cs-next:hover .pill-icon, .cs-next:focus-visible .pill-icon { transform: rotate(45deg); }
 
 /* ---------- Shared components ----------
    One look per role across every page. Positions and sizes stay in each section's own rules;
@@ -2032,14 +2129,37 @@ a { color: inherit; text-decoration: none; }
   .feel-card p { font-size: 16px; line-height: 1.4; margin-top: 26px; }
   .feel--projects .feel-card { height: auto; padding-top: 72px; }
   /* projects page gallery */
-  .gx { padding: 48px 20px 80px; }
-  .gx-title { width: auto; margin-bottom: 36px; font-size: 21vw; }
+  .gx { padding: 48px 0 0; }
+  .gx-title { width: auto; margin: 0 20px 8px; font-size: 21vw; }
   .gx-count { font-size: 13px; top: 8px; margin-left: 6px; }
-  .gx-grid { grid-template-columns: 1fr; gap: 44px; width: auto; }
-  .gx-meta { gap: 12px; margin-top: 16px; padding-top: 14px; flex-wrap: wrap; }
-  .gx-name { font-size: 34px; }
-  .gx-kind { order: 3; width: 100%; margin-left: 0; font-size: 11px; }
-  .gx-meta .pill-icon { width: 42px; height: 42px; margin-left: auto; }
+  .gx-item { height: 210vh; }
+  .gx-frame { clip-path: inset(calc((1 - var(--e, 0)) * 22vh) calc((1 - var(--e, 0)) * 9vw) round calc((1 - var(--e, 0)) * var(--radius-media-m))); }
+  .gx-name { font-size: 19vw; top: calc(50% + var(--e, 0) * 12vh); }
+  .gx-foot { left: 20px; right: 20px; bottom: 28px; flex-wrap: wrap; gap: 8px 16px; }
+  .gx-num, .gx-kind, .gx-go { font-size: 11px; }
+  .gx-kind { order: 3; width: 100%; }
+  .gx-go .pill-icon { width: 42px; height: 42px; }
+  /* case study */
+  .cs-hero { height: 72svh; }
+  .cs-hero-copy { left: 20px; right: 20px; bottom: 28px; }
+  .cs-kicker { font-size: 11px; }
+  .cs-title { font-size: 21vw; }
+  .cs-line { font-size: 20px; }
+  .cs-body { padding: 48px 16px 56px; }
+  .cs-intro { font-size: 26px; }
+  .pj-stats.cs-facts { grid-template-columns: 1fr; margin-top: 32px; }
+  .pj-stats.cs-facts div:nth-child(n) { padding: 16px 0; border-left: 0; border-top: 0; }
+  .pj-stats.cs-facts div:nth-child(n + 2) { border-top: 1px solid var(--black); }
+  .cs-ch { margin-top: 64px; }
+  .cs-ch-label { font-size: 34px; margin-bottom: 18px; padding-top: 16px; }
+  .cs-ch-label span { font-size: 11px; }
+  .cs-full, .cs-pair figure, .cs-logo { border-radius: var(--radius-media-m); }
+  .cs-full, .cs-pair, .cs-logo { margin-bottom: 8px; }
+  .cs-pair { gap: 8px; }
+  .cs-end { grid-template-columns: 1fr; gap: 28px; margin-top: 72px; padding-top: 28px; }
+  .cs-end-line { font-size: 26px; }
+  .cs-next b { font-size: 40px; }
+  .cs-next .pill-icon { width: 48px; height: 48px; }
   /* phones: no pinning, the track is a native swipe strip */
   .hs-stage { position: static; height: auto; padding-top: 0; gap: 28px; overflow: visible; }
   .hs-head { padding: 0; }
