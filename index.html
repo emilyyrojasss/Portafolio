@@ -34,7 +34,7 @@
 <main>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="inicio">
     <div class="hero-photos" aria-hidden="true">
       <div class="hero-photo"></div>
     </div>
@@ -48,12 +48,10 @@
       <img src="assets/img/made%20in%20costa%20rica/costa%20rica-10-turquesa.svg" alt="">
     </a>
 
-    <svg class="hero-ribbon hero-ribbon--pink" viewBox="0 761 2000 420" aria-hidden="true">
-      <defs><path id="ribbon-path" d="M-800 852 L-30 852 C356 852 644 1172 1030 1172 C1416 1172 1704 852 2090 852 L2900 852"/></defs>
-      <use href="#ribbon-path" class="ribbon-band"/>
-      <defs><filter id="ribbon-tint" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feFlood flood-color="#f4f2ee"/><feComposite in2="SourceAlpha" operator="in"/></filter></defs>
-      <g id="ribbon-tools" class="ribbon-tools" data-start="975" data-tools="Illustrator:adobeillustrator.svg:1|Photoshop:adobephotoshop.svg:1|Canva:canva.svg:1|Figma:figma.svg:1|GitHub:github.svg:1|Visual Studio Code:visualstudiocode.svg:1|Magnific:magnific.svg:1|:capcut.png:5.27"></g>
-    </svg>
+    <div class="ribbon hero-ribbon" role="group" aria-label="Herramientas que uso para crear: Illustrator, Photoshop, Canva, Figma, GitHub, Visual Studio Code, Magnific, CapCut">
+      <ul class="ribbon-track"><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--adobeillustrator" aria-hidden="true"></i><span>Illustrator</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--adobephotoshop" aria-hidden="true"></i><span>Photoshop</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--canva" aria-hidden="true"></i><span>Canva</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--figma" aria-hidden="true"></i><span>Figma</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--github" aria-hidden="true"></i><span>GitHub</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--visualstudiocode" aria-hidden="true"></i><span>Visual Studio Code</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--magnific" aria-hidden="true"></i><span>Magnific</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--capcut" aria-hidden="true"></i><span class="ribbon-sr">CapCut</span></li><li class="ribbon-dot" aria-hidden="true">•</li></ul>
+      <ul class="ribbon-track" aria-hidden="true"><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--adobeillustrator" aria-hidden="true"></i><span>Illustrator</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--adobephotoshop" aria-hidden="true"></i><span>Photoshop</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--canva" aria-hidden="true"></i><span>Canva</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--figma" aria-hidden="true"></i><span>Figma</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--github" aria-hidden="true"></i><span>GitHub</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--visualstudiocode" aria-hidden="true"></i><span>Visual Studio Code</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--magnific" aria-hidden="true"></i><span>Magnific</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><i class="ribbon-logo ribbon-logo--capcut" aria-hidden="true"></i><span class="ribbon-sr">CapCut</span></li><li class="ribbon-dot" aria-hidden="true">•</li></ul>
+    </div>
   </section>
 
   <!-- INTRO -->
@@ -92,7 +90,7 @@
   </section>
 
   <!-- DOES THIS SOUND LIKE YOU -->
-  <section class="feel feel--projects">
+  <section class="feel feel--projects" id="proyectos">
     <h2 class="feel-title">Proyectos que<br>empezaron <em>escuchando</em></h2>
     <div class="feel-grid">
         <a href="services.html#pj" class="feel-card">
@@ -117,8 +115,15 @@
 
   </div>
 
+  <!-- REEL: project mockups that slide sideways while scrolling -->
+  <section class="reel" aria-label="Piezas de Yellowmaps y Ceipa">
+    <div class="reel-row" data-reel="-1"><img src="assets/img/strip/ym-portada.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-celular.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ceipa-portada-isotipo.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-libro.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-mapa.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ceipa-ejercicios.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-landing.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-isotipo.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-redes.jpg" alt="" loading="lazy" decoding="async"></div>
+    <p class="reel-words" data-reel="1" aria-hidden="true">UX/UI <em>•</em> Branding <em>•</em> Identidad <em>•</em> Dirección de arte <em>•</em> UX/UI <em>•</em> Branding <em>•</em> Identidad <em>•</em> Dirección de arte <em>•</em> UX/UI <em>•</em> Branding <em>•</em> Identidad <em>•</em> Dirección de arte <em>•</em></p>
+    <div class="reel-row" data-reel="1"><img src="assets/img/strip/ym-tarjetas.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ceipa-isotipo.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-sticker.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-botella2.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-afiche.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ceipa-isotipo2.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-libro-portada.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-posters.jpg" alt="" loading="lazy" decoding="async"><img src="assets/img/strip/ym-flyers.jpg" alt="" loading="lazy" decoding="async"></div>
+  </section>
+
   <!-- COACHING OFFERS (stacked cards) -->
-  <section class="coaching">
+  <section class="coaching" id="certificaciones">
     <a href="https://www.credential.net/profile/emilyvivianarojassolorzano163634/wallet" target="_blank" rel="noopener" class="coach-card coach-card--individual" style="--i:0">
       <h2 class="coach-title">Certificación <em>UX/UI</em></h2>
       <i class="pill-icon pill-orange coach-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i>
@@ -167,7 +172,7 @@
   </section>
 
   <!-- WHY WE DO THIS -->
-  <section class="why">
+  <section class="why" id="como-pienso">
     <p class="intro-eyebrow">CÓMO PIENSO</p>
     <h2 class="why-title">Diseñar no es solo crear algo <em>bonito</em>. <br>Es crear algo que tenga <em>sentido</em>.</h2>
 
@@ -180,8 +185,9 @@
       </div>
     </div>
 
-    <div class="tilt-band" aria-hidden="true">
-      <div class="tilt-track"><span>ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • </span><span>ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • ESCUCHAR • DESCUBRIR • CONECTAR • CREAR • PROBAR • </span></div>
+    <div class="ribbon ribbon--tilt why-ribbon" aria-hidden="true">
+      <ul class="ribbon-track"><li class="ribbon-item"><span>Escuchar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Descubrir</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Conectar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Crear</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Probar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Escuchar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Descubrir</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Conectar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Crear</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Probar</span></li><li class="ribbon-dot" aria-hidden="true">•</li></ul>
+      <ul class="ribbon-track"><li class="ribbon-item"><span>Escuchar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Descubrir</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Conectar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Crear</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Probar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Escuchar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Descubrir</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Conectar</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Crear</span></li><li class="ribbon-dot" aria-hidden="true">•</li><li class="ribbon-item"><span>Probar</span></li><li class="ribbon-dot" aria-hidden="true">•</li></ul>
     </div>
   </section>
 

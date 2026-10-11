@@ -68,120 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // Hero ribbon: the text repeats along the curved path and drifts
-  // right-to-left. RIBBON_START is the arc length at which the first
-  // "Structure" sits when the page loads.
-  const ribbonText = document.getElementById("ribbon-text");
-  if (ribbonText) {
-    const RIBBON_START = parseFloat(ribbonText.dataset.start) || 975;
-    const RIBBON_SPEED = 70; // svg units per second
-    const REPEATS = 6;
-    const unit = ribbonText.dataset.text || "Structure Meets Softness ✱ Strategy Meets Sweetness ✱ ";
-    ribbonText.textContent = unit.repeat(REPEATS);
-
-    const start = () => {
-      const unitLen = ribbonText.getComputedTextLength() / REPEATS;
-      if (!unitLen) return;
-      const base = RIBBON_START - unitLen;
-      const render = (t) => {
-        const shift = prefersReducedMotion ? 0 : (t / 1000) * RIBBON_SPEED % unitLen;
-        ribbonText.setAttribute("startOffset", base - shift);
-        if (!prefersReducedMotion) requestAnimationFrame(render);
-      };
-      requestAnimationFrame(render);
-    };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
-    else start();
-  }
-
-  // Home hero ribbon: instead of words, the logos (and names) of the tools I use
-  // travel along the same curve. Each logo is an <image> laid on the path (position
-  // and angle read from the path itself); each name is a <textPath>.
-  const toolsG = document.getElementById("ribbon-tools");
-  const toolsPath = document.getElementById("ribbon-path");
-  if (toolsG && toolsPath) {
-    const NS = "http://www.w3.org/2000/svg";
-    const RIBBON_SPEED = 70; // svg units per second
-    const total = toolsPath.getTotalLength();
-    const start = parseFloat(toolsG.dataset.start) || 975;
-    const fontSize = parseFloat(getComputedStyle(toolsG).fontSize) || 50;
-    const logoH = fontSize * 1.3;
-    const gap = fontSize * 0.42;   // logo <-> name
-    const after = fontSize * 1.05; // space around the separator dot
-
-    const mk = (tag, attrs, parent) => {
-      const el = document.createElementNS(NS, tag);
-      Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
-      if (parent) parent.appendChild(el);
-      return el;
-    };
-    const probe = mk("text", { class: "ribbon-text", opacity: 0 }, toolsG);
-    const measure = (str) => { probe.textContent = str; return probe.getComputedTextLength(); };
-
-    const build = () => {
-      // one cycle = every tool once, each followed by a dot
-      const cycle = [];
-      toolsG.dataset.tools.split("|").forEach((entry) => {
-        const [name, file, ratio] = entry.split(":");
-        const w = logoH * (parseFloat(ratio) || 1);
-        cycle.push({ kind: "logo", file, w, len: w });
-        if (name) cycle.push({ kind: "text", str: name.toUpperCase(), len: measure(name.toUpperCase()), lead: gap });
-        cycle.push({ kind: "text", str: "•", len: measure("•"), lead: after });
-        cycle[cycle.length - 1].tail = after;
-      });
-      // place items one after another (offset = arc length from the cycle start)
-      let x = 0;
-      cycle.forEach((it, i) => {
-        if (it.kind === "logo" && i > 0) x += 0;
-        x += it.lead || 0;
-        it.at = x;
-        x += it.len + (it.tail || 0);
-      });
-      const cycleLen = x;
-      probe.remove();
-
-      const copies = Math.ceil((total + cycleLen) / cycleLen) + 1;
-      const nodes = [];
-      for (let c = 0; c < copies; c++) {
-        cycle.forEach((it) => {
-          const node = { it, off: c * cycleLen + it.at };
-          if (it.kind === "logo") {
-            node.el = mk("image", { href: "assets/img/tools/" + it.file, width: it.w, height: logoH, filter: "url(#ribbon-tint)" }, toolsG);
-          } else {
-            const t = mk("text", { class: "ribbon-text", dy: ".36em" }, toolsG);
-            node.el = mk("textPath", { href: "#ribbon-path" }, t);
-            node.el.textContent = it.str;
-          }
-          nodes.push(node);
-        });
-      }
-
-      const render = (time) => {
-        const shift = prefersReducedMotion ? 0 : ((time / 1000) * RIBBON_SPEED) % cycleLen;
-        const base = start - cycleLen - shift;
-        nodes.forEach((n) => {
-          const pos = base + n.off;
-          if (n.it.kind === "text") {
-            n.el.setAttribute("startOffset", pos);
-            return;
-          }
-          const mid = pos + n.it.w / 2;
-          if (mid < -logoH || mid > total + logoH) { n.el.style.display = "none"; return; }
-          n.el.style.display = "";
-          const a = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid - 2)));
-          const b = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid + 2)));
-          const p = toolsPath.getPointAtLength(Math.max(0, Math.min(total, mid)));
-          const deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-          n.el.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${deg}) translate(${-n.it.w / 2} ${-logoH / 2})`);
-        });
-        if (!prefersReducedMotion) requestAnimationFrame(render);
-      };
-      requestAnimationFrame(render);
-    };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
-    else build();
-  }
-
   // About hero: the giant "ABOUT" drifts right at half the scroll speed.
   // Spans repeat every one span-width, so wrap the offset by that width.
   const abTrack = document.querySelector(".ab-track");
@@ -384,6 +270,202 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Scroll motion. Text rises in and photos open like a curtain when they enter the screen
+  // (the classes are removed afterwards so hover transitions keep working), and big titles,
+  // the home reel rows and the tilted band slide sideways while the page scrolls.
+  if (!prefersReducedMotion) {
+    const RISE = ".intro-eyebrow, .intro-title, .intro-copy, .about-copy > *, .feel-title, .feel-card, .feel-cta > *, .why-title, .why-copy > *, .freebie-card, .cta-eyebrow, .cta-title, .cta-text, .sv-eyebrow, .sv-intro-title, .sv-intro-copy p, .how-title, .how-card, .sv-cta > *, .ab-story-copy > *, .ab-values-cols > *, .ab-values-list li, .approach-title, .approach-sub, .approach-text, .faq-eyebrow, .faq-title, .faq-item, .ct-card";
+    const WIPE = ".why-photo, .ab-story-photo, .ab-values-photo, .feel-card-photo, .approach-photo";
+    // Kinetic type (after the Auros reference): titles come in word by word, uppercase labels
+    // "decode" like an instrument read-out, the footer name rises letter by letter and the
+    // project stats count up.
+    const TITLES = ".hero-title, .ab-title, .sv-title, .ct-title, .intro-title, .about-title, .feel-title, .feel-cta-title, .why-title, .freebie-title, .cta-title, .sv-intro-title, .sv-card-title, .how-title, .sv-cta-title, .ab-values-title, .approach-title, .faq-title, .ct-card-title, .foot-tag";
+    const LABELS = ".intro-eyebrow, .cta-eyebrow, .sv-eyebrow, .sv-cta-eyebrow, .faq-eyebrow, .about-sub, .sv-card-h";
+    // wrap every word (or letter) of el's text in a span, keeping <em>/<br> where they are
+    const split = (el, cls, byLetter) => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      let n = 0;
+      texts.forEach((t) => {
+        if (!t.textContent.trim()) return;
+        const frag = document.createDocumentFragment();
+        t.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (!part.trim()) { frag.append(part); return; }
+          (byLetter ? [...part] : [part]).forEach((piece) => {
+            const span = document.createElement("span");
+            span.className = cls;
+            span.style.setProperty("--wi", n++);
+            span.textContent = piece;
+            frag.append(span);
+          });
+        });
+        t.replaceWith(frag);
+      });
+      el.style.setProperty("--step", Math.min(70, 900 / Math.max(n, 1)) + "ms");
+      return n;
+    };
+    const typeIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        typeIo.unobserve(e.target);
+        e.target.classList.add("is-in");
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    // Guided reading: titles and paragraphs stay in place, faint, and fill in word by word as
+    // the page scrolls, as if being read. Only the first-screen titles keep the word entrance.
+    // Text inside pinned (sticky) cards is left out: it would freeze half filled.
+    const HERO_TITLES = ".hero-title, .ab-title, .sv-title, .ct-title";
+    const READ = TITLES + ", .intro-copy, .about-text, .why-sub, .why-text, .cta-text, .sv-intro-copy p, .how-card p, .sv-cta-text, .ab-vtext, .approach-sub, .approach-text, .freebie-text, .ct-card-text";
+    document.querySelectorAll(HERO_TITLES).forEach((el) => {
+      split(el, "tw");
+      el.classList.add("tw-armed");
+      typeIo.observe(el);
+    });
+    const reads = [];
+    document.querySelectorAll(READ).forEach((el) => {
+      if (el.matches(HERO_TITLES) || el.closest(".pj, .coach-card, .sv-card, details")) return;
+      const n = split(el, "rw");
+      el.style.setProperty("--n", n);
+      el.classList.add("rf");
+      reads.push(el);
+    });
+    document.querySelectorAll(".foot-mark").forEach((el) => {
+      split(el, "tw", true);
+      el.classList.add("tw-armed", "tw-armed--letters");
+      typeIo.observe(el);
+    });
+
+    const GLYPHS = "ABCDEFGHIJKLMNOPRSTUVXYZ";
+    const decode = (el) => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      while (walker.nextNode()) texts.push({ node: walker.currentNode, final: walker.currentNode.textContent });
+      const total = texts.reduce((sum, t) => sum + t.final.length, 0);
+      const start = performance.now();
+      const DURATION = 900;
+      const frame = (now) => {
+        const solved = Math.floor(((now - start) / DURATION) * total);
+        let i = 0;
+        texts.forEach((t) => {
+          t.node.textContent = [...t.final].map((ch) => {
+            const k = i++;
+            if (k < solved || !/[A-ZÁÉÍÓÚÑ]/i.test(ch)) return ch;
+            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          }).join("");
+        });
+        if (solved < total) requestAnimationFrame(frame);
+        else texts.forEach((t) => { t.node.textContent = t.final; });
+      };
+      requestAnimationFrame(frame);
+    };
+    const labelIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        labelIo.unobserve(e.target);
+        decode(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(LABELS).forEach((el) => labelIo.observe(el));
+
+    // stats like "+1000": count from 0 to the number, keeping what's around it
+    const countIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        countIo.unobserve(e.target);
+        const el = e.target;
+        const [, pre, num, post] = el.textContent.match(/^(\D*)(\d+)(.*)$/) || [];
+        if (!num) return;
+        const target = Number(num);
+        const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - start) / 1400);
+          el.textContent = pre + Math.round(target * (1 - Math.pow(1 - p, 3))) + post;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    });
+    document.querySelectorAll(".pj-stats b").forEach((el) => countIo.observe(el));
+
+    const tag = (el, cls) => {
+      if (el.closest(".pj, .coach-card") || el.matches(TITLES) || el.classList.contains("rf")) return null;
+      // buttons stay put: only text moves
+      if (el.matches("a.pill, a.btn-learn, button, .about-actions")) return null;
+      const n = Array.from(el.parentElement.children).indexOf(el);
+      el.classList.add(cls);
+      el.style.setProperty("--rd", (n % 5) * 110 + "ms");
+      return el;
+    };
+    const items = [
+      ...Array.from(document.querySelectorAll(RISE), (el) => tag(el, "sr")),
+      ...Array.from(document.querySelectorAll(WIPE), (el) => tag(el, "sr-wipe")),
+    ].filter(Boolean);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        io.unobserve(el);
+        el.classList.add("is-in");
+        const wait = 1700 + (parseFloat(el.style.getPropertyValue("--rd")) || 0);
+        setTimeout(() => {
+          el.classList.remove("sr", "sr-wipe", "is-in");
+          el.style.removeProperty("--rd");
+        }, wait);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    items.forEach((el) => io.observe(el));
+
+    // sideways drift: [element, direction, distance as a share of the screen width]
+    const drift = [];
+    const addDrift = (sel, dir, amount) => document.querySelectorAll(sel).forEach((el) => {
+      el.classList.add("sx");
+      drift.push({ el, dir, amount });
+    });
+    addDrift(".intro:not(.ab-statement) .intro-title, .why-title, .ab-values-title, .sv-intro-title, .faq-title", 1, 0.06);
+    addDrift(".feel-title, .feel-cta-title, .cta-title, .how-title, .ab-statement .intro-title", -1, 0.06);
+    addDrift(".ribbon--tilt .ribbon-track", -1, 0.35);
+    const reels = Array.from(document.querySelectorAll("[data-reel]"), (el) => ({ el, dir: Number(el.dataset.reel) }));
+
+    let queued = false;
+    const updateDrift = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      const vw = document.documentElement.clientWidth;
+      const progress = (r) => Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+      drift.forEach(({ el, dir, amount }) => {
+        const r = (el.closest("section") || el).getBoundingClientRect();
+        if (r.bottom < -vh || r.top > 2 * vh) return;
+        const k = vw < 800 ? 0.5 : 1; // phones: half the travel so titles stay inside the screen
+        el.style.setProperty("--sx", ((progress(r) - 0.5) * dir * amount * k * vw).toFixed(1) + "px");
+      });
+      reels.forEach(({ el, dir }) => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > 2 * vh) return;
+        const room = Math.max(0, el.scrollWidth - vw);
+        const p = progress(r);
+        // dir -1 travels right-to-left, dir 1 left-to-right
+        const x = dir < 0 ? -p * room : -(1 - p) * room;
+        el.style.setProperty("--sx", x.toFixed(1) + "px");
+      });
+      // reading fill: starts when the text's top passes 88% of the screen and is complete
+      // when its bottom reaches 55%
+      reads.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > 2 * vh) return;
+        const span = vh * (0.88 - 0.55) + r.height;
+        const p = Math.min(1, Math.max(0, (vh * 0.88 - r.top) / span));
+        el.style.setProperty("--p", p.toFixed(3));
+      });
+    };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(updateDrift); } };
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    window.addEventListener("load", queue);
+    updateDrift();
+  }
 
   // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
   // project cards; choosing one shows either a presentation (.pj-view--deck > .pj-deck, a case-study page)
