@@ -1,6 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Splash: plays on every load; click/tap or Escape skips it
+  const splash = document.getElementById("splash");
+  if (splash) {
+    const skip = () => splash.classList.add("is-leaving");
+    splash.addEventListener("click", skip);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") skip(); }, { once: true });
+    splash.addEventListener("animationend", (e) => {
+      if (e.target === splash) splash.remove();
+    });
+  }
+
   // Mobile nav toggle
   const toggle = document.getElementById("nav-toggle");
   const navs = document.querySelectorAll(".main-nav");
@@ -114,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // pinned by their top edge (their bottom would never show), so they stick
   // once their bottom edge reaches the bottom of the screen and the next one
   // slides over. --pin-top holds that offset, kept in sync with the size.
-  const pinEls = document.querySelectorAll(".over-group .about, .feel--paper, .how--incl, .sv-card, .coach-card");
+  const pinEls = document.querySelectorAll(".orb-scene .about, .feel--paper, .how--incl, .sv-card, .coach-card");
   if (pinEls.length && !prefersReducedMotion) {
     const pinMq = window.matchMedia("(max-width: 800px)");
     pinEls.forEach((el) => el.classList.add("is-pinned"));
@@ -275,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // (the classes are removed afterwards so hover transitions keep working), and big titles,
   // the home reel rows and the tilted band slide sideways while the page scrolls.
   if (!prefersReducedMotion) {
-    const RISE = ".intro-eyebrow, .intro-title, .intro-copy, .about-copy > *, .feel-title, .feel-card, .feel-cta > *, .why-title, .why-copy > *, .freebie-card, .cta-eyebrow, .cta-title, .cta-text, .sv-eyebrow, .sv-intro-title, .sv-intro-copy p, .how-title, .how-card, .sv-cta > *, .ab-story-copy > *, .ab-values-cols > *, .ab-values-list li, .approach-title, .approach-sub, .approach-text, .faq-eyebrow, .faq-title, .faq-item, .ct-card";
+    const RISE = ".gx-title, .gx-card, .intro-eyebrow, .intro-title, .intro-copy, .about-copy > *, .feel-title, .feel-card, .feel-cta > *, .why-title, .why-copy > *, .freebie-card, .cta-eyebrow, .cta-title, .cta-text, .sv-eyebrow, .sv-intro-title, .sv-intro-copy p, .how-title, .how-card, .sv-cta > *, .ab-story-copy > *, .ab-values-cols > *, .ab-values-list li, .approach-title, .approach-sub, .approach-text, .faq-eyebrow, .faq-title, .faq-item, .ct-card";
     const WIPE = ".why-photo, .ab-story-photo, .ab-values-photo, .feel-card-photo, .approach-photo";
     // Kinetic type (after the Auros reference): titles come in word by word, uppercase labels
     // "decode" like an instrument read-out, the footer name rises letter by letter and the
@@ -425,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
       drift.push({ el, dir, amount });
     });
     addDrift(".intro:not(.ab-statement) .intro-title, .why-title, .ab-values-title, .sv-intro-title, .faq-title", 1, 0.06);
-    addDrift(".feel-title, .feel-cta-title, .cta-title, .how-title, .ab-statement .intro-title", -1, 0.06);
+    addDrift(".feel:not(.feel--projects) .feel-title, .feel-cta-title, .cta-title, .how-title, .ab-statement .intro-title", -1, 0.06);
     addDrift(".ribbon--tilt .ribbon-track", -1, 0.35);
     const reels = Array.from(document.querySelectorAll("[data-reel]"), (el) => ({ el, dir: Number(el.dataset.reel) }));
 
@@ -465,6 +476,234 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", queue);
     window.addEventListener("load", queue);
     updateDrift();
+  }
+
+  // Home particles (after the reference's particle orb). One canvas, sticky behind the hero and
+  // the intro. In the hero the particles make a vector scribble, as if drawn with the pen tool
+  // and selected in Figma: a loopy lime stroke, square anchors on it, the active anchor's
+  // handles and a dashed selection box. The pointer grabs the nearest anchor and drags it,
+  // bending the scribble. Scrolling out of the hero lets it go, and the loose particles then
+  // draw an olive crayon scribble around the intro, stroke by stroke. It fades as the scene ends.
+  const orb = document.querySelector(".hero-orb");
+  const scene = orb && orb.closest(".orb-scene");
+  if (orb && scene && orb.getContext) {
+    const ctx = orb.getContext("2d");
+    const hero = scene.querySelector(".hero");
+    const heroTitle = hero.querySelector(".hero-title");
+    const LIME = "221,212,128", WAVE = "176,215,206", PAPER = "244,242,238", PAPAYA = "232,88,42", OLIVE = "206,198,72";
+    const smooth = (v) => { v = Math.min(1, Math.max(0, v)); return v * v * (3 - 2 * v); };
+    let W = 0, H = 0, dpr = 1, pts = [];
+    const scribble = (t) => {
+      const T = Math.PI * 2;
+      const cx = Math.cos(T * t * 1.3 + 0.6) * 0.3 + Math.sin(T * t * 2.9) * 0.08;
+      const cy = Math.sin(T * t * 1.1) * 0.2 + Math.cos(T * t * 3.4) * 0.06;
+      const r = 0.5 + 0.14 * Math.sin(T * t * 3.3 + 1) + 0.06 * Math.sin(T * t * 8.7);
+      const a = T * t * 5.5 + 0.9 * Math.sin(T * t * 2.2);
+      return [cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.85];
+    };
+
+    // The vector scribble: anchors (x, y) with their outgoing handle (hx, hy); the incoming
+    // handle mirrors it, so every anchor is smooth. Top anchors have their handle pointing
+    // backwards, which makes each pair a round cursive loop (like "ℓℓℓ"). Unit box: -1..1.
+    const NODES = [
+      [-1.0, 0.2, 0.3, 0.35],
+      [-0.66, -0.55, -0.42, 0.0],
+      [-0.4, 0.5, 0.4, 0.0],
+      [-0.05, -0.65, -0.48, 0.0],
+      [0.25, 0.45, 0.42, 0.0],
+      [0.62, -0.5, -0.4, 0.0],
+      [1.0, 0.3, 0.28, 0.4],
+    ];
+    const nodes = NODES.map(([x, y, hx, hy]) => ({ x, y, hx, hy, ox: 0, oy: 0 })); // ox/oy: drag offset
+    const SEG = NODES.length - 1;
+
+    // what each particle is in the hero
+    const ROLES = [[0.7, "stroke"], [0.08, "anchor"], [0.07, "handle"], [0.04, "knob"], [0.11, "box"]];
+    const build = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = orb.clientWidth; H = orb.clientHeight;
+      orb.width = W * dpr; orb.height = H * dpr;
+      const n = W < 800 ? 3000 : 6500;
+      pts = Array.from({ length: n }, (_, i) => {
+        let roll = Math.random(), role = "box";
+        for (const [share, name] of ROLES) { if (roll < share) { role = name; break; } roll -= share; }
+        const t = i / n;
+        const loop = Math.min(1, t / TAIL); // position along the scribble loops
+        const [sx, sy] = scribble(loop), [nx, ny] = scribble(loop + 0.0004);
+        const len = Math.hypot(nx - sx, ny - sy) || 1;
+        const across = (Math.random() + Math.random() - 1) * 0.034;
+        const a = Math.random() * Math.PI * 2;
+        return {
+          role,
+          u: Math.random(),                                 // along its line / outline
+          k: Math.floor(Math.random() * NODES.length),      // which anchor
+          side: Math.random() < 0.5 ? -1 : 1,               // which handle (in / out)
+          w: Math.random() + Math.random() - 1,             // across the stroke
+          t, loop, tail: t > TAIL ? (t - TAIL) / (1 - TAIL) : -1, across,
+          gx: sx - ((ny - sy) / len) * across, gy: sy + ((nx - sx) / len) * across,
+          dx: Math.cos(a), dy: Math.sin(a), far: 0.3 + Math.random() * 1.2,
+          seed: Math.random() * 100,
+          px: 0, py: 0,
+        };
+      });
+    };
+    // the canvas layer covers the whole scene (hero + intro + about), so the scribble's tail
+    // can run down and hide behind the "Hola, soy Mimi" photo
+    const stage = orb.parentElement;
+    const sky = scene.querySelector(".orb-sky") || scene; // hero + intro: the dark part
+    const photo = scene.querySelector(".about-photo");
+    const introTitle = scene.querySelector(".intro-title");
+    const mouse = { x: -9999, y: -9999, inHero: false };
+    sky.addEventListener("pointermove", (e) => {
+      const r = orb.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+      const h = hero.getBoundingClientRect();
+      mouse.inHero = e.clientY >= h.top && e.clientY <= h.bottom;
+    });
+    sky.addEventListener("pointerleave", () => { mouse.x = mouse.y = -9999; mouse.inHero = false; });
+
+    const TAIL = 0.72; // the last 28% of the particles make the tail
+    let running = false, visible = true, last = 0, active = 2, idleSwitch = 0;
+    const draw = (time) => {
+      last = time;
+      const canvasTop = orb.getBoundingClientRect().top;
+      const heroRect = hero.getBoundingClientRect();
+      const skyRect = sky.getBoundingClientRect();
+      const past = -heroRect.top / heroRect.height;
+      const e = smooth(past / 0.8);
+      const pen = Math.min(1, Math.max(0, (past - 0.35) / 0.95));
+      // loose particles (not on the scribble) fade out as the dark part ends
+      const fade = smooth((window.innerHeight * 1.15 - skyRect.bottom) / (window.innerHeight * 0.55));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      const ox = W / 2;
+      const tr = heroTitle ? heroTitle.getBoundingClientRect() : null;
+      const oy0 = (tr ? tr.top + tr.height / 2 : heroRect.top + heroRect.height * 0.47) - canvasTop;
+      // once gathered, the scribble stays pinned to the intro title and scrolls away with it
+      const ir = introTitle ? introTitle.getBoundingClientRect() : null;
+      const oy1 = ir ? ir.top + ir.height / 2 - canvasTop + H * 0.04 : H * 0.5;
+      const oy = oy0 + (oy1 - oy0) * e;
+      // tail: from the scribble's last point, a swoop down to the middle of the photo
+      const pr = photo ? photo.getBoundingClientRect() : null;
+      const tailPen = pr ? smooth((window.innerHeight - pr.top) / (window.innerHeight * 0.75)) : 0;
+      const CW = Math.min(W * (W < 800 ? 0.4 : 0.34), 520), CH = Math.min(heroRect.height * (W < 800 ? 0.24 : 0.36), 300);
+      const tt = prefersReducedMotion ? 0 : time * 0.0006;
+
+      // anchors in screen space, breathing a little on their own
+      const S = nodes.map((nd, k) => ({
+        x: ox + (nd.x + Math.sin(tt + k * 1.7) * 0.03) * CW + nd.ox,
+        y: oy + (nd.y + Math.cos(tt * 1.2 + k) * 0.05) * CH + nd.oy,
+        hx: nd.hx * CW, hy: nd.hy * CH,
+      }));
+      // the pointer picks the nearest anchor and drags it; without it, the selection hops around
+      let grab = -1;
+      if (mouse.inHero && e < 0.2) {
+        let best = 170;
+        S.forEach((a, k) => { const d = Math.hypot(a.x - nodes[k].ox - mouse.x, a.y - nodes[k].oy - mouse.y); if (d < best) { best = d; grab = k; } });
+      }
+      if (grab >= 0) active = grab;
+      else if (time - idleSwitch > 1800) { active = (active + 3) % nodes.length; idleSwitch = time; }
+      nodes.forEach((nd, k) => {
+        const tx = k === grab ? mouse.x - (S[k].x - nd.ox) : 0, ty = k === grab ? mouse.y - (S[k].y - nd.oy) : 0;
+        nd.ox += (tx - nd.ox) * 0.1; nd.oy += (ty - nd.oy) * 0.1;
+      });
+      const at = (u) => { // point on the path, u in 0..SEG
+        const k = Math.min(SEG - 1, Math.floor(u)), f = u - k, v = 1 - f;
+        const a = S[k], b = S[k + 1];
+        const p1x = a.x + a.hx, p1y = a.y + a.hy, p2x = b.x - b.hx, p2y = b.y - b.hy;
+        return [
+          v * v * v * a.x + 3 * v * v * f * p1x + 3 * v * f * f * p2x + f * f * f * b.x,
+          v * v * v * a.y + 3 * v * v * f * p1y + 3 * v * f * f * p2y + f * f * f * b.y,
+        ];
+      };
+      // selection box around the anchors and handles
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (let u = 0; u <= SEG; u += 0.05) { const [x, y] = at(u); x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+      x0 -= 18; y0 -= 18; x1 += 18; y1 += 18;
+
+      const A = Math.min(W * 0.42, 560), B = Math.min(H * 0.5, 430);
+      const boil = prefersReducedMotion ? 0 : Math.floor(time / 120);
+      const R = Math.min(W, H) * 0.35;
+
+      for (const p of pts) {
+        let X, Y, size = 1.6, alpha = 0.9, col = PAPER;
+        if (p.role === "stroke") {
+          const u = p.u * SEG, [bx, by] = at(u), [cx2, cy2] = at(Math.min(SEG, u + 0.01));
+          const l = Math.hypot(cx2 - bx, cy2 - by) || 1;
+          X = bx - ((cy2 - by) / l) * p.w * 7; Y = by + ((cx2 - bx) / l) * p.w * 7;
+          size = 2.5; alpha = 0.85; col = LIME;
+        } else if (p.role === "anchor") {
+          const c = S[p.k], h = p.k === active ? 8 : 6, q = p.u * 4, sd = Math.floor(q), f = q - sd;
+          const off = [[-h + 2 * h * f, -h], [h, -h + 2 * h * f], [h - 2 * h * f, h], [-h, h - 2 * h * f]][sd];
+          X = c.x + off[0]; Y = c.y + off[1]; alpha = 1; col = p.k === active ? PAPAYA : PAPER;
+        } else if (p.role === "handle" || p.role === "knob") {
+          const c = S[active], ex = c.x + c.hx * p.side, ey = c.y + c.hy * p.side;
+          if (p.role === "handle") {
+            if ((p.u * 12) % 1 > 0.6) continue; // dashed
+            X = c.x + (ex - c.x) * p.u; Y = c.y + (ey - c.y) * p.u; size = 1.8; alpha = 0.95; col = PAPAYA;
+          } else {
+            const ang = p.u * Math.PI * 2;
+            X = ex + Math.cos(ang) * 6; Y = ey + Math.sin(ang) * 6; alpha = 1; col = PAPAYA;
+          }
+        } else {
+          // dashed box with small squares on the corners
+          const q = p.u * 4, sd = Math.floor(q), f = q - sd;
+          if (p.seed < 20) {
+            const cxr = [x0, x1, x1, x0][sd], cyr = [y0, y0, y1, y1][sd], ang = f * 4, a2 = Math.floor(ang), g2 = ang - a2;
+            const off = [[-5 + 10 * g2, -5], [5, -5 + 10 * g2], [5 - 10 * g2, 5], [-5, 5 - 10 * g2]][a2];
+            X = cxr + off[0]; Y = cyr + off[1]; alpha = 0.9; col = WAVE;
+          } else {
+            if ((f * 30) % 1 > 0.5) continue;
+            X = [x0 + (x1 - x0) * f, x1, x1 - (x1 - x0) * f, x0][sd];
+            Y = [y0, y0 + (y1 - y0) * f, y1, y1 - (y1 - y0) * f][sd];
+            size = 1.2; alpha = 0.5; col = WAVE;
+          }
+        }
+        X += p.dx * p.far * R * e; Y += p.dy * p.far * R * e;
+        alpha *= 1 - e * 0.55;
+        const on = p.tail < 0 ? smooth((pen - p.loop) * 14) : pen >= 1 && pr ? smooth((tailPen * 1.05 - p.tail) * 10) : 0;
+        if (on > 0) {
+          const jx = Math.sin(p.seed + boil * 1.7) * 0.9, jy = Math.cos(p.seed * 1.3 + boil * 2.1) * 0.9;
+          let GX, GY;
+          if (p.tail < 0) { GX = ox + p.gx * A + jx; GY = oy - H * 0.04 + p.gy * B + jy; }
+          else {
+            const [ex, ey] = scribble(1), sx0 = ox + ex * A, sy0 = oy - H * 0.04 + ey * B;
+            const tx = pr.left + pr.width * 0.5, ty = pr.top + pr.height * 0.45 - canvasTop;
+            const c1x = sx0 + A * 0.2, c1y = sy0 + B * 1.1, c2x = tx + A * 1.1, c2y = ty - B * 0.7; // a wide swoop, not a straight drop
+            const v = p.tail, w = 1 - v;
+            const bx = w * w * w * sx0 + 3 * w * w * v * c1x + 3 * w * v * v * c2x + v * v * v * tx;
+            const by = w * w * w * sy0 + 3 * w * w * v * c1y + 3 * w * v * v * c2y + v * v * v * ty;
+            GX = bx + p.across * 260 + jx; GY = by + p.across * 120 + jy;
+          }
+          X += (GX - X) * on; Y += (GY - Y) * on;
+          alpha += (0.6 - alpha) * on;
+          size += (2.7 - size) * on;
+          if (on > 0.5) col = OLIVE;
+          if (p.tail >= 0) { alpha = 0.85 * on; size = 3; col = "176,166,40"; } // deeper olive so it still reads on the paper colour
+        }
+        if (e > 0.05) {
+          const mx = X - mouse.x, my = Y - mouse.y, d2 = mx * mx + my * my, rad = 100;
+          let pushX = 0, pushY = 0;
+          if (d2 < rad * rad) { const d = Math.sqrt(d2) || 1, q2 = (1 - d / rad) * 34; pushX = (mx / d) * q2; pushY = (my / d) * q2; }
+          p.px += (pushX - p.px) * 0.12; p.py += (pushY - p.py) * 0.12;
+          X += p.px; Y += p.py;
+        }
+        ctx.fillStyle = `rgba(${col},${(Math.max(0, alpha) * (1 - fade * (1 - on))).toFixed(3)})`;
+        ctx.fillRect(X - size / 2, Y - size / 2, size, size);
+      }
+      if (running && !prefersReducedMotion) requestAnimationFrame(draw);
+    };
+    const start = () => { if (running || !visible || document.hidden) return; running = true; last = 0; requestAnimationFrame(draw); };
+    const stop = () => { running = false; };
+    build();
+    if (prefersReducedMotion) {
+      requestAnimationFrame(draw);
+      window.addEventListener("scroll", () => requestAnimationFrame(draw), { passive: true });
+    } else start();
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); }).observe(stage);
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+    window.addEventListener("resize", () => { build(); if (prefersReducedMotion) requestAnimationFrame(draw); });
   }
 
   // Projects overlays (services): a button [data-pj-open="<id>"] opens a full-screen list of
@@ -515,6 +754,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const decks = pj.querySelectorAll(".pj-deck");
     let opener = null;
     let from = null; // the "all projects" overlay we came from, if any
+    let direct = false; // opened straight on a case from the gallery page: back closes the overlay
 
     const setScreen = (screen) => {
       listView.hidden = screen !== "list";
@@ -525,6 +765,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pj.classList.toggle("is-gallery", screen === "gallery" || screen === "deck");
     };
     const showList = () => {
+      if (direct) { closePj(); return; }
       if (from) {
         const back = from;
         from = null;
@@ -568,6 +809,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const closePj = () => {
       from = null;
+      direct = false;
       pj.classList.remove("is-open");
       document.body.classList.remove("pj-lock");
       setTimeout(() => { pj.hidden = true; }, prefersReducedMotion ? 0 : 250);
@@ -591,6 +833,15 @@ document.addEventListener("DOMContentLoaded", () => {
         pj.classList.add("is-open");
         const last = pj.querySelector(".pj-pill.is-last");
         focusIfKeyboard(last || pj.querySelector(".pj-pill"));
+      },
+      // open straight on case i from the gallery page
+      openCase: (i, btn) => {
+        direct = true;
+        opener = btn || null;
+        pj.hidden = false;
+        document.body.classList.add("pj-lock");
+        requestAnimationFrame(() => pj.classList.add("is-open"));
+        showDetail(i);
       },
       hideNow: closeNow,
       getOpener: () => opener,
@@ -628,12 +879,12 @@ document.addEventListener("DOMContentLoaded", () => {
     pj.querySelectorAll(".pj-back-circle").forEach((btn) => btn.addEventListener("click", showList));
     pj.addEventListener("click", (e) => { if (e.target === pj) closePj(); });
     // links from other pages (services.html#pj) open the overlay on load
-    if (location.hash === "#" + pj.id) openPj();
+    if (location.hash === "#" + pj.id) pjApis[pj.id].openCase(0);
 
     document.addEventListener("keydown", (e) => {
       // another overlay may have handled this same key press already (Esc going back to the list)
       if (e.defaultPrevented || pj.hidden || document.querySelector(".lightbox")) return;
-      const inList = !listView.hidden;
+      const inList = !listView.hidden || direct;
       if (e.key === "Escape") { e.preventDefault(); inList ? closePj() : showList(); }
       else if (e.key === "Tab") {
         // keep focus inside the dialog
@@ -645,4 +896,103 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Projects page gallery: each card opens its case study directly ([data-pj-case="<overlay id>:<index>"])
+  document.querySelectorAll("[data-pj-case]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const [id, index] = btn.dataset.pjCase.split(":");
+      const api = pjApis[id];
+      if (api) api.openCase(Number(index), btn);
+    });
+  });
 });
+
+// Home projects: horizontal reel. On desktop the stage pins and vertical scroll moves the track
+// sideways; on phones (or reduced motion) the strip is a native swipe and only the thread follows.
+// To feel like one continuous movement: the track already starts sliding in while the section rises
+// (no dead stop when it pins), its position eases toward the scroll instead of jumping, a lime thread
+// fills along the top and lights each case, and the photos grow a little as they reach the middle.
+(() => {
+  const hs = document.querySelector(".hs");
+  if (!hs) return;
+  const view = hs.querySelector(".hs-view");
+  const track = hs.querySelector(".hs-track");
+  const now = hs.querySelector(".hs-now");
+  const line = hs.querySelector(".hs-line");
+  const fill = hs.querySelector(".hs-fill");
+  const stops = Array.from(hs.querySelectorAll(".hs-info, .hs-end"));
+  const infos = Array.from(hs.querySelectorAll(".hs-info"));
+  const shots = Array.from(hs.querySelectorAll(".hs-shot"));
+  const pinned = () => window.innerWidth > 800 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const LEAD = 0.45; // share of the screen height the track slides in before the stage pins
+  let travel = 0;
+  let target = 0;
+  let current = 0;
+  let running = false;
+
+  const measure = () => {
+    if (pinned()) {
+      travel = Math.max(0, track.scrollWidth - view.clientWidth);
+      hs.style.height = `${window.innerHeight + travel}px`;
+    } else {
+      travel = 0;
+      hs.style.height = "";
+      track.style.removeProperty("--hx");
+    }
+    readScroll();
+    current = target;
+    paint();
+  };
+
+  // target x of the track: before pinning it trails in from the right at half speed, then follows 1:1
+  const readScroll = () => {
+    if (!pinned()) return;
+    const vh = window.innerHeight;
+    const pos = Math.min(travel, Math.max(-vh * LEAD * 2, -hs.getBoundingClientRect().top));
+    target = pos < 0 ? -pos * 0.5 : -pos;
+  };
+
+  const paint = () => {
+    const vw = window.innerWidth;
+    if (pinned()) track.style.setProperty("--hx", `${current.toFixed(1)}px`);
+    const mid = vw * 0.5;
+    const lr = line.getBoundingClientRect();
+    fill.style.setProperty("--fill", `${Math.max(0, Math.min(lr.width, mid - lr.left)).toFixed(1)}px`);
+    let caseNo = 1;
+    stops.forEach((el) => {
+      const on = el.getBoundingClientRect().left < mid;
+      el.classList.toggle("is-on", on);
+      const i = infos.indexOf(el);
+      if (on && i >= 0) caseNo = i + 1;
+    });
+    now.textContent = String(caseNo).padStart(2, "0");
+    shots.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.right < -vw * 0.2 || r.left > vw * 1.2) return;
+      const k = Math.min(1, Math.max(-1, (r.left + r.width / 2 - mid) / vw));
+      el.style.setProperty("--px", `${(-5 - k * 5).toFixed(2)}%`);
+      el.style.setProperty("--sc", (1 - Math.abs(k) * 0.08).toFixed(3));
+    });
+  };
+
+  const tick = () => {
+    current += (target - current) * 0.14;
+    if (Math.abs(target - current) < 0.3) current = target;
+    paint();
+    if (current !== target) requestAnimationFrame(tick);
+    else running = false;
+  };
+  const onScroll = () => {
+    readScroll();
+    if (!pinned()) { paint(); return; }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  view.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
+  // fonts and late layout can change the track width after the first measurement
+  if ("ResizeObserver" in window) new ResizeObserver(measure).observe(track);
+  measure();
+})();

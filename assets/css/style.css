@@ -108,11 +108,9 @@ a { color: inherit; text-decoration: none; }
 .hero-photo {
   width: 100%;
   height: 100%;
-  background-color: #9b7d5a;
-  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/tropical/toucan.jpg");
-  background-size: 100% 100%, cover;
-  background-repeat: no-repeat;
-  background-position: 0 0, 50% 22%;
+  /* deep ocean field for the particle orb (main.js draws it on .hero-orb) */
+  background-color: #0c3534;
+  background-image: radial-gradient(ellipse 60% 70% at 50% 48%, #1b5a58 0%, #0f403f 45%, #082827 100%);
 }
 
 /* photos dissolve into the page background at the bottom */
@@ -120,10 +118,8 @@ a { color: inherit; text-decoration: none; }
   content: "";
   position: absolute;
   inset: 0;
-  /* the second layer hides the end of the metal perch that enters from the bottom-left */
-  background:
-    radial-gradient(ellipse 42% 26% at 0% 100%, var(--paper) 45%, rgba(244, 242, 238, 0) 100%),
-    linear-gradient(to bottom, rgba(244, 242, 238, 0) 63%, var(--paper) 96%);
+  z-index: 1; /* above the orb canvas (same level, earlier in the DOM), below title and ribbon */
+  background: linear-gradient(to bottom, rgba(244, 242, 238, 0) 80%, rgba(244, 242, 238, 0.35) 88%, var(--paper) 98%);
   pointer-events: none;
 }
 
@@ -521,12 +517,116 @@ a { color: inherit; text-decoration: none; }
 /* home: two project cards (one per area), each with a cover image; same card size as the 3-column grid, centred */
 .feel--projects .feel-grid { grid-template-columns: repeat(2, calc((var(--u) * 1061 - var(--u) * 52) / 3)); justify-content: center; }
 .feel--projects .feel-card {
-  height: calc(var(--u) * 490);
+  height: auto;
+  min-height: calc(var(--u) * 490); /* grows with the title so the caption always stays inside the card, whatever the accent font */
+  padding-bottom: calc(var(--u) * 40);
   padding-top: calc(var(--u) * 70);
   border: 1px dashed var(--black); /* same dashed outline as the certification cards */
   box-shadow: none;
 }
 .feel--projects .feel-card p { margin-top: calc(var(--u) * 34); }
+/* home: projects as a horizontal reel. .hs is as tall as the sideways travel needs (set in main.js),
+   the stage pins to the screen and the track slides left: case info, then its pieces, all one height */
+.feel--projects { text-align: left; }
+.hs-stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--u) * 76);
+  height: 100vh;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+}
+.hs-head { display: flex; align-items: flex-end; justify-content: space-between; padding: 0 calc(var(--u) * 85); }
+.hs-head .feel-title { margin: 0; font-size: calc(var(--u) * 110); line-height: 0.95; }
+.hs-count { margin: 0 0 calc(var(--u) * 10); white-space: nowrap; font-size: calc(var(--u) * 15); font-weight: 500; letter-spacing: 0.16em; color: rgba(244, 242, 238, 0.7); }
+.hs-now { color: var(--lime); }
+.hs-track {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  gap: calc(var(--u) * 22);
+  height: min(54vh, calc(var(--u) * 500));
+  padding: 0 calc(var(--u) * 85);
+  width: max-content;
+  translate: var(--hx, 0px) 0;
+  will-change: translate;
+}
+.hs-info, .hs-end {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: calc(var(--u) * 400);
+  padding: 0 calc(var(--u) * 30) 0 calc(var(--u) * 28);
+  border-left: 1px dashed rgba(244, 242, 238, 0.6);
+  color: var(--paper);
+}
+.hs-info + .hs-shot { margin-left: calc(var(--u) * 6); }
+.hs-shot + .hs-info { margin-left: calc(var(--u) * 70); }
+.hs-num { margin: 0; font-size: calc(var(--u) * 15); font-weight: 500; letter-spacing: 0.14em; color: var(--lime); }
+.hs-name {
+  margin: calc(var(--u) * 18) 0 0;
+  font-family: var(--font-display);
+  font-size: calc(var(--u) * 72);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.hs-sub { margin: calc(var(--u) * 10) 0 0; font-family: var(--font-display); font-size: calc(var(--u) * 24); font-weight: 600; letter-spacing: -0.03em; }
+.hs-sub em, .hs-end-title em { font-family: "Instrument Serif", "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; font-size: 1.12em; letter-spacing: -0.01em; }
+.hs-client { margin: calc(var(--u) * 12) 0 0; font-size: calc(var(--u) * 13); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 242, 238, 0.7); }
+.hs-text { margin: calc(var(--u) * 22) 0 0; font-size: calc(var(--u) * 16); line-height: 1.5; color: rgba(244, 242, 238, 0.85); }
+/* what was done, as one plain line of text separated by dots (no boxes) */
+.hs-tags { display: flex; flex-wrap: wrap; margin: calc(var(--u) * 18) 0 0; padding: 0; list-style: none; font-size: calc(var(--u) * 15); color: var(--paper); }
+.hs-tags li + li::before { content: "•"; margin: 0 calc(var(--u) * 10); color: var(--lime); }
+.hs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 14);
+  margin-top: auto;
+  font-size: calc(var(--u) * 14);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hs-link .pill-icon { width: calc(var(--u) * 50); height: calc(var(--u) * 50); transition: transform 0.3s ease; }
+.hs-info:hover .hs-link .pill-icon, .hs-end:hover .hs-link .pill-icon { transform: rotate(45deg); }
+.hs-shot {
+  flex: none;
+  height: 100%;
+  aspect-ratio: var(--ar);
+  overflow: hidden;
+  border-radius: calc(var(--u) * 8);
+  background: rgba(0, 0, 0, 0.12);
+  scale: var(--sc, 1); /* photos grow slightly as they reach the middle of the screen */
+}
+/* the photo is wider than its frame and pans a little as the frame crosses the screen */
+.hs-shot img { display: block; width: 112%; max-width: none; height: 100%; object-fit: cover; translate: var(--px, -5%) 0; transition: scale 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hs-shot:hover img { scale: 1.04; }
+.hs-end { justify-content: center; margin-left: calc(var(--u) * 70); width: calc(var(--u) * 520); }
+.hs-end-title { margin: 0 0 calc(var(--u) * 36); font-family: var(--font-display); font-size: calc(var(--u) * 46); font-weight: 600; line-height: 1.02; letter-spacing: -0.04em; }
+.hs-end .hs-link { margin-top: 0; }
+/* one dashed thread runs along the top of the whole track; it fills in lime up to the middle of the
+   screen, and each case hangs from it with its dashed border and a dot that lights up when reached */
+.hs-line { position: absolute; top: calc(var(--u) * -34); left: calc(var(--u) * 85); right: calc(var(--u) * 85); border-top: 1px dashed rgba(244, 242, 238, 0.45); pointer-events: none; }
+.hs-fill { position: absolute; top: -2px; left: 0; height: 3px; width: var(--fill, 0px); max-width: 100%; border-radius: 3px; background: var(--lime); }
+.hs-info, .hs-end { position: relative; margin-top: calc(var(--u) * -34); padding-top: calc(var(--u) * 34); }
+.hs-info::before, .hs-end::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--u) * -6);
+  left: calc(var(--u) * -6);
+  width: calc(var(--u) * 11);
+  height: calc(var(--u) * 11);
+  border: 1px solid var(--lime);
+  border-radius: 50%;
+  background: var(--ocean);
+  transition: background 0.4s ease, scale 0.4s ease;
+}
+.hs-info.is-on::before, .hs-end.is-on::before { background: var(--lime); scale: 1.5; }
+
 .feel-card-photo {
   height: calc(var(--u) * 190);
   margin-top: calc(var(--u) * 34);
@@ -1091,7 +1191,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 7; /* shared closing block: always above pinned/sticky sections before it */
   height: calc(var(--u) * 807);
   background-color: #2c4a48;
-  background-image: linear-gradient(rgba(20, 64, 64, 0.68), rgba(20, 64, 64, 0.68)), url("../img/ceipa/web/isotipo.jpg");
+  background-image: linear-gradient(rgba(20, 14, 10, 0.55), rgba(20, 14, 10, 0.55)), url("../img/tropical/cta-papaya.jpg");
   background-size: cover;
   background-position: 50% 50%;
   color: var(--white);
@@ -1283,8 +1383,8 @@ a { color: inherit; text-decoration: none; }
   background-color: #8a6d54;
   background-image:
     linear-gradient(to bottom, rgba(244, 242, 238, 0) 50%, var(--paper) 98.7%),
-    linear-gradient(to right, rgba(60, 40, 25, 0.35), rgba(60, 40, 25, 0) 60%),
-    linear-gradient(rgba(70, 50, 35, 0.2), rgba(70, 50, 35, 0.2)),
+    linear-gradient(to right, rgba(40, 28, 18, 0.6), rgba(40, 28, 18, 0) 55%), /* darker behind the copy, top left */
+    linear-gradient(rgba(70, 50, 35, 0.25), rgba(70, 50, 35, 0.25)),
     url("../img/tropical/beach-volcano.jpg"),
     url("../img/tropical/beach-volcano.jpg");
   background-size: 100% 100%, 100% 100%, 100% 100%, cover, cover;
@@ -1642,14 +1742,13 @@ a { color: inherit; text-decoration: none; }
   height: max(100svh, calc(var(--u) * 600));
   margin-top: calc(var(--nav-h) * -1);
   overflow-x: clip;
-  /* portrait on the right, its grey studio wall fading into a flat grey on the left */
-  background-color: #616162;
+  /* tropical placeholder for now (dark banana leaves keep the white title readable) */
+  background-color: #2f4a1c;
   background-image:
-    linear-gradient(rgba(20, 14, 10, 0.3), rgba(20, 14, 10, 0.3)),
-    linear-gradient(to right, #616162 calc(100% - max(100svh, calc(var(--u) * 600)) * 0.6667), rgba(97, 97, 98, 0) calc(100% - max(100svh, calc(var(--u) * 600)) * 0.6667 + 12vw)),
-    url("../img/me/emily-chaqueta.jpg");
-  background-size: 100% 100%, 100% 100%, auto 100%;
-  background-position: 0 0, 0 0, 100% 0;
+    linear-gradient(rgba(20, 14, 10, 0.5), rgba(20, 14, 10, 0.5)),
+    url("../img/tropical/e6358927d2a21441f391a2cdf10a9942.jpg");
+  background-size: 100% 100%, cover;
+  background-position: 0 0, 50% 40%;
   background-repeat: no-repeat;
   color: var(--paper);
 }
@@ -1903,7 +2002,7 @@ a { color: inherit; text-decoration: none; }
 .sv-photo--left {
   grid-column: 1 / -1;
   background-color: #b89c86;
-  background-image: linear-gradient(rgba(20, 14, 10, 0.3), rgba(20, 14, 10, 0.3)), url("../img/yellowmaps/web/isotipo.jpg"), url("../img/yellowmaps/web/isotipo.jpg");
+  background-image: linear-gradient(rgba(20, 14, 10, 0.35), rgba(20, 14, 10, 0.35)), url("../img/tropical/hero-cascadas.jpg"), url("../img/tropical/hero-cascadas.jpg");
   background-position: 0 0, 50% 42%, 50% 42%;
 }
 /* photos dissolve into the page colour at the bottom */
@@ -2746,22 +2845,47 @@ a { color: inherit; text-decoration: none; }
 /* FAQ on the sales page sits above the pinned sections before it */
 .inv ~ .faq { position: relative; z-index: 5; }
 
-/* ---------- Home: "Does this sound like you?" slides over the pinned "Hey, I'm Lily!" ---------- */
+/* ---------- Home: the projects slide over the pinned "Hola, soy Mimi" (last part of .orb-scene) ---------- */
 
-.over-group { position: relative; isolation: isolate; }
-.over-group .about {
+.orb-scene .about {
   position: sticky;
   top: calc(var(--u) * -11);
   z-index: 1;
   padding-bottom: calc(var(--u) * 320); /* room under the pills for the gradient to overlap */
 }
-.over-group .feel {
+/* empty room at the end of the scene: the about stays pinned in it while the projects rise over it */
+.orb-scene::after { content: ""; display: block; height: calc(100vh + var(--u) * 257); }
+.orb-scene + .feel {
   position: relative;
   z-index: 2;
-  margin-top: calc(var(--u) * -257);
+  margin-top: calc(-100vh - var(--u) * 514); /* the room above + 257u of overlap */
   padding-top: calc(var(--u) * 343); /* 257u of fade + 86u to line the title up with the reference */
   background: linear-gradient(to bottom, rgba(34, 107, 107, 0), var(--ocean) calc(var(--u) * 257));
 }
+
+/* ---------- Projects page: only the gallery ---------- */
+.gx { min-height: calc(100vh - var(--nav-h)); padding: calc(var(--u) * 90) 0 calc(var(--u) * 150); background: var(--ocean); color: var(--paper); }
+.gx-title {
+  width: calc(var(--u) * 1300);
+  margin: 0 auto calc(var(--u) * 70);
+  font-family: var(--font-display);
+  font-size: calc(var(--u) * 190);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+.gx-title em { font-family: "Instrument Serif", "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.gx-count { margin-left: calc(var(--u) * 14); font-family: var(--font-sans); font-size: calc(var(--u) * 22); font-weight: 500; letter-spacing: 0.12em; vertical-align: top; position: relative; top: calc(var(--u) * 26); color: var(--lime); }
+.gx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: calc(var(--u) * 70) calc(var(--u) * 30); width: calc(var(--u) * 1300); margin: 0 auto; padding: 0; list-style: none; }
+.gx-card { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.gx-media { display: block; overflow: hidden; aspect-ratio: 4 / 3.3; border-radius: calc(var(--u) * 8); background: rgba(0, 0, 0, 0.15); }
+.gx-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: scale 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.gx-card:hover .gx-media img, .gx-card:focus-visible .gx-media img { scale: 1.05; }
+.gx-meta { display: flex; align-items: center; gap: calc(var(--u) * 18); margin-top: calc(var(--u) * 22); padding-top: calc(var(--u) * 18); border-top: 1px dashed rgba(244, 242, 238, 0.5); }
+.gx-name { font-family: var(--font-display); font-size: calc(var(--u) * 46); font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+.gx-kind { margin-left: auto; font-size: calc(var(--u) * 13); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 242, 238, 0.75); }
+.gx-meta .pill-icon { flex: none; width: calc(var(--u) * 50); height: calc(var(--u) * 50); transition: transform 0.3s ease; }
+.gx-card:hover .gx-meta .pill-icon, .gx-card:focus-visible .gx-meta .pill-icon { transform: rotate(45deg); }
 
 /* ---------- Mobile ---------- */
 
@@ -2836,6 +2960,38 @@ a { color: inherit; text-decoration: none; }
   .feel-card-title { font-size: 44px; }
   .feel-card p { font-size: 16px; line-height: 1.4; margin-top: 26px; }
   .feel--projects .feel-card { height: auto; padding-top: 72px; }
+  /* projects page gallery */
+  .gx { padding: 48px 20px 80px; }
+  .gx-title { width: auto; margin-bottom: 36px; font-size: 21vw; }
+  .gx-count { font-size: 13px; top: 8px; margin-left: 6px; }
+  .gx-grid { grid-template-columns: 1fr; gap: 44px; width: auto; }
+  .gx-meta { gap: 12px; margin-top: 16px; padding-top: 14px; flex-wrap: wrap; }
+  .gx-name { font-size: 34px; }
+  .gx-kind { order: 3; width: 100%; margin-left: 0; font-size: 11px; }
+  .gx-meta .pill-icon { width: 42px; height: 42px; margin-left: auto; }
+  /* phones: no pinning, the track is a native swipe strip */
+  .hs-stage { position: static; height: auto; padding-top: 0; gap: 28px; overflow: visible; }
+  .hs-head { padding: 0; }
+  .hs-head .feel-title { font-size: 58px; }
+  .hs-count { font-size: 12px; }
+  .hs-view { margin: 0 -20px; padding-top: 32px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .hs-view::-webkit-scrollbar { display: none; }
+  .hs-track { height: 420px; gap: 12px; padding: 0 20px; translate: none; }
+  .hs-info, .hs-end { width: 78vw; padding: 0 18px; scroll-snap-align: start; }
+  .hs-shot { scroll-snap-align: start; height: 62%; align-self: center; border-radius: 8px; }
+  .hs-shot + .hs-info, .hs-end { margin-left: 24px; }
+  .hs-num, .hs-client { font-size: 12px; }
+  .hs-name { font-size: 48px; }
+  .hs-sub { font-size: 21px; }
+  .hs-text { font-size: 15px; }
+  .hs-tags { font-size: 14px; }
+  .hs-tags li + li::before { margin: 0 8px; }
+  .hs-link { font-size: 13px; }
+  .hs-link .pill-icon { width: 44px; height: 44px; }
+  .hs-end-title { font-size: 32px; }
+  .hs-line { left: 20px; right: 20px; top: -26px; }
+  .hs-info, .hs-end { margin-top: -26px; padding-top: 26px; }
+  .hs-info::before, .hs-end::before { top: -5px; left: -5px; width: 9px; height: 9px; }
   .feel-card-photo { height: auto; aspect-ratio: 16 / 9; margin-top: 24px; }
   .feel-cta { flex-direction: column; align-items: flex-start; gap: 28px; width: auto; margin: 56px 0 0; }
   .feel-cta-title { font-size: 34px; }
@@ -2944,7 +3100,7 @@ a { color: inherit; text-decoration: none; }
   .approach-ribbon { display: none; }
   .ab-cta { padding: 24px 20px 64px; }
   .ab-cta .feel-cta { width: auto; margin: 0; }
-  .ct-hero { height: 640px; background-size: 100% 100%, 0 0, cover; background-position: 0 0, 0 0, 50% 10%; }
+  .ct-hero { height: 640px; }
   .ct-title { top: 250px; left: 20px; right: 20px; font-size: 16.5vw; white-space: normal; }
   .ct-pills { top: 470px; left: 20px; right: 20px; flex-wrap: wrap; gap: 12px; }
   .ct-pills .pill { width: calc(50% - 6px) !important; height: 60px; padding: 0 10px 0 18px; font-size: 13px; }
@@ -3060,8 +3216,9 @@ a { color: inherit; text-decoration: none; }
   .inv-list li { height: auto; line-height: 2; }
   .inv-card h3 { font-size: 30px; line-height: 1.1; }
   .inv-card .btn-learn { width: 100%; height: 52px; margin-top: 28px; }
-  .over-group .about { position: relative; top: auto; padding-bottom: 64px; }
-  .over-group .feel { margin-top: 0; padding-top: 64px; background: var(--ocean); }
+  .orb-scene .about { position: relative; top: auto; padding-bottom: 64px; }
+  .orb-scene::after { height: 100vh; }
+  .orb-scene + .feel { margin-top: -100vh; padding-top: 64px; background: var(--ocean); }
   .coaching { padding: 64px 20px; }
   /* phones: the cards pin one over another via .is-pinned (main.js), aligned so each shows whole before the next slides over it */
   .coaching::after { display: none; }
@@ -3739,4 +3896,116 @@ button.pill { border: 0; cursor: pointer; text-align: left; }
 .rf .rw {
   opacity: clamp(0.18, calc(var(--p, 0) * (var(--n) + 2) - var(--wi)), 1);
   transition: opacity 0.15s linear;
+}
+
+/* Home: hero + intro + about as one scene for the particle animation. The canvas sticks to the
+   screen while the scene scrolls; main.js draws the vector path in the hero, the scribble around
+   the intro and the tail behind the about photo. .orb-sky (hero + intro) is the dark part,
+   ending in the paper colour; it isn't positioned, so it paints below the canvas. */
+.orb-scene { position: relative; }
+.orb-sky {
+  padding-bottom: calc(var(--u) * 220);
+  /* flat brand ocean (turquesa); ends through wave so the step to paper never turns grey */
+  background: linear-gradient(to bottom, var(--ocean) 0, var(--ocean) calc(100% - var(--u) * 260), var(--wave) calc(100% - var(--u) * 90), var(--paper) 100%);
+}
+.orb-stage { position: absolute; top: 0; left: 0; right: 0; height: 100%; z-index: 0; pointer-events: none; }
+.hero-orb { position: sticky; top: 0; display: block; width: 100%; height: 100vh; }
+.orb-scene .hero-photos { display: none; }
+.orb-scene .hero::after { content: none; }
+.orb-scene .intro {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  color: var(--paper);
+}
+.orb-scene .intro-copy { color: rgba(244, 242, 238, 0.86); }
+
+/* ---------- Splash ---------- */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--lime);
+  color: var(--ocean);
+  text-align: center;
+  cursor: pointer;
+  animation: splash-out 1s cubic-bezier(0.76, 0, 0.24, 1) 3.7s forwards;
+}
+.splash-inner { animation: splash-inner-out 1s cubic-bezier(0.76, 0, 0.24, 1) 3.7s forwards; }
+
+/* "hola" in one continuous cursive line that draws itself, like Apple's "hello" */
+.splash-hola {
+  display: block;
+  height: clamp(130px, calc(var(--u) * 370), 420px);
+  margin: 0 auto;
+  overflow: visible;
+}
+.splash-pen {
+  fill: none;
+  stroke: var(--ocean);
+  stroke-width: 17;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: splash-draw 2.3s cubic-bezier(0.5, 0.1, 0.35, 1) 0.2s forwards;
+}
+
+.splash-text {
+  margin: clamp(10px, calc(var(--u) * 22), 28px) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(20px, calc(var(--u) * 38), 46px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.splash-word { display: inline-block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; vertical-align: top; }
+.splash-word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: splash-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(2.35s + var(--i) * 0.08s) forwards;
+}
+.splash-word em {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.2em;
+  letter-spacing: -0.02em;
+}
+
+/* thin progress line along the bottom */
+.splash-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--ocean);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: splash-bar 3.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+
+.splash.is-leaving,
+.splash.is-leaving .splash-inner { animation-delay: 0s; animation-duration: 0.7s; }
+
+@keyframes splash-up { to { transform: none; } }
+@keyframes splash-draw { to { stroke-dashoffset: 0; } }
+@keyframes splash-bar { to { transform: scaleX(1); } }
+@keyframes splash-inner-out { to { transform: translateY(-35vh); opacity: 0; } }
+@keyframes splash-out { to { transform: translateY(-100%); visibility: hidden; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .splash *, .splash *::before { animation: none !important; transform: none !important; }
+  .splash-pen { stroke-dashoffset: 0; }
+  .splash { animation: splash-fade 0.4s ease 1.8s forwards; }
+  .splash.is-leaving { animation: splash-fade 0.3s ease forwards; }
+  @keyframes splash-fade { to { opacity: 0; visibility: hidden; } }
 }
