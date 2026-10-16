@@ -506,7 +506,7 @@ a { color: inherit; text-decoration: none; }
 .feel--projects .feel-card p { margin-top: calc(var(--u) * 34); }
 /* home: projects as a horizontal reel. .hs is as tall as the sideways travel needs (set in main.js),
    the stage pins to the screen and the track slides left: case info, then its pieces, all one height */
-.feel--projects { text-align: left; }
+.feel--projects { text-align: left; padding-bottom: 0; } /* the pinned stage already leaves room under the reel */
 .hs-stage {
   position: sticky;
   top: 0;
@@ -1899,10 +1899,16 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- Projects page: only the gallery ---------- */
-.gx { padding: calc(var(--u) * 90) 0 0; background: var(--ocean); color: var(--paper); }
+.gx { margin-top: calc(var(--nav-h) * -1); padding: 0; background: var(--ocean); color: var(--paper); } /* starts under the fixed header so the first screen is one composition */
 .gx-title {
-  width: calc(var(--u) * 1300);
-  margin: 0 auto calc(var(--u) * 20);
+  position: absolute;
+  top: calc(var(--nav-h) + var(--u) * 40);
+  left: calc(var(--u) * 85);
+  z-index: 2;
+  margin: 0;
+  opacity: calc(1 - var(--e, 0) * 3);
+  translate: 0 calc(var(--e, 0) * -60px);
+  pointer-events: none;
   font-family: var(--font-display);
   font-size: calc(var(--u) * 190);
   font-weight: 600;
@@ -1913,24 +1919,26 @@ a { color: inherit; text-decoration: none; }
 .gx-count { margin-left: calc(var(--u) * 14); font-family: var(--font-sans); font-size: calc(var(--u) * 22); font-weight: 500; letter-spacing: 0.12em; vertical-align: top; position: relative; top: calc(var(--u) * 26); color: var(--lime); }
 /* each project: a tall block whose stage pins to the screen while the cover grows from a small
    framed picture to the full screen (--e goes 0 → 1, set in main.js); the name sits on top, huge */
-.gx-item { height: 250vh; }
+.gx-item { --t0: 16vh; height: 250vh; }
+.gx-item:first-child { --t0: 36vh; } /* room for the page title on the first screen */
 .gx-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 .gx-card { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .gx-frame {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  clip-path: inset(calc((1 - var(--e, 0)) * 24vh) calc((1 - var(--e, 0)) * 28vw) round calc((1 - var(--e, 0)) * var(--radius-media)));
+  clip-path: inset(calc((1 - var(--e, 0)) * var(--t0)) calc((1 - var(--e, 0)) * 30vw) calc((1 - var(--e, 0)) * 18vh) round calc((1 - var(--e, 0)) * var(--radius-media)));
 }
-.gx-frame img { display: block; width: 100%; height: 100%; object-fit: cover; scale: calc(1.3 - var(--e, 0) * 0.3); transition: filter 0.4s ease; }
+.gx-frame img { display: block; width: 100%; height: 100%; object-fit: cover; scale: calc(1.1 - var(--e, 0) * 0.1); transition: filter 0.4s ease; }
 .gx-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12, 44, 44, 0.7), rgba(12, 44, 44, 0) 55%); opacity: var(--e, 0); }
 .gx-card:hover .gx-frame img { filter: brightness(1.06); }
 .gx-name {
   position: absolute;
   left: 50%;
-  top: calc(50% + var(--e, 0) * 18vh);
+  /* small caption under the framed cover at first, then big over the full-screen picture */
+  top: calc(100% - 9vh - var(--e, 0) * 23vh);
   translate: -50% -50%;
-  scale: calc(1 - var(--e, 0) * 0.2);
+  scale: calc(0.36 + var(--e, 0) * 0.44);
   font-family: var(--font-display);
   font-size: 15vw;
   font-weight: 600;
@@ -1959,6 +1967,7 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   .gx-item { height: auto; }
   .gx-stage { position: relative; height: 90vh; }
+  .gx-title { opacity: 1; translate: none; }
 }
 
 /* ---------- Case study (inside the project overlay): big cover, one line, then the work ---------- */
@@ -2129,12 +2138,13 @@ a { color: inherit; text-decoration: none; }
   .feel-card p { font-size: 16px; line-height: 1.4; margin-top: 26px; }
   .feel--projects .feel-card { height: auto; padding-top: 72px; }
   /* projects page gallery */
-  .gx { padding: 48px 0 0; }
-  .gx-title { width: auto; margin: 0 20px 8px; font-size: 21vw; }
+  .gx-title { top: calc(var(--nav-h) + 24px); left: 20px; font-size: 21vw; }
+  .gx-item:first-child { --t0: 26vh; }
   .gx-count { font-size: 13px; top: 8px; margin-left: 6px; }
   .gx-item { height: 210vh; }
-  .gx-frame { clip-path: inset(calc((1 - var(--e, 0)) * 22vh) calc((1 - var(--e, 0)) * 9vw) round calc((1 - var(--e, 0)) * var(--radius-media-m))); }
-  .gx-name { font-size: 19vw; top: calc(50% + var(--e, 0) * 12vh); }
+  .gx-frame { clip-path: inset(calc((1 - var(--e, 0)) * var(--t0)) calc((1 - var(--e, 0)) * 8vw) calc((1 - var(--e, 0)) * 20vh) round calc((1 - var(--e, 0)) * var(--radius-media-m))); }
+  .gx-name { font-size: 19vw; top: calc(100% - 10vh - var(--e, 0) * 28vh); }
+  .feel--projects { padding-bottom: 24px; }
   .gx-foot { left: 20px; right: 20px; bottom: 28px; flex-wrap: wrap; gap: 8px 16px; }
   .gx-num, .gx-kind, .gx-go { font-size: 11px; }
   .gx-kind { order: 3; width: 100%; }
