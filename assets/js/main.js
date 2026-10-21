@@ -279,6 +279,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Contact page: the topic chips fill the "¿De qué querés hablar?" field (typing
+  // in it clears the chip), and the clock shows Emily's local time in Costa Rica.
+  document.querySelectorAll("form.ct-fields").forEach((form) => {
+    const chips = form.querySelectorAll(".ct-chip");
+    const reason = form.elements.reason;
+    if (!chips.length || !reason) return;
+    const mark = (on) => chips.forEach((c) => {
+      c.classList.toggle("is-on", c === on);
+      c.setAttribute("aria-pressed", c === on);
+    });
+    chips.forEach((chip) => chip.addEventListener("click", () => {
+      reason.value = chip.dataset.reason;
+      mark(chip);
+      form.elements.message.focus();
+    }));
+    reason.addEventListener("input", () => mark(null));
+    form.addEventListener("reset", () => mark(null));
+  });
+  document.querySelectorAll(".ct-copy").forEach((btn) => {
+    const idle = btn.textContent;
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        btn.textContent = "¡Copiado!";
+      } catch {
+        // no clipboard access: select the address so it can be copied by hand
+        const range = document.createRange();
+        range.selectNodeContents(btn.previousElementSibling);
+        getSelection().removeAllRanges();
+        getSelection().addRange(range);
+        return;
+      }
+      btn.classList.add("is-done");
+      setTimeout(() => { btn.textContent = idle; btn.classList.remove("is-done"); }, 2000);
+    });
+  });
+  document.querySelectorAll(".ct-clock").forEach((el) => {
+    const fmt = new Intl.DateTimeFormat("es-CR", { hour: "numeric", minute: "2-digit", timeZone: el.dataset.tz });
+    const tick = () => { el.textContent = fmt.format(new Date()); };
+    tick();
+    setInterval(tick, 30000);
+  });
+
   // Scroll motion. Text rises in and photos open like a curtain when they enter the screen
   // (the classes are removed afterwards so hover transitions keep working), and big titles,
   // the home reel rows and the tilted band slide sideways while the page scrolls.
@@ -340,11 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.add("rf");
       reads.push(el);
     });
-    document.querySelectorAll(".foot-mark").forEach((el) => {
-      split(el, "tw", true);
-      el.classList.add("tw-armed", "tw-armed--letters");
-      typeIo.observe(el);
-    });
 
     const GLYPHS = "ABCDEFGHIJKLMNOPRSTUVXYZ";
     const decode = (el) => {
@@ -361,7 +399,8 @@ document.addEventListener("DOMContentLoaded", () => {
           t.node.textContent = [...t.final].map((ch) => {
             const k = i++;
             if (k < solved || !/[A-ZÁÉÍÓÚÑ]/i.test(ch)) return ch;
-            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            const g = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            return ch === ch.toLowerCase() ? g.toLowerCase() : g; // labels are sentence case now
           }).join("");
         });
         if (solved < total) requestAnimationFrame(frame);
@@ -1103,4 +1142,105 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", queue, { passive: true });
   window.addEventListener("resize", queue);
   update();
+})();
+
+/* Footer name (reference: Gander's footer): it always spans the full width; letters near the
+   cursor widen and the others narrow to make room. Touch screens get a slow wave instead.
+   Desktop shows one row, phones split it into "Emily Rojas" / "Solórzano" */
+(() => {
+  const mark = document.querySelector(".foot-mark");
+  if (!mark) return;
+  const text = mark.textContent.trim().replace(/\s+/g, " ");
+  const footer = mark.closest(".site-footer") || mark;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  mark.setAttribute("aria-label", text);
+
+  let rows = [];
+  let pointer = null; // x inside the name, or null when the cursor is away
+  let visible = false;
+  let raf = 0;
+
+  const build = () => {
+    const cut = text.lastIndexOf(" ");
+    const lines = innerWidth <= 800 && cut > 0 ? [text.slice(0, cut), text.slice(cut + 1)] : [text];
+    mark.textContent = "";
+    mark.style.fontSize = "100px";
+    rows = lines.map((line) => {
+      const row = document.createElement("span");
+      row.className = "fm-row";
+      row.setAttribute("aria-hidden", "true");
+      const letters = [...line].map((ch) => {
+        const box = document.createElement("span");
+        box.className = "fm-l";
+        const glyph = document.createElement("span");
+        glyph.textContent = ch === " " ? "\u00a0" : ch;
+        box.appendChild(glyph);
+        row.appendChild(box);
+        return { box, glyph, space: ch === " ", w: 1 };
+      });
+      mark.appendChild(row);
+      return { row, letters };
+    });
+    // natural widths at 100px, then one font size that makes the widest row fill the width
+    const W = mark.clientWidth;
+    let widest = 0;
+    rows.forEach((r) => {
+      r.letters.forEach((l) => { l.n = l.glyph.getBoundingClientRect().width; });
+      r.sum = r.letters.reduce((a, l) => a + l.n, 0);
+      widest = Math.max(widest, r.sum);
+    });
+    // taller than "just fits": letters start condensed (like the reference) and open up on hover
+    const TALL = innerWidth <= 800 ? 1.25 : 1.6;
+    const fs = ((100 * W) / widest) * TALL;
+    mark.style.fontSize = fs + "px";
+    rows.forEach((r) => {
+      r.letters.forEach((l) => { l.n *= fs / 100; });
+      r.scale = W / (r.sum * fs / 100); // every row reaches both edges
+    });
+    layout(true);
+  };
+
+  // writes widths; returns true while letters are still easing
+  const layout = (snap) => {
+    const W = mark.clientWidth;
+    const sigma = W * 0.09;
+    let moving = false;
+    rows.forEach((r) => {
+      let x = 0;
+      r.letters.forEach((l) => {
+        const cx = x + (l.n * r.scale) / 2;
+        x += l.n * r.scale;
+        const near = pointer === null ? 0 : Math.exp(-((cx - pointer) ** 2) / (2 * sigma * sigma));
+        const target = 1 + (l.space ? 0.4 : 1.7) * near;
+        l.w = snap ? target : l.w + (target - l.w) * 0.14;
+        if (Math.abs(target - l.w) > 0.002) moving = true;
+      });
+      const total = r.letters.reduce((a, l) => a + l.n * l.w, 0);
+      r.letters.forEach((l) => {
+        const width = (l.n * l.w * W) / total;
+        l.box.style.width = width + "px";
+        l.glyph.style.transform = `scaleX(${width / l.n})`;
+      });
+    });
+    return moving;
+  };
+
+  const tick = (t) => {
+    raf = 0;
+    if (!hover && visible) pointer = mark.clientWidth * (0.5 + 0.42 * Math.sin(t / 1700));
+    const moving = layout(false);
+    if (visible && (moving || !hover)) raf = requestAnimationFrame(tick);
+  };
+  const run = () => { if (!raf && !reduce) raf = requestAnimationFrame(tick); };
+
+  if (hover) {
+    footer.addEventListener("pointermove", (e) => { pointer = e.clientX - mark.getBoundingClientRect().left; run(); });
+    footer.addEventListener("pointerleave", () => { pointer = null; run(); });
+  }
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) run(); }).observe(mark);
+
+  let resizeT = 0;
+  window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(build, 150); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(build);
 })();

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013">
+<link rel="stylesheet" href="assets/css/style.css?v=20261020">
 </head>
 <body>
 
@@ -31,27 +31,58 @@
 
   <!-- CONTACT HERO -->
   <section class="ct-hero">
-    <h1 class="ct-title">Hablemos <em>juntos</em></h1>
-    <div class="ct-pills">
-      <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-      <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-      <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-      <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+    <div class="ct-hero-copy">
+      <p class="ct-kicker">Contacto <span aria-hidden="true">—</span> <span class="ct-kicker-light">por donde te quede más cómodo</span></p>
+      <h1 class="ct-title">Hablemos <em>juntos</em></h1>
+      <div class="ct-pills">
+        <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+        <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+      </div>
+      <p class="ct-mail">
+        <span>contact.emilyrojas@gmail.com</span>
+        <button type="button" class="ct-copy" data-copy="contact.emilyrojas@gmail.com">Copiar</button>
+      </p>
     </div>
+
+    <a href="#escribime" class="ct-scroll" aria-label="Ir al formulario">
+      <svg class="ct-scroll-ring" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="ct-ring" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1 -76 0"/></defs>
+        <text><textPath href="#ct-ring" textLength="236" lengthAdjust="spacing">Escribime • Escribime • Escribime •</textPath></text>
+      </svg>
+      <svg class="ct-scroll-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+    </a>
   </section>
 
   <!-- CONTACT FORM -->
-  <section class="ct-form">
+  <section class="ct-form" id="escribime">
     <div class="ct-card">
-      <h2 class="ct-card-title">¿Tenés una <em>idea?</em></h2>
-      <p class="ct-card-text">Escribime por el formulario o mandá un correo a <br>contact.emilyrojas@gmail.com. Contame qué necesitás; si es una <br>colaboración, sumá detalles y fechas para responderte pronto.</p>
+      <div class="ct-side">
+        <p class="ct-status"><i aria-hidden="true"></i>Disponible para proyectos</p>
+        <h2 class="ct-card-title">¿Tenés una <br><em>idea?</em></h2>
+        <p class="ct-card-text">Contame qué tenés en mente. No hace falta <br>tenerlo todo claro: lo vamos armando juntos.</p>
+        <ul class="ct-facts">
+          <li><b>Respondo</b><span>en menos de 24 horas</span></li>
+          <li><b>Acá son las</b><span><time class="ct-clock" data-tz="America/Costa_Rica">--:--</time> en Costa Rica</span></li>
+          <li><b>¿Algo rápido?</b><span><a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener">Escribime por WhatsApp</a></span></li>
+        </ul>
+        <img class="ct-wave" src="assets/img/perezoso/perezoso-06-animado.svg" alt="" aria-hidden="true">
+      </div>
 
       <form class="ct-fields">
+        <p class="ct-chips-label" id="ct-chips-label">¿De qué querés hablar?</p>
+        <div class="ct-chips" role="group" aria-labelledby="ct-chips-label">
+          <button type="button" class="ct-chip" data-reason="Un proyecto UX/UI">Un proyecto UX/UI</button>
+          <button type="button" class="ct-chip" data-reason="Una marca">Una marca</button>
+          <button type="button" class="ct-chip" data-reason="Una colaboración">Una colaboración</button>
+          <button type="button" class="ct-chip" data-reason="Solo quiero charlar">Solo charlar</button>
+        </div>
         <div class="ct-row">
           <input type="text" name="name" placeholder="Nombre*" aria-label="Nombre" required>
           <input type="email" name="email" placeholder="Correo electrónico*" aria-label="Correo electrónico" required>
         </div>
-        <input type="text" name="reason" placeholder="¿De qué querés hablar?*" aria-label="¿De qué querés hablar?" class="ct-reason" required>
+        <input type="text" name="reason" placeholder="O contame con tus palabras*" aria-label="¿De qué querés hablar?" class="ct-reason" required>
         <textarea name="message" placeholder="Mensaje*" aria-label="Mensaje" required></textarea>
         <button type="submit" class="ct-submit">Enviar</button>
       </form>
@@ -59,99 +90,66 @@
   </section>
 
   <!-- FAQ -->
-  <section class="faq">
+  <section class="faq" id="faq">
     <p class="faq-eyebrow">¿Tenés dudas? Acá hay respuestas</p>
     <h2 class="faq-title">Preguntas <br><em>frecuentes</em></h2>
     <div class="faq-grid">
-        <details class="faq-item">
+        <details class="faq-item" name="faq">
           <summary><h3>¿Qué ofrecés?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
           <p>Diseño UX/UI: investigación, arquitectura de información, wireframes, prototipos, interfaces y pruebas de usabilidad. También identidad de marca y dirección de arte, que vienen de mi lado publicitario.</p>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" name="faq">
           <summary><h3>¿Estás disponible?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
           <p>Sí, estoy abierta a proyectos freelance, a colaboraciones y a simplemente conversar sobre una idea. Si tenés algo en mente, escribime.</p>
         </details>
-        <details class="faq-item">
-          <summary><h3>¿Cuánto cuesta?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Depende del alcance de cada proyecto. Contame qué necesitás y te preparo una propuesta clara antes de empezar, para que sepas qué incluye.</p>
-        </details>
-        <details class="faq-item">
-          <summary><h3>¿Cuánto tarda?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Depende del tamaño del proyecto y de las etapas que incluya, desde una investigación breve hasta un producto completo. Lo acordamos desde el inicio.</p>
-        </details>
-        <details class="faq-item">
-          <summary><h3>¿Qué te envío?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Basta con contarme qué querés lograr, para quién es y para cuándo lo necesitás. Si tenés referencias, mejor. No hace falta tenerlo todo definido.</p>
-        </details>
-        <details class="faq-item">
-          <summary><h3>¿Cómo empezamos?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Escribime por el formulario, correo, LinkedIn, Instagram o WhatsApp. Contame tu idea y empezamos con una conversación para entender qué necesitás.</p>
-        </details>
-        <details class="faq-item">
+        <details class="faq-item" name="faq">
           <summary><h3>¿Cómo trabajás?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
           <p>Primero escucho: pregunto, investigo y observo. Después ordeno lo que encontré, diseño, lo pruebo con quienes lo van a usar y ajusto hasta que funcione bien.</p>
         </details>
-        <details class="faq-item">
-          <summary><h3>¿Hay revisiones?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Sí. Diseñar es iterar: escuchamos comentarios, probamos y ajustamos. Definimos cuántas rondas incluye cada proyecto antes de empezar.</p>
+        <details class="faq-item" name="faq">
+          <summary><h3>¿Cuánto cuesta y cuánto tarda?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
+          <p>Depende del alcance y de las etapas que incluya. Contame qué necesitás y te preparo una propuesta clara con precio, tiempos y rondas de revisión antes de empezar.</p>
         </details>
-        <details class="faq-item">
-          <summary><h3>¿Y tu experiencia?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Trabajo como UX/UI Designer en productos digitales y apps móviles, con certificaciones en UX/UI Design y Project Management (LCI Education). Mirá mis proyectos.</p>
-        </details>
-        <details class="faq-item">
-          <summary><h3>¿Cuándo respondés?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
-          <p>Normalmente respondo en menos de 24 horas, por el medio que prefieras. En colaboraciones, incluir detalles y fechas me ayuda a responderte mejor.</p>
+        <details class="faq-item" name="faq">
+          <summary><h3>¿Cómo empezamos?</h3><i class="faq-arrow pill-icon pill-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></summary>
+          <p>Escribime por el formulario o por donde prefieras y contame qué querés lograr, para quién es y para cuándo. No hace falta tenerlo todo definido. Respondo en menos de 24 horas.</p>
         </details>
     </div>
-  </section>
-
-  <div class="dark-block dark-block--solo">
-    <!-- FREEBIE -->
-  <section class="freebie" id="freebie">
-
-    <div class="freebie-card freebie-card--contact">
-      <h2 class="freebie-title">¿Tenés una idea? <br><em>Hablemos.</em></h2>
-      <p class="freebie-text">Si tenés una idea, un problema o simplemente <br>querés hablar de diseño, escribime. Contame qué <br>te frena o qué querés lograr y lo pensamos juntos.</p>
-
-      <form class="freebie-form">
-        <input type="text" name="first" placeholder="Nombre" aria-label="Nombre" class="f-first" required>
-        <input type="text" name="last" placeholder="Apellido" aria-label="Apellido" class="f-last">
-        <input type="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" class="f-email" required>
-        <textarea name="message" placeholder="Contame qué tenés en mente" aria-label="Contame qué tenés en mente" class="f-message" required></textarea>
-        <button type="submit" class="f-submit">HABLEMOS</button>
-      </form>
-    </div>
-  </section>
-  </div>
-
-  <!-- CONTACT sections go here, one at a time -->
-
-  <!-- FINAL CTA -->
-  <section class="cta cta--compact">
-    <p class="cta-eyebrow">Y AHORA, ¿QUÉ SIGUE?</p>
-    <h2 class="cta-title">¿Y si hacemos <br>algo <em>juntos?</em></h2>
-    <p class="cta-text">Si buscás a alguien para tu equipo, tenés una app a medio pensar o una marca que todavía no tiene cara, escribime. No hace falta tenerlo todo claro: casi todo lo que he hecho empezó con una conversación y una pregunta. Contame qué tenés en mente y lo vamos armando juntos.</p>
-    <img class="cta-sloth" src="assets/img/perezoso/perezoso-02-blanco-animado.svg" alt="" aria-hidden="true">
+    <p class="faq-more">¿Te quedó otra duda? <br><a href="#escribime">Escribime</a></p>
   </section>
 
 </main>
 
 <footer class="site-footer">
-    <div class="foot-mid">
-      <p class="foot-tag">Las mejores ideas<br>nacen de<br>conversaciones <em>reales.</em></p>
-      <div class="foot-links">
-        <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+    <div class="foot-card">
+      <div class="foot-top">
+        <p class="foot-tag">Las mejores ideas nacen de conversaciones <em>reales.</em></p>
+        <div class="foot-write">
+          <a href="mailto:contact.emilyrojas@gmail.com" class="foot-mail">contact.emilyrojas@gmail.com</a>
+          <a href="contact.html" class="foot-go">Escribime</a>
+        </div>
+      </div>
+
+      <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
+
+      <div class="foot-bottom">
+        <p class="foot-credit">&copy; 2026 Emily Rojas <span aria-hidden="true">•</span> Hecho en Costa Rica</p>
+        <nav class="foot-nav" aria-label="Pie de página">
+          <a href="index.html">Inicio</a>
+          <a href="about.html">Acerca de mí</a>
+          <a href="services.html">Proyectos</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+        <div class="foot-social">
+          <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v7M7 7v.01M11 17v-7M11 13.5c0-2 1.2-3.5 3-3.5s3 1.2 3 3.5V17"/></svg></a>
+          <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><path d="M16 8v.01"/></svg></a>
+          <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 18.5 6.6 15A7 7 0 1 1 9 17.4z"/><path d="M9.7 9.6c.3 1.8 2.6 4.1 4.6 4.6l.9-1.1-1.5-.8-.6.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.6-.8-1.5z"/></svg></a>
+          <a href="mailto:contact.emilyrojas@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6.5" width="15" height="11" rx="2"/><path d="m5 7.5 7 5.5 7-5.5"/></svg></a>
+        </div>
       </div>
     </div>
-
-    <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
-    <p class="foot-credit">&copy; 2026 Emily Rojas</p>
   </footer>
 
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261020"></script>
 </body>
 </html>

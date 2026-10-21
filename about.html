@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013">
+<link rel="stylesheet" href="assets/css/style.css?v=20261020">
 </head>
 <body>
 
@@ -139,7 +139,7 @@
         <input type="text" name="last" placeholder="Apellido" aria-label="Apellido" class="f-last">
         <input type="email" name="email" placeholder="Correo electrónico" aria-label="Correo electrónico" class="f-email" required>
         <textarea name="message" placeholder="Contame qué tenés en mente" aria-label="Contame qué tenés en mente" class="f-message" required></textarea>
-        <button type="submit" class="f-submit">HABLEMOS</button>
+        <button type="submit" class="f-submit">Hablemos</button>
       </form>
     </div>
   </section>
@@ -149,7 +149,7 @@
 
   <!-- FINAL CTA -->
   <section class="cta cta--compact">
-    <p class="cta-eyebrow">Y AHORA, ¿QUÉ SIGUE?</p>
+    <p class="cta-eyebrow">Y ahora, ¿qué sigue?</p>
     <h2 class="cta-title">¿Y si hacemos <br>algo <em>juntos?</em></h2>
     <p class="cta-text">Si buscás a alguien para tu equipo, tenés una app a medio pensar o una marca que todavía no tiene cara, escribime. No hace falta tenerlo todo claro: casi todo lo que he hecho empezó con una conversación y una pregunta. Contame qué tenés en mente y lo vamos armando juntos.</p>
     <img class="cta-sloth" src="assets/img/perezoso/perezoso-02-blanco-animado.svg" alt="" aria-hidden="true">
@@ -158,20 +158,35 @@
 </main>
 
 <footer class="site-footer">
-    <div class="foot-mid">
-      <p class="foot-tag">Las mejores ideas<br>nacen de<br>conversaciones <em>reales.</em></p>
-      <div class="foot-links">
-        <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+    <div class="foot-card">
+      <div class="foot-top">
+        <p class="foot-tag">Las mejores ideas nacen de conversaciones <em>reales.</em></p>
+        <div class="foot-write">
+          <a href="mailto:contact.emilyrojas@gmail.com" class="foot-mail">contact.emilyrojas@gmail.com</a>
+          <a href="contact.html" class="foot-go">Escribime</a>
+        </div>
+      </div>
+
+      <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
+
+      <div class="foot-bottom">
+        <p class="foot-credit">&copy; 2026 Emily Rojas <span aria-hidden="true">•</span> Hecho en Costa Rica</p>
+        <nav class="foot-nav" aria-label="Pie de página">
+          <a href="index.html">Inicio</a>
+          <a href="about.html">Acerca de mí</a>
+          <a href="services.html">Proyectos</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+        <div class="foot-social">
+          <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v7M7 7v.01M11 17v-7M11 13.5c0-2 1.2-3.5 3-3.5s3 1.2 3 3.5V17"/></svg></a>
+          <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><path d="M16 8v.01"/></svg></a>
+          <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 18.5 6.6 15A7 7 0 1 1 9 17.4z"/><path d="M9.7 9.6c.3 1.8 2.6 4.1 4.6 4.6l.9-1.1-1.5-.8-.6.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.6-.8-1.5z"/></svg></a>
+          <a href="mailto:contact.emilyrojas@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6.5" width="15" height="11" rx="2"/><path d="m5 7.5 7 5.5 7-5.5"/></svg></a>
+        </div>
       </div>
     </div>
-
-    <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
-    <p class="foot-credit">&copy; 2026 Emily Rojas</p>
   </footer>
 
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261020"></script>
 </body>
 </html>
