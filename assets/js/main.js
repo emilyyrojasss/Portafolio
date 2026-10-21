@@ -297,36 +297,18 @@ document.addEventListener("DOMContentLoaded", () => {
     reason.addEventListener("input", () => mark(null));
     form.addEventListener("reset", () => mark(null));
   });
-  document.querySelectorAll(".ct-copy").forEach((btn) => {
-    const idle = btn.textContent;
-    btn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(btn.dataset.copy);
-        btn.textContent = "¡Copiado!";
-      } catch {
-        // no clipboard access: select the address so it can be copied by hand
-        const range = document.createRange();
-        range.selectNodeContents(btn.previousElementSibling);
-        getSelection().removeAllRanges();
-        getSelection().addRange(range);
-        return;
-      }
-      btn.classList.add("is-done");
-      setTimeout(() => { btn.textContent = idle; btn.classList.remove("is-done"); }, 2000);
-    });
-  });
   document.querySelectorAll(".ct-clock").forEach((el) => {
     const fmt = new Intl.DateTimeFormat("es-CR", { hour: "numeric", minute: "2-digit", timeZone: el.dataset.tz });
     const tick = () => { el.textContent = fmt.format(new Date()); };
     tick();
-    setInterval(tick, 30000);
+    setInterval(tick, 1000);
   });
 
   // Scroll motion. Text rises in and photos open like a curtain when they enter the screen
   // (the classes are removed afterwards so hover transitions keep working), and big titles,
   // the home reel rows and the tilted band slide sideways while the page scrolls.
   if (!prefersReducedMotion) {
-    const RISE = ".gx-title, .gx-card, .intro-eyebrow, .intro-title, .intro-copy, .about-copy > *, .feel-title, .feel-card, .feel-cta > *, .why-title, .why-copy > *, .freebie-card, .cta-eyebrow, .cta-title, .cta-text, .sv-eyebrow, .sv-intro-title, .sv-intro-copy p, .how-title, .how-card, .sv-cta > *, .ab-story-copy > *, .ab-values-cols > *, .ab-values-list li, .approach-title, .approach-sub, .approach-text, .faq-eyebrow, .faq-title, .faq-item, .ct-card";
+    const RISE = ".intro-eyebrow, .intro-title, .intro-copy, .about-copy > *, .feel-title, .feel-card, .feel-cta > *, .why-title, .why-copy > *, .freebie-card, .cta-eyebrow, .cta-title, .cta-text, .sv-eyebrow, .sv-intro-title, .sv-intro-copy p, .how-title, .how-card, .sv-cta > *, .ab-story-copy > *, .ab-values-cols > *, .ab-values-list li, .approach-title, .approach-sub, .approach-text, .faq-eyebrow, .faq-title, .faq-item, .ct-card";
     const WIPE = ".why-photo, .ab-story-photo, .ab-values-photo, .feel-card-photo, .approach-photo";
     // Kinetic type (after the Auros reference): titles come in word by word, uppercase labels
     // "decode" like an instrument read-out, the footer name rises letter by letter and the
@@ -471,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.add("sx");
       drift.push({ el, dir, amount });
     });
-    addDrift(".intro:not(.ab-statement) .intro-title, .why-title, .ab-values-title, .sv-intro-title, .faq-title", 1, 0.06);
+    addDrift(".intro:not(.ab-statement) .intro-title, .why-title, .ab-values-title, .sv-intro-title", 1, 0.06);
     addDrift(".feel:not(.feel--projects) .feel-title, .feel-cta-title, .cta-title, .how-title, .ab-statement .intro-title", -1, 0.06);
     addDrift(".ribbon--tilt .ribbon-track", -1, 0.35);
     const reels = Array.from(document.querySelectorAll("[data-reel]"), (el) => ({ el, dir: Number(el.dataset.reel) }));
@@ -1118,127 +1100,189 @@ document.addEventListener("DOMContentLoaded", () => {
   measure();
 })();
 
-// Projects page: each cover starts as a small framed picture and grows to fill the screen while its
-// stage is pinned; --e (0 → 1) drives the CSS clip, zoom, name position and the footer fade.
+// Projects page: folder stack. The stage pins; the first folder comes in when the page opens and each next
+// one slides in from the bottom-left over its own stretch of scroll (--k 0 → 1).
 (() => {
-  const items = Array.from(document.querySelectorAll(".gx-item"));
-  if (!items.length) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) { items.forEach((el) => el.style.setProperty("--e", "1")); return; }
+  const files = document.querySelector(".files");
+  if (!files) return;
+  const folders = Array.from(files.querySelectorAll(".fl"));
+  files.style.setProperty("--n", folders.length);
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // all in place (--k defaults to 1)
   const ease = (t) => 1 - Math.pow(1 - t, 3);
+  folders[0].style.setProperty("--k", "0");
+  folders[0].style.transition = "opacity 0.7s ease 0.15s, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s, translate 0.35s ease";
+  requestAnimationFrame(() => requestAnimationFrame(() => folders[0].style.setProperty("--k", "1")));
+  const rest = folders.slice(1);
   const update = () => {
-    const vh = window.innerHeight;
-    items.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -vh || r.top > vh * 2) return;
-      // starts as the block reaches the top, complete after 60% of its pinned run
-      const run = Math.max(1, r.height - vh);
-      const t = Math.min(1, Math.max(0, -r.top / (run * 0.6)));
-      el.style.setProperty("--e", ease(t).toFixed(4));
-    });
+    const r = files.getBoundingClientRect();
+    const run = Math.max(1, r.height - window.innerHeight);
+    const p = Math.min(1, Math.max(0, -r.top / run)) * rest.length;
+    rest.forEach((f, i) => f.style.setProperty("--k", ease(Math.min(1, Math.max(0, (p - i) * 1.25))).toFixed(4)));
   };
   let queued = false;
-  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; update(); }); } };
-  window.addEventListener("scroll", queue, { passive: true });
-  window.addEventListener("resize", queue);
+  window.addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; update(); }); } }, { passive: true });
+  window.addEventListener("resize", update);
   update();
 })();
 
-/* Footer name (reference: Gander's footer): it always spans the full width; letters near the
-   cursor widen and the others narrow to make room. Touch screens get a slow wave instead.
+/* Footer name (reference: Gander's footer). The name stays still and fills the width; the holes
+   inside the letters (R, o, a, ó…) keep their own shape and drift slowly and constantly.
+   How: each letter is drawn on a canvas to find its counters. Each counter gets a cover in the
+   letter's colour: the counter grown by a few px (closes the real hole) minus the counter's own
+   shape placed at --x/--y (mask-composite), so the hole looks like it slides inside the letter.
    Desktop shows one row, phones split it into "Emily Rojas" / "Solórzano" */
 (() => {
   const mark = document.querySelector(".foot-mark");
   if (!mark) return;
   const text = mark.textContent.trim().replace(/\s+/g, " ");
-  const footer = mark.closest(".site-footer") || mark;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hover = matchMedia("(hover: hover) and (pointer: fine)").matches;
   mark.setAttribute("aria-label", text);
 
-  let rows = [];
-  let pointer = null; // x inside the name, or null when the cursor is away
+  let holes = [];
   let visible = false;
   let raf = 0;
+
+  const S = 3; // counters are traced at 3× so their edges stay smooth on any screen
+
+  // a counter's shape as an image (in S-space). grow > 0: solid, grown; grow = 0: the exact hole,
+  // with the glyph's own anti-aliasing on its edge
+  const shapeURL = (px, alpha, W, x0, y0, w, h, grow) => {
+    const c = document.createElement("canvas");
+    c.width = w + grow * 2; c.height = h + grow * 2;
+    const ctx = c.getContext("2d");
+    if (grow) {
+      ctx.fillStyle = "#000";
+      px.forEach((p) => ctx.fillRect((p % W) - x0, ((p / W) | 0) - y0, 1 + grow * 2, 1 + grow * 2));
+    } else {
+      const img = ctx.createImageData(c.width, c.height);
+      const inside = new Set(px);
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const k = (y0 + y) * W + (x0 + x);
+        let v = 0;
+        if (inside.has(k)) v = 255;
+        else if (inside.has(k - 1) || inside.has(k + 1) || inside.has(k - W) || inside.has(k + W)) v = 255 - alpha[k]; // soft edge
+        img.data[(y * c.width + x) * 4 + 3] = v;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+    return c.toDataURL();
+  };
+
+  // counters of one glyph: background pixels that the outside can't reach
+  const findCounters = (ch, font, w, h, baseline, grow) => {
+    const pad = 12 * S, W = Math.ceil(w * S) + pad * 2, H = Math.ceil(h * S) + pad * 2;
+    const c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.font = font;
+    ctx.textBaseline = "alphabetic";
+    ctx.setTransform(S, 0, 0, S, pad, pad);
+    ctx.fillText(ch, 0, baseline);
+    const a = ctx.getImageData(0, 0, W, H).data;
+    const alpha = new Uint8Array(W * H), ink = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) { alpha[i] = a[i * 4 + 3]; ink[i] = alpha[i] > 110 ? 1 : 0; }
+    const seen = new Uint8Array(W * H);
+    const flood = (start) => {
+      const stack = [start], px = [];
+      seen[start] = 1;
+      while (stack.length) {
+        const k = stack.pop(); px.push(k);
+        const x = k % W, y = (k / W) | 0;
+        if (x > 0 && !seen[k - 1] && !ink[k - 1]) { seen[k - 1] = 1; stack.push(k - 1); }
+        if (x < W - 1 && !seen[k + 1] && !ink[k + 1]) { seen[k + 1] = 1; stack.push(k + 1); }
+        if (y > 0 && !seen[k - W] && !ink[k - W]) { seen[k - W] = 1; stack.push(k - W); }
+        if (y < H - 1 && !seen[k + W] && !ink[k + W]) { seen[k + W] = 1; stack.push(k + W); }
+      }
+      return px;
+    };
+    flood(0); // the outside
+    const found = [];
+    const G = grow * S;
+    for (let k = 0; k < W * H; k++) {
+      if (seen[k] || ink[k]) continue;
+      const px = flood(k);
+      if (px.length < (h * S * h * S) / 400) continue; // ignore specks
+      let x0 = W, y0 = H, x1 = 0, y1 = 0;
+      px.forEach((p) => { const x = p % W, y = (p / W) | 0; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); });
+      const cw = x1 - x0 + 1, chh = y1 - y0 + 1;
+      found.push({
+        x: (x0 - pad - G) / S, y: (y0 - pad - G) / S, w: (cw + G * 2) / S, h: (chh + G * 2) / S, cw: cw / S, ch: chh / S,
+        cover: shapeURL(px, alpha, W, x0, y0, cw, chh, G), // the counter grown: closes the real hole
+        hole: shapeURL(px, alpha, W, x0, y0, cw, chh, 0), // the counter as it is
+      });
+    }
+    return found;
+  };
 
   const build = () => {
     const cut = text.lastIndexOf(" ");
     const lines = innerWidth <= 800 && cut > 0 ? [text.slice(0, cut), text.slice(cut + 1)] : [text];
     mark.textContent = "";
     mark.style.fontSize = "100px";
-    rows = lines.map((line) => {
+    const rows = lines.map((line) => {
       const row = document.createElement("span");
       row.className = "fm-row";
       row.setAttribute("aria-hidden", "true");
-      const letters = [...line].map((ch) => {
-        const box = document.createElement("span");
-        box.className = "fm-l";
-        const glyph = document.createElement("span");
-        glyph.textContent = ch === " " ? "\u00a0" : ch;
-        box.appendChild(glyph);
-        row.appendChild(box);
-        return { box, glyph, space: ch === " ", w: 1 };
-      });
+      row.textContent = line;
       mark.appendChild(row);
-      return { row, letters };
+      return row;
     });
-    // natural widths at 100px, then one font size that makes the widest row fill the width
-    const W = mark.clientWidth;
-    let widest = 0;
-    rows.forEach((r) => {
-      r.letters.forEach((l) => { l.n = l.glyph.getBoundingClientRect().width; });
-      r.sum = r.letters.reduce((a, l) => a + l.n, 0);
-      widest = Math.max(widest, r.sum);
-    });
-    // taller than "just fits": letters start condensed (like the reference) and open up on hover
-    const TALL = innerWidth <= 800 ? 1.25 : 1.6;
-    const fs = ((100 * W) / widest) * TALL;
+    // one font size so the widest row fills the width
+    const widest = Math.max(...rows.map((r) => r.getBoundingClientRect().width));
+    const fs = (100 * mark.clientWidth) / widest;
     mark.style.fontSize = fs + "px";
-    rows.forEach((r) => {
-      r.letters.forEach((l) => { l.n *= fs / 100; });
-      r.scale = W / (r.sum * fs / 100); // every row reaches both edges
+    const grow = Math.max(3, Math.round(fs * 0.05)); // room to move, still inside the stroke
+    const amp = fs * 0.028; // how far a hole drifts: slight
+
+    holes = [];
+    rows.forEach((row) => {
+      const line = row.textContent;
+      row.textContent = "";
+      [...line].forEach((ch) => {
+        const l = document.createElement("span");
+        l.className = "fm-l";
+        l.textContent = ch === " " ? " " : ch;
+        row.appendChild(l);
+        if (!/[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(ch)) return;
+        const probe = document.createElement("i");
+        probe.className = "fm-probe";
+        l.appendChild(probe);
+        const baseline = probe.offsetTop;
+        probe.remove();
+        const cs = getComputedStyle(l);
+        const font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+        findCounters(ch, font, l.offsetWidth, l.offsetHeight, baseline, grow).forEach((k) => {
+          const el = document.createElement("i");
+          el.className = "fm-c";
+          Object.assign(el.style, { left: k.x + "px", top: k.y + "px", width: k.w + "px", height: k.h + "px" });
+          el.style.setProperty("--cover", `url(${k.cover})`);
+          el.style.setProperty("--hole", `url(${k.hole})`);
+          el.style.setProperty("--hw", k.cw + "px");
+          el.style.setProperty("--hh", k.ch + "px");
+          l.appendChild(el);
+          const h = { el, grow, a: Math.min(amp, grow - 1), p: Math.random() * 6.28, sx: 650 + Math.random() * 350, sy: 780 + Math.random() * 350 };
+          place(h, 0, 0);
+          holes.push(h);
+        });
+      });
     });
-    layout(true);
+    run();
   };
 
-  // writes widths; returns true while letters are still easing
-  const layout = (snap) => {
-    const W = mark.clientWidth;
-    const sigma = W * 0.09;
-    let moving = false;
-    rows.forEach((r) => {
-      let x = 0;
-      r.letters.forEach((l) => {
-        const cx = x + (l.n * r.scale) / 2;
-        x += l.n * r.scale;
-        const near = pointer === null ? 0 : Math.exp(-((cx - pointer) ** 2) / (2 * sigma * sigma));
-        const target = 1 + (l.space ? 0.4 : 1.7) * near;
-        l.w = snap ? target : l.w + (target - l.w) * 0.14;
-        if (Math.abs(target - l.w) > 0.002) moving = true;
-      });
-      const total = r.letters.reduce((a, l) => a + l.n * l.w, 0);
-      r.letters.forEach((l) => {
-        const width = (l.n * l.w * W) / total;
-        l.box.style.width = width + "px";
-        l.glyph.style.transform = `scaleX(${width / l.n})`;
-      });
-    });
-    return moving;
+  const place = (h, x, y) => {
+    h.el.style.setProperty("--x", h.grow + x + "px");
+    h.el.style.setProperty("--y", h.grow + y + "px");
   };
 
+  // constant, gentle drift: each hole on its own slow loop
   const tick = (t) => {
     raf = 0;
-    if (!hover && visible) pointer = mark.clientWidth * (0.5 + 0.42 * Math.sin(t / 1700));
-    const moving = layout(false);
-    if (visible && (moving || !hover)) raf = requestAnimationFrame(tick);
+    holes.forEach((h) => place(h, Math.cos(t / h.sx + h.p) * h.a, Math.sin(t / h.sy + h.p) * h.a));
+    if (visible) raf = requestAnimationFrame(tick);
   };
-  const run = () => { if (!raf && !reduce) raf = requestAnimationFrame(tick); };
+  const run = () => { if (!raf && !reduce && visible) raf = requestAnimationFrame(tick); };
 
-  if (hover) {
-    footer.addEventListener("pointermove", (e) => { pointer = e.clientX - mark.getBoundingClientRect().left; run(); });
-    footer.addEventListener("pointerleave", () => { pointer = null; run(); });
-  }
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) run(); }).observe(mark);
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; run(); }).observe(mark);
 
   let resizeT = 0;
   window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(build, 150); });
