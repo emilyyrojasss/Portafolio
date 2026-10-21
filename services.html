@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261027">
+<link rel="stylesheet" href="assets/css/style.css?v=20261028">
 </head>
 <body>
 
@@ -37,14 +37,14 @@
     <div class="files-stage">
     <h1 class="files-title">Proyec<em>tos</em><sup class="files-count">02</sup></h1>
     <div class="fl-stack" style="--n:2">
-      <button type="button" class="fl fl--left" data-pj-case="pj:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Yellowmaps" style="--i:0; --cx:58%; --mcx:78%">
+      <button type="button" class="fl fl--left fl--ym" data-pj-case="pj:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Yellowmaps" style="--i:0; --cx:58%; --mcx:78%">
         <span class="fl-back"><span class="fl-tab">Yellowmaps</span></span>
         <span class="fl-paper" aria-hidden="true"></span>
         <svg class="fl-clip fl-clip--back" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/></svg>
         <span class="fl-front"><span class="fl-meta">UX/UI y Branding • 2026</span></span>
         <svg class="fl-clip fl-clip--front" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/></svg>
       </button>
-      <button type="button" class="fl fl--right fl--front" data-pj-case="pj-freelance:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Ceipa" style="--i:1; --cx:30%; --mcx:14%">
+      <button type="button" class="fl fl--right fl--front fl--ce" data-pj-case="pj-freelance:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Ceipa" style="--i:1; --cx:30%; --mcx:14%">
         <span class="fl-back"><span class="fl-tab">Ceipa</span></span>
         <span class="fl-paper" aria-hidden="true"></span>
         <svg class="fl-clip fl-clip--back" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/></svg>
@@ -104,7 +104,7 @@
     <div class="pj-view pj-view--deck" hidden>
       <button type="button" class="pj-back-circle" aria-label="Volver a la lista"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
       <!-- Each .pj-deck is one project, shown as a case-study preview -->
-      <section class="pj-deck cs" data-tone="lime" data-name="Yellowmaps" hidden>
+      <section class="pj-deck cs cs--ym" data-tone="lime" data-name="Yellowmaps" hidden>
         <header class="cs-hero">
           <img class="cs-hero-img" src="assets/img/yellowmaps/web/portada.jpg" alt="Dos manos sostienen un celular con la app de Yellowmaps" width="1920" height="1080" decoding="async">
           <div class="cs-hero-copy">
@@ -114,33 +114,54 @@
           </div>
         </header>
         <div class="cs-body">
-        <p class="cs-intro">Una app para encontrar los negocios que tenés cerca, y para que ellos también te encuentren.</p>
-        <div class="pj-stats cs-facts">
-          <div><b>+1000</b><span>usuarios en Costa Rica</span></div>
-          <div><b>3</b><span>app, plataforma y landing</span></div>
-          <div><b>Panamá</b><span>su siguiente lanzamiento</span></div>
+        <section class="cx-overview">
+          <div>
+            <p class="cx-lede">Una app para encontrar los negocios que tenés cerca, y para que ellos también te encuentren.</p>
+            <p class="cx-context">Yellowmaps nació en Costa Rica, inspirado en los antiguos libros de páginas amarillas. Es una app por geolocalización que muestra los negocios en el mapa, con una plataforma para los negocios y un landing page que explica todo el ecosistema.</p>
+          </div>
+          <dl class="cx-meta"><div><dt>Rol</dt><dd>UX/UI y Brand Designer</dd></div><div><dt>Empresa</dt><dd>A3 Technology</dd></div><div><dt>Año</dt><dd>2026</dd></div><div><dt>Equipo</dt><dd>Junto al área de front-end</dd></div><div><dt>Entregables</dt><dd>App móvil, plataforma de negocios, landing page, libro de marca y piezas gráficas</dd></div></dl>
+        </section>
+        <section class="cx-sec">
+          <header class="cx-label"><span>01</span><h3>El reto</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">La gente no siempre conoce los comercios que tiene cerca, y esos negocios necesitan que los vean. Eran dos usuarios distintos compartiendo un mismo mapa.</p>
+          </div>
+        </section>
+        <figure class="cx-bleed" style="--ar:1.400"><img src="assets/img/yellowmaps/web/posters.jpg" data-zoom="assets/img/yellowmaps/web/posters.jpg" width="2400" height="1714" alt="Posters de Yellowmaps en una calle" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+        <section class="cx-sec">
+          <header class="cx-label"><span>02</span><h3>El proceso</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">Empecé analizando a la competencia: casi nadie resolvía las dos puntas a la vez. Con el prototipo listo hice pruebas de usabilidad con el público objetivo y ajusté lo que no se entendía antes de seguir construyendo con desarrollo.</p>
+            <ol class="cx-steps"><li><span>01</span>Análisis de la competencia</li><li><span>02</span>Prototipo de alta fidelidad</li><li><span>03</span>Pruebas de usabilidad</li><li><span>04</span>Ajustes junto a front-end</li></ol>
+          </div>
+        </section>
+        <section class="cx-sec">
+          <header class="cx-label"><span>03</span><h3>La solución</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">Un sistema completo: la app, la marca que la acompaña y las piezas que la llevan a la calle.</p>
+            <h4 class="cx-sub">La app</h4>
+            <div class="cs-pair"><figure style="--ar:0.778"><img src="assets/img/yellowmaps/web/celular.jpg" data-zoom="assets/img/yellowmaps/web/celular.jpg" width="1867" height="2400" alt="La app de Yellowmaps en un celular" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:0.750"><img src="assets/img/yellowmaps/web/mapa.jpg" data-zoom="assets/img/yellowmaps/web/mapa.jpg" width="1800" height="2400" alt="El mapa de la app de Yellowmaps en un celular" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+            <figure class="cs-full" style="--ar:1.333"><img src="assets/img/yellowmaps/web/landing.jpg" data-zoom="assets/img/yellowmaps/web/landing.jpg" width="2400" height="1800" alt="La página web de Yellowmaps en una laptop, con los negocios aliados" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+            <h4 class="cx-sub">La marca</h4>
+            <figure class="cs-full" style="--ar:1.500"><img src="assets/img/yellowmaps/web/libro.jpg" data-zoom="assets/img/yellowmaps/web/libro.jpg" width="2400" height="1600" alt="Libro de marca de Yellowmaps abierto en la página de uso del color" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+            <div class="cs-pair"><figure style="--ar:0.778"><img src="assets/img/yellowmaps/web/isotipo.jpg" data-zoom="assets/img/yellowmaps/web/isotipo.jpg" width="1867" height="2400" alt="Isotipo de Yellowmaps en un letrero" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.500"><img src="assets/img/yellowmaps/web/libro-portada.jpg" data-zoom="assets/img/yellowmaps/web/libro-portada.jpg" width="2400" height="1600" alt="Portada del libro de marca de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+            <h4 class="cx-sub">En la calle</h4>
+            <div class="cs-pair"><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/sticker.jpg" data-zoom="assets/img/yellowmaps/web/sticker.jpg" width="1920" height="1080" alt="Sticker de Yellowmaps con QR en la vitrina de un negocio" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/flyers.jpg" data-zoom="assets/img/yellowmaps/web/flyers.jpg" width="1920" height="1080" alt="Flyers de Yellowmaps en una pared y bajo un limpiaparabrisas" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+            <div class="cs-pair"><figure style="--ar:1.251"><img src="assets/img/yellowmaps/web/tarjetas.jpg" data-zoom="assets/img/yellowmaps/web/tarjetas.jpg" width="2400" height="1918" alt="Tarjetas de presentación de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/botella2.jpg" data-zoom="assets/img/yellowmaps/web/botella2.jpg" width="1920" height="1080" alt="Botella con el isotipo y el patrón de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+          </div>
+        </section>
+        <section class="cx-sec">
+          <header class="cx-label"><span>04</span><h3>El resultado</h3></header>
+          <div class="cx-content">
+            <div class="pj-stats cs-facts cx-stats"><div><b>+1000</b><span>usuarios en Costa Rica</span></div><div><b>3</b><span>app, plataforma y landing</span></div><div><b>Panamá</b><span>su siguiente lanzamiento</span></div></div>
+            <p class="cx-quote">Estuve desde investigar hasta ver la marca en la calle. Ahí entendí que la app y la marca son <em>una sola experiencia.</em></p>
+          </div>
+        </section>
         </div>
-        <section class="cs-ch">
-          <p class="cs-ch-label"><span>01</span>La marca</p>
-          <figure class="cs-full" style="--ar:1.500"><img src="assets/img/yellowmaps/web/libro.jpg" data-zoom="assets/img/yellowmaps/web/libro.jpg" width="2400" height="1600" alt="Libro de marca de Yellowmaps abierto en la página de uso del color" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
-          <div class="cs-pair"><figure style="--ar:0.778"><img src="assets/img/yellowmaps/web/isotipo.jpg" data-zoom="assets/img/yellowmaps/web/isotipo.jpg" width="1867" height="2400" alt="Isotipo de Yellowmaps en un letrero" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.500"><img src="assets/img/yellowmaps/web/libro-portada.jpg" data-zoom="assets/img/yellowmaps/web/libro-portada.jpg" width="2400" height="1600" alt="Portada del libro de marca de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
-        </section>
-        <section class="cs-ch">
-          <p class="cs-ch-label"><span>02</span>La app</p>
-          <div class="cs-pair"><figure style="--ar:0.778"><img src="assets/img/yellowmaps/web/celular.jpg" data-zoom="assets/img/yellowmaps/web/celular.jpg" width="1867" height="2400" alt="La app de Yellowmaps en un celular" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:0.750"><img src="assets/img/yellowmaps/web/mapa.jpg" data-zoom="assets/img/yellowmaps/web/mapa.jpg" width="1800" height="2400" alt="El mapa de la app de Yellowmaps en un celular" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
-          <figure class="cs-full" style="--ar:1.333"><img src="assets/img/yellowmaps/web/landing.jpg" data-zoom="assets/img/yellowmaps/web/landing.jpg" width="2400" height="1800" alt="La página web de Yellowmaps en una laptop, con los negocios aliados" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
-        </section>
-        <section class="cs-ch">
-          <p class="cs-ch-label"><span>03</span>En la calle</p>
-          <figure class="cs-full" style="--ar:1.400"><img src="assets/img/yellowmaps/web/posters.jpg" data-zoom="assets/img/yellowmaps/web/posters.jpg" width="2400" height="1714" alt="Posters de Yellowmaps en una calle" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
-          <div class="cs-pair"><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/sticker.jpg" data-zoom="assets/img/yellowmaps/web/sticker.jpg" width="1920" height="1080" alt="Sticker de Yellowmaps con QR en la vitrina de un negocio" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/flyers.jpg" data-zoom="assets/img/yellowmaps/web/flyers.jpg" width="1920" height="1080" alt="Flyers de Yellowmaps en una pared y bajo un limpiaparabrisas" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
-          <div class="cs-pair"><figure style="--ar:1.251"><img src="assets/img/yellowmaps/web/tarjetas.jpg" data-zoom="assets/img/yellowmaps/web/tarjetas.jpg" width="2400" height="1918" alt="Tarjetas de presentación de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.778"><img src="assets/img/yellowmaps/web/botella2.jpg" data-zoom="assets/img/yellowmaps/web/botella2.jpg" width="1920" height="1080" alt="Botella con el isotipo y el patrón de Yellowmaps" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
-        </section>
-        <footer class="cs-end">
-          <p class="cs-end-line">Estuve desde investigar hasta ver la marca en la calle. Ahí entendí que la app y la marca son <em>una sola experiencia.</em></p>
-          <button type="button" class="cs-next" data-pj-case="pj-freelance:0"><span>Siguiente proyecto</span><b>Ceipa</b><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></button>
-        </footer>
-        </div>
+        <button type="button" class="cx-next" data-pj-case="pj-freelance:0">
+          <span class="cx-next-copy"><span>Siguiente proyecto</span><b>Ceipa</b><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></span>
+          <span class="cx-next-img"><img src="assets/img/ceipa/portada.jpg" alt="" loading="lazy" decoding="async"></span>
+        </button>
       </section>
     </div>
 
@@ -164,7 +185,7 @@
     <div class="pj-view pj-view--deck" hidden>
       <button type="button" class="pj-back-circle" aria-label="Volver a la lista"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
       <!-- Each .pj-deck is one project, shown as a case-study preview -->
-      <section class="pj-deck cs" data-tone="lime" data-name="Ceipa" hidden>
+      <section class="pj-deck cs cs--ce" data-tone="lime" data-name="Ceipa" hidden>
         <header class="cs-hero">
           <img class="cs-hero-img" src="assets/img/ceipa/portada.jpg" alt="Dos jóvenes conversan en una casita entre plantas, con el isotipo de Ceipa encima" width="2216" height="1242" decoding="async">
           <div class="cs-hero-copy">
@@ -174,27 +195,56 @@
           </div>
         </header>
         <div class="cs-body">
-        <p class="cs-intro">Un grupo de jóvenes que vive la fe en lo de todos los días. Por eso la identidad salió de la naturaleza, no de símbolos religiosos clásicos.</p>
-        <section class="cs-ch">
-          <p class="cs-ch-label"><span>01</span>El logo</p>
-          <div class="cs-logo" role="img" aria-label="Isotipo de Ceipa"><svg class="cs-logo-svg" viewBox="0 0 2080 2080" aria-hidden="true"><line pathLength="1" x1="194.83" y1="1025.66" x2="1885.17" y2="1025.66"/><line pathLength="1" x1="904.18" y1="325.99" x2="904.18" y2="1754.01"/><polyline pathLength="1" points="394.61 783.93 548.57 594.47 700.49 757.17"/><polyline pathLength="1" points="1145.08 805.31 1161.14 582.98 1291.46 692.5 1406.52 594.47 1438.08 805.31"/><polygon pathLength="1" points="468.23 1267.38 468.23 1522.25 678.04 1406.32 468.23 1267.38"/><polyline pathLength="1" points="1394.79 1280.27 1201.39 1446.92 1438.08 1459.81 1438.08 1522.25"/></svg></div>
-          <div class="cs-pair"><figure style="--ar:1.500"><img src="assets/img/ceipa/portada-isotipo.jpg" data-zoom="assets/img/ceipa/portada-isotipo.jpg" width="2200" height="1467" alt="Isotipo de Ceipa en relieve sobre papel texturizado, con un lápiz" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.545"><img src="assets/img/ceipa/web/isotipo.jpg" data-zoom="assets/img/ceipa/web/isotipo.jpg" width="2400" height="1553" alt="Isotipo de Ceipa en bajorrelieve dorado sobre papel" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+        <section class="cx-overview">
+          <div>
+            <p class="cx-lede">Una identidad para una comunidad de jóvenes que vive la fe en lo de todos los días.</p>
+            <p class="cx-context">CEIPA, el Círculo de Espiritualidad Pedro Arrupe, es un proyecto católico para jóvenes. Forma comunidad a través de los ejercicios espirituales y el discernimiento de la vida cotidiana.</p>
+          </div>
+          <dl class="cx-meta"><div><dt>Rol</dt><dd>Diseño de identidad</dd></div><div><dt>Cliente</dt><dd>CEIPA</dd></div><div><dt>Tipo</dt><dd>Proyecto freelance</dd></div><div><dt>Entregables</dt><dd>Logo, sublogos, paleta, línea gráfica y piezas para redes</dd></div></dl>
         </section>
-        <section class="cs-ch">
-          <p class="cs-ch-label"><span>02</span>En uso</p>
-          <figure class="cs-full" style="--ar:1.500"><img src="assets/img/ceipa/web/ejercicios.jpg" data-zoom="assets/img/ceipa/web/ejercicios.jpg" width="2400" height="1600" alt="Afiche de los ejercicios espirituales de Ceipa pegado en una pared" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+        <section class="cx-sec">
+          <header class="cx-label"><span>01</span><h3>El reto</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">CEIPA necesitaba una identidad que mostrara que la fe también se vive en lo cotidiano y en la naturaleza, no solo en espacios formales.</p>
+          </div>
         </section>
-        <footer class="cs-end">
-          <p class="cs-end-line">No hace falta un símbolo obvio para que algo se entienda. A veces <em>lo cotidiano dice más.</em></p>
-          <button type="button" class="cs-next" data-pj-case="pj:0"><span>Siguiente proyecto</span><b>Yellowmaps</b><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></button>
-        </footer>
+        <figure class="cx-bleed" style="--ar:1.784"><img src="assets/img/ceipa/portada.jpg" data-zoom="assets/img/ceipa/portada.jpg" width="2216" height="1242" alt="Dos jóvenes en una casita entre plantas, con el isotipo de Ceipa" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+        <section class="cx-sec">
+          <header class="cx-label"><span>02</span><h3>El proceso</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">Escuchando a la comunidad apareció la idea: su fe no vive en un templo, vive en los ejercicios espirituales y en el día a día. Por eso el logo y la paleta tenían que salir de la naturaleza y no de símbolos religiosos clásicos.</p>
+            <ol class="cx-steps"><li><span>01</span>Escuchar a la comunidad</li><li><span>02</span>Encontrar la idea</li><li><span>03</span>Logo y sublogos</li><li><span>04</span>Sistema visual</li></ol>
+          </div>
+        </section>
+        <section class="cx-sec">
+          <header class="cx-label"><span>03</span><h3>La solución</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">Una identidad cálida y flexible, con logo, sublogos, paleta y línea gráfica propias.</p>
+            <h4 class="cx-sub">El logo</h4>
+            <div class="cs-logo" role="img" aria-label="Isotipo de Ceipa"><svg class="cs-logo-svg" viewBox="0 0 2080 2080" aria-hidden="true"><line pathLength="1" x1="194.83" y1="1025.66" x2="1885.17" y2="1025.66"/><line pathLength="1" x1="904.18" y1="325.99" x2="904.18" y2="1754.01"/><polyline pathLength="1" points="394.61 783.93 548.57 594.47 700.49 757.17"/><polyline pathLength="1" points="1145.08 805.31 1161.14 582.98 1291.46 692.5 1406.52 594.47 1438.08 805.31"/><polygon pathLength="1" points="468.23 1267.38 468.23 1522.25 678.04 1406.32 468.23 1267.38"/><polyline pathLength="1" points="1394.79 1280.27 1201.39 1446.92 1438.08 1459.81 1438.08 1522.25"/></svg></div>
+            <div class="cs-pair"><figure style="--ar:1.500"><img src="assets/img/ceipa/portada-isotipo.jpg" data-zoom="assets/img/ceipa/portada-isotipo.jpg" width="2200" height="1467" alt="Isotipo de Ceipa en relieve sobre papel texturizado, con un lápiz" loading="lazy" decoding="async" tabindex="0" role="button"></figure><figure style="--ar:1.545"><img src="assets/img/ceipa/web/isotipo.jpg" data-zoom="assets/img/ceipa/web/isotipo.jpg" width="2400" height="1553" alt="Isotipo de Ceipa en bajorrelieve dorado sobre papel" loading="lazy" decoding="async" tabindex="0" role="button"></figure></div>
+            <h4 class="cx-sub">En uso</h4>
+            <figure class="cs-full" style="--ar:1.500"><img src="assets/img/ceipa/web/ejercicios.jpg" data-zoom="assets/img/ceipa/web/ejercicios.jpg" width="2400" height="1600" alt="Afiche de los ejercicios espirituales de Ceipa pegado en una pared" loading="lazy" decoding="async" tabindex="0" role="button"></figure>
+          </div>
+        </section>
+        <section class="cx-sec">
+          <header class="cx-label"><span>04</span><h3>El resultado</h3></header>
+          <div class="cx-content">
+            <p class="cx-text">Hoy CEIPA comunica sus actividades y su mensaje de forma unificada.</p>
+            <p class="cx-quote">No hace falta un símbolo obvio para que algo se entienda. A veces <em>lo cotidiano dice más.</em></p>
+          </div>
+        </section>
         </div>
+        <button type="button" class="cx-next" data-pj-case="pj:0">
+          <span class="cx-next-copy"><span>Siguiente proyecto</span><b>Yellowmaps</b><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></span>
+          <span class="cx-next-img"><img src="assets/img/yellowmaps/web/portada.jpg" alt="" loading="lazy" decoding="async"></span>
+        </button>
       </section>
     </div>
 
   </div>
 </div>
 
-<script src="assets/js/main.js?v=20261027"></script>
+<script src="assets/js/main.js?v=20261028"></script>
 </body>
 </html>
