@@ -8,12 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Inter+Tight:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Shrikhand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261011">
+<link rel="stylesheet" href="assets/css/style.css?v=20261027">
 </head>
 <body>
 
 <header class="site-header">
-  <a href="index.html" class="logo" aria-label="Emily Rojas S."><img src="assets/img/perezoso/perezoso-02-blanco.svg" alt=""></a>
+  <a href="index.html" class="logo" aria-label="Emily Rojas S."><svg viewBox="0 0 283.46 283.46" aria-hidden="true"><path d="M110.64,125.06l-9.43-3.48c-45.6-22.75-40.53-82.48,8.46-98.26,20.86-6.72,56.74-5.03,73.32,11,2.62,2.53,2.39,5.07,2.73,8.52,1.24,12.48,2.24,26.76,3.05,39.2.07,1.07.2,2.72.24,3.53.25,4.52-4.36,4.74-4.98.3-.3-2.13-.69-6.42-1.13-8.9-4.27-24.02-16.74-50.27-44.43-51.93-56.91-3.4-52.13,97.39-5.19,99.12,4.91.18,9.55.48,11.86.61,3.94.22,3.8,4.61-.03,4.55-5.06-.08-12.42-.06-19.41,0-58.48.54-57.34,87.36-14.23,111.49,33.96,19.01,86.61.78,93.01-40,1.46-9.26.93-26.52-5.83-33.81-3.39-3.66-7.44-1.98-11.66-1-18.45,4.29-48.11,14.23-41.45,37.28.63,2.18,1.48,8-1.34,8.09-3.31.1-4.08-6.32-4.54-8.79-4.92-26.54,4.18-42.95,28.22-53.86,15.4-6.99,36.05-10.24,46.36-24.77,7.74-10.92,7.44-25.56,5.88-38.17-.38-4.19,3.96-4.38,4.76-.95.95,4.06,4.07,16.71,4.57,21.27,2.13,19.67-.84,37.68-17.5,49.91-1.76,1.29-5.53,3.15-6.79,4.45-2.39,2.46.72,6.85,1.67,9.6,10.06,29.09-1.12,58.53-27.71,73.48-23.43,13.18-58.56,13.04-82.97,2.54-29.54-12.7-48.27-41.88-41.29-74.53,5.6-26.21,30.18-43.29,55.78-46.51Z"/></svg></a>
 
   <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -29,45 +29,62 @@
 
 <main class="page-main">
 
-  <!-- PROJECTS: just the gallery. Each cover starts small and grows to fill the screen as you scroll
-       (main.js sets --e per item); clicking it opens the case study (overlays below) -->
-  <section class="gx">
-    <h1 class="gx-title">Proyec<em>tos</em><sup class="gx-count">02</sup></h1>
-    <div class="gx-item">
-      <div class="gx-stage">
-        <button type="button" class="gx-card" data-pj-case="pj:0" aria-haspopup="dialog" aria-label="Ver el caso Yellowmaps">
-          <span class="gx-frame"><img src="assets/img/yellowmaps/web/portada.jpg" alt="" width="1920" height="1080" decoding="async"></span>
-          <span class="gx-name" aria-hidden="true">Yellowmaps</span>
-          <span class="gx-foot" aria-hidden="true"><span class="gx-num">01 / 02</span><span class="gx-kind">UX/UI y Branding • 2026</span><span class="gx-go">Ver caso<i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></span></span>
-        </button>
-      </div>
+  <!-- PROJECTS: a stack of file folders, all in view (like a filing drawer seen from the front).
+       Each folder = back panel + tab (one silhouette) → white sheet → paper clip's back half → front flap →
+       clip's front half, so the clip really grips the edge. Every folder sits a little lower and lighter than
+       the one behind it, tabs alternate sides. The stage pins and each folder slides in from the bottom-left as you scroll (main.js sets --k). -->
+  <section class="files">
+    <div class="files-stage">
+    <h1 class="files-title">Proyec<em>tos</em><sup class="files-count">02</sup></h1>
+    <div class="fl-stack" style="--n:2">
+      <button type="button" class="fl fl--left" data-pj-case="pj:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Yellowmaps" style="--i:0; --cx:58%; --mcx:78%">
+        <span class="fl-back"><span class="fl-tab">Yellowmaps</span></span>
+        <span class="fl-paper" aria-hidden="true"></span>
+        <svg class="fl-clip fl-clip--back" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/></svg>
+        <span class="fl-front"><span class="fl-meta">UX/UI y Branding • 2026</span></span>
+        <svg class="fl-clip fl-clip--front" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/></svg>
+      </button>
+      <button type="button" class="fl fl--right fl--front" data-pj-case="pj-freelance:0" aria-haspopup="dialog" aria-label="Abrir el proyecto Ceipa" style="--i:1; --cx:30%; --mcx:14%">
+        <span class="fl-back"><span class="fl-tab">Ceipa</span></span>
+        <span class="fl-paper" aria-hidden="true"></span>
+        <svg class="fl-clip fl-clip--back" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V14 A10.5 10.5 0 0 0 2 14 V100 A14 14 0 0 0 30 100 V46"/></svg>
+        <span class="fl-front"><span class="fl-meta">Identidad de marca • Freelance</span></span>
+        <svg class="fl-clip fl-clip--front" viewBox="0 0 32 118" aria-hidden="true"><path class="fl-clip-shadow" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-edge" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-wire" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/><path class="fl-clip-shine" d="M9 54 V92 A7 7 0 0 0 23 92 V34"/></svg>
+      </button>
     </div>
-    <div class="gx-item">
-      <div class="gx-stage">
-        <button type="button" class="gx-card" data-pj-case="pj-freelance:0" aria-haspopup="dialog" aria-label="Ver el caso Ceipa">
-          <span class="gx-frame"><img src="assets/img/ceipa/portada.jpg" alt="" width="2216" height="1242" decoding="async"></span>
-          <span class="gx-name" aria-hidden="true">Ceipa</span>
-          <span class="gx-foot" aria-hidden="true"><span class="gx-num">02 / 02</span><span class="gx-kind">Identidad de marca • Freelance</span><span class="gx-go">Ver caso<i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></span></span>
-        </button>
-      </div>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-    <div class="foot-mid">
-      <p class="foot-tag">Las mejores ideas<br>nacen de<br>conversaciones <em>reales.</em></p>
-      <div class="foot-links">
-        <a href="mailto:contact.emilyrojas@gmail.com" class="pill"><span>Email</span><i class="pill-icon pill-orange"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" class="pill"><span>LinkedIn</span><i class="pill-icon pill-butter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" class="pill"><span>Instagram</span><i class="pill-icon pill-lavender"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
-        <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="pill"><span>WhatsApp</span><i class="pill-icon pill-passion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 16.5 20 5.5M12.8 4.6 20 5.5l-2.6 7"/></svg></i></a>
+    <div class="foot-card">
+      <div class="foot-top">
+        <p class="foot-tag">Las mejores ideas nacen de conversaciones <em>reales.</em></p>
+        <div class="foot-write">
+          <a href="mailto:contact.emilyrojas@gmail.com" class="foot-mail">contact.emilyrojas@gmail.com</a>
+          <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" class="foot-go">Escribime</a>
+        </div>
+      </div>
+
+      <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
+
+      <div class="foot-bottom">
+        <p class="foot-credit">&copy; 2026 Emily Rojas <span aria-hidden="true">•</span> Hecho en Costa Rica</p>
+        <nav class="foot-nav" aria-label="Pie de página">
+          <a href="index.html">Inicio</a>
+          <a href="about.html">Acerca de mí</a>
+          <a href="services.html">Proyectos</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+        <div class="foot-social">
+          <a href="https://www.linkedin.com/in/emilyyrojasss/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v7M7 7v.01M11 17v-7M11 13.5c0-2 1.2-3.5 3-3.5s3 1.2 3 3.5V17"/></svg></a>
+          <a href="https://www.instagram.com/emilyrojas.ptf/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><path d="M16 8v.01"/></svg></a>
+          <a href="https://wa.me/50683122993?text=Hola%20Emily%2C%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 18.5 6.6 15A7 7 0 1 1 9 17.4z"/><path d="M9.7 9.6c.3 1.8 2.6 4.1 4.6 4.6l.9-1.1-1.5-.8-.6.6c-.8-.4-1.5-1.1-1.9-1.9l.6-.6-.8-1.5z"/></svg></a>
+          <a href="mailto:contact.emilyrojas@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="6.5" width="15" height="11" rx="2"/><path d="m5 7.5 7 5.5 7-5.5"/></svg></a>
+        </div>
       </div>
     </div>
-
-    <a href="index.html" class="foot-mark">Emily Rojas Solórzano</a>
-    <p class="foot-credit">&copy; 2026 Emily Rojas</p>
   </footer>
 
 <!-- PROJECTS OVERLAY (opens from "Ver proyectos" in A3 Technology) -->
@@ -178,6 +195,6 @@
   </div>
 </div>
 
-<script src="assets/js/main.js?v=20261011"></script>
+<script src="assets/js/main.js?v=20261027"></script>
 </body>
 </html>

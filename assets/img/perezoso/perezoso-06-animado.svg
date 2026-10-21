@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="240 380 2300 2060">
   <style>
-    .arm { transform-origin: 923px 1397px; animation: wave 1.7s ease-in-out infinite; }
-    .mark { transform-box: fill-box; transform-origin: center; animation: pulse 1.7s ease-in-out infinite; }
-    .mark--b { animation-delay: .15s; }
+    /* the arm pivots where it meets the head, so the joint never opens; every step eases
+       into the next for a loose, continuous wave */
+    .arm { transform-origin: 923px 1150px; animation: wave 2.8s ease-in-out infinite; }
+    .mark { transform-box: fill-box; transform-origin: center; animation: pulse 2.8s ease-in-out infinite; }
+    .mark--b { animation-delay: .25s; }
     @keyframes wave {
       0%, 100% { transform: rotate(0deg); }
-      20% { transform: rotate(-13deg); }
-      40% { transform: rotate(7deg); }
-      60% { transform: rotate(-13deg); }
-      80% { transform: rotate(4deg); }
+      25% { transform: rotate(-7deg); }
+      50% { transform: rotate(-1.5deg); }
+      75% { transform: rotate(-6deg); }
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      20%, 60% { opacity: .25; transform: scale(.7); }
-      40%, 80% { opacity: 1; transform: scale(1.1); }
+      0%, 100% { opacity: 1; }
+      50% { opacity: .4; }
     }
     @media (prefers-reduced-motion: reduce) { .arm, .mark { animation: none; } }
   </style>
