@@ -2270,7 +2270,7 @@ a { color: inherit; text-decoration: none; }
 .cx-meta dd { margin: calc(var(--u) * 4) 0 0; font-size: calc(var(--u) * 18); font-weight: 600; line-height: 1.35; }
 
 .cx-sec { display: grid; grid-template-columns: calc(var(--u) * 300) 1fr; gap: calc(var(--u) * 60); margin-top: calc(var(--u) * 130); padding-top: calc(var(--u) * 28); border-top: 1px solid rgba(0, 0, 0, 0.15); }
-.cx-label { position: sticky; top: calc(var(--u) * 40); align-self: start; }
+.cx-label { position: sticky; top: calc(var(--u) * 140); align-self: start; } /* clears the round back button */
 .cx-label span { display: inline-grid; place-items: center; width: calc(var(--u) * 46); height: calc(var(--u) * 46); border-radius: 50%; background: var(--brand); color: var(--brand-ink); font-size: calc(var(--u) * 15); font-weight: 600; letter-spacing: var(--tracking-small); }
 .cx-label h3 { margin: calc(var(--u) * 18) 0 0; font-family: var(--font-display); font-size: calc(var(--u) * 44); font-weight: 600; line-height: 1; letter-spacing: var(--tracking-heading); }
 .cx-text { max-width: calc(var(--u) * 780); margin: 0 0 calc(var(--u) * 40); font-size: calc(var(--u) * 22); line-height: 1.5; }
